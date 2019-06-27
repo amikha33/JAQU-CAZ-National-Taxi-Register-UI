@@ -23,9 +23,5 @@ module JaquCaz
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
-
-    # http://www.glitchwrks.com/2017/01/16/removing-cookies-sessions-rails-5
-    config.middleware.delete ActionDispatch::Cookies
-    config.middleware.delete ActionDispatch::Session::CookieStore
   end
 end
