@@ -1,0 +1,36 @@
+//TODO Replace when https://github.com/alphagov/govuk-design-system-backlog/issues/12 is done
+$background-white: #d5e8f3;
+
+#global-cookie-message {
+  width: 100%;
+  background-color: $background-white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  .govuk-width-container {
+    max-width: 960px;
+    margin: 0 15px;
+
+    @media (min-width: 1020px) {
+      margin: 0 auto;
+    }
+
+    p {
+      font-weight: 400;
+      text-transform: none;
+      font-size: 14px;
+      line-height: 1.14286;
+      max-width: 960px;
+      margin: 0 15px;
+
+      @media (min-width: 641px) {
+        font-size: 16px;
+        line-height: 1.25;
+      }
+
+      @media (min-width: 1020px) {
+        margin: 0 auto;
+      }
+    }
+  }
+}
