@@ -2,7 +2,7 @@
 %html{html_attrs('en')}
   %head
     %meta{charset: 'utf-8'}
-    %title CAZ CSV Uploader
+    %title TAXI Register CSV Uploader
     = csrf_meta_tags
     = csp_meta_tag
 
@@ -22,7 +22,6 @@
 
     %meta{content: asset_pack_url('media/images/govuk-opengraph-image.png'), property: 'og:image'}/
 
-  // Set ga variable before assets:precompile //
   %body.govuk-template__body
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');

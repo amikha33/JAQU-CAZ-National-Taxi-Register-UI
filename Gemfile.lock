@@ -61,6 +61,22 @@ GEM
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
     ast (2.4.0)
+    aws-eventstream (1.0.3)
+    aws-partitions (1.180.0)
+    aws-sdk-core (3.56.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
+      aws-partitions (~> 1.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.22.0)
+      aws-sdk-core (~> 3, >= 3.56.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.43.0)
+      aws-sdk-core (~> 3, >= 3.56.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.1.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     backports (3.15.0)
     bindex (0.7.0)
     bootsnap (1.4.4)
@@ -138,6 +154,7 @@ GEM
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
+    jmespath (1.4.0)
     json (2.2.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -277,7 +294,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.1)
     temple (0.8.1)
     thor (0.20.3)
     thread_safe (0.3.6)
@@ -313,6 +329,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-nulldb-adapter
+  aws-sdk-s3
   bootsnap (>= 1.4.2)
   brakeman
   bundler-audit
@@ -334,7 +351,6 @@ DEPENDENCIES
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
-  sqlite3 (~> 1.4)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)

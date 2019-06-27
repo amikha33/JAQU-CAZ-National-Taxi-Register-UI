@@ -13,6 +13,7 @@ gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
 
 gem 'activerecord-nulldb-adapter'
+gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'brakeman'
 gem 'bundler-audit'

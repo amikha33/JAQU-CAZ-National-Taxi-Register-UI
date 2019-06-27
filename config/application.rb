@@ -7,7 +7,6 @@ require 'active_model/railtie'
 require 'action_controller/railtie'
 require 'action_view/railtie'
 require 'sprockets/railtie'
-require 'active_storage/engine'
 require 'active_record/railtie'
 
 # Require the gems listed in Gemfile, including any gems
