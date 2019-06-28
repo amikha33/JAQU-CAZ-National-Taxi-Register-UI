@@ -8,7 +8,8 @@ ruby '2.6.3'
 gem 'rails', '~> 6.0.0.rc1'
 
 gem 'activerecord-nulldb-adapter'
-gem 'aws-sdk'
+gem 'aws-sdk-cognitoidentityprovider'
+gem 'aws-sdk-s3'
 gem 'bootsnap', require: false
 gem 'brakeman'
 gem 'bundler-audit'

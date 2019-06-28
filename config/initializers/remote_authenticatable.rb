@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'aws-sdk'
-
 module Devise
   module Models
     module RemoteAuthenticatable

@@ -5,7 +5,7 @@
 Devise.setup do |config|
   # Add Cognito Custom Strategy to Devise
   config.warden do |manager|
-    manager.strategies.add(:remote_authenticatable, Devise::Strategies::RemoteAuthenticatable)
+    manager.strategies.add(:remote_authenticatable, AuthenticationStrategies::Remote)
     manager.default_strategies(scope: :user).unshift :remote_authenticatable
   end
 
