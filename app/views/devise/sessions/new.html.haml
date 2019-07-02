@@ -1,0 +1,18 @@
+%main.govuk-main-wrapper#main-content{role: 'main'}
+  %fieldset.govuk-fieldset
+  %legend.govuk-fieldset__legend.govuk-fieldset__legend--xl
+    %h1.govuk-fieldset__heading
+      = t('.sign_in')
+    %br
+
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .govuk-form-group
+        = f.label :email, class: 'govuk-label'
+        = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'govuk-input'
+      .govuk-form-group
+        = f.label :password, class: 'govuk-label'
+        = f.password_field :password, autocomplete: 'current-password', class: 'govuk-input'
+      .govuk-form-group
+        = f.submit 'Log in', class: 'govuk-button'
+    = render 'devise/shared/links'
+
