@@ -2,12 +2,12 @@
 
 require_relative 'boot'
 
-# Pick the frameworks you want:
-require 'active_model/railtie'
+# This is not loaded in rails/all but inside active_record so add it if
+# you want your models work as expected
+require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'action_view/railtie'
 require 'sprockets/railtie'
-require 'active_record/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
