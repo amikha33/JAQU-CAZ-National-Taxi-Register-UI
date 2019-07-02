@@ -1,42 +1,45 @@
-# README
-
-## JAQU CAZ - Ruby on Rails template
+## CAZ CSV Uploader
 
 ### Dependencies
-* ruby 2.6.3
-* rails 6.0.0.rc1 - update to 6.0.0 as soon as it is available
-* [govuk-frontend](https://github.com/alphagov/govuk-frontend)
-* other packages listed in Gemfile and package.json files
+* Ruby 2.6.3
+* Ruby on Rails 6.0.0.rc1 - update to 6.0.0 as soon as it is available.
+* [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend)
+* Other packages listed in Gemfile and package.json files.
 
-### Specs test
+### RSpec test
 ```
-bundle exec rspec
+rspec
+```
+
+### Cucumber test
+```
+cucumber
 ```
 
 ### Linting
-A Ruby static code analyzer and formatter. 
+A Ruby static code analyzer and formatter.
 ```
 rubocop
 ```
 
 Configures various linters to comply with GOV.UK's style guides.
 ```
-bundle exec govuk-lint-sass app/javascript
+govuk-lint-sass app/javascript
 ```
 
-### Cucumber test
+### SonarQube inspection
 ```
-bundle exec rake cucumber
+sonar-scanner
 ```
 
-### Variables 
+### Variables
 
-* Create .env configuration file from example config
+* Create .env configuration file from example config.
 ```
 cp .env.example .env
 ```
 
-* Enter local credentials for database, Redis url etc.:
+* Enter local credentials for database, google analytics etc.:
 ```
 nano .env
 ```

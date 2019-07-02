@@ -7,37 +7,40 @@ ruby '2.6.3'
 
 gem 'rails', '~> 6.0.0.rc1'
 
-gem 'puma', '~> 3.11'
-gem 'sass-rails', '~> 5'
-gem 'turbolinks', '~> 5'
-gem 'webpacker', '~> 4.0'
-
 gem 'activerecord-nulldb-adapter'
+gem 'aws-sdk-cognitoidentityprovider'
 gem 'aws-sdk-s3'
-gem 'bootsnap', '>= 1.4.2', require: false
+gem 'bootsnap', require: false
 gem 'brakeman'
 gem 'bundler-audit'
+gem 'devise'
 gem 'haml'
 gem 'logstash-logger'
+gem 'puma'
 gem 'rubocop-rails'
+gem 'sass-rails'
+gem 'turbolinks'
+gem 'webpacker'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   gem 'govuk-lint'
   gem 'haml-rails'
-  gem 'rspec-rails', '~> 3.8'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'rspec-rails'
 end
 
 group :development do
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen'
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'web-console', '>= 3.3.0'
+  gem 'spring-watcher-listen'
+  gem 'web-console'
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
+  gem 'capybara'
   gem 'cucumber-rails', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
