@@ -62,7 +62,7 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     ast (2.4.0)
     aws-eventstream (1.0.3)
-    aws-partitions (1.183.0)
+    aws-partitions (1.184.0)
     aws-sdk-cognitoidentityprovider (1.24.0)
       aws-sdk-core (~> 3, >= 3.58.0)
       aws-sigv4 (~> 1.1)
@@ -103,6 +103,8 @@ GEM
       rake (< 13.0)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     crass (1.0.4)
     cucumber (3.1.2)
       builder (>= 2.1.2)
@@ -158,6 +160,7 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 5.1)
+    hashdiff (0.4.0)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -285,6 +288,7 @@ GEM
     ruby_parser (3.13.1)
       sexp_processor (~> 4.9)
     rubyzip (1.2.3)
+    safe_yaml (1.0.5)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -303,6 +307,8 @@ GEM
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
     sexp_processor (4.12.1)
+    show_me_the_cookies (5.0.0)
+      capybara (>= 2, < 4)
     simplecov (0.17.0)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -336,10 +342,14 @@ GEM
       activemodel (>= 6.0.0.a)
       bindex (>= 0.4.0)
       railties (>= 6.0.0.a)
-    webdrivers (4.0.1)
+    webdrivers (4.1.0)
       nokogiri (~> 1.6)
       rubyzip (~> 1.0)
       selenium-webdriver (>= 3.0, < 4.0)
+    webmock (3.6.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     webpacker (4.0.7)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
@@ -379,6 +389,7 @@ DEPENDENCIES
   rubocop-rails
   sass-rails
   selenium-webdriver
+  show_me_the_cookies
   simplecov
   spring
   spring-watcher-listen
@@ -386,6 +397,7 @@ DEPENDENCIES
   tzinfo-data
   web-console
   webdrivers
+  webmock
   webpacker
 
 RUBY VERSION

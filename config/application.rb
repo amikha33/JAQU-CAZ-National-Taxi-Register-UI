@@ -20,5 +20,7 @@ module CsvUploader
 
     config.autoload_paths << Rails.root.join('lib')
     config.eager_load_paths << Rails.root.join('lib')
+
+    config.x.session_timeout_in_min = (ENV['SESSION_TIMEOUT'].presence || 15).to_i
   end
 end

@@ -9,7 +9,7 @@ class User
   define_model_callbacks :validation
   devise :remote_authenticatable, :timeoutable
 
-  attr_accessor :email, :auth_token
+  attr_accessor :email, :username
 
   # Latest devise(v4.6.2) tries to initialize this class with values
   # ignore it for now

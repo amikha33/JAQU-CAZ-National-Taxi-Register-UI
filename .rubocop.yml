@@ -10,5 +10,9 @@ Style/Documentation:
 Metrics/LineLength:
   Max: 99
   IgnoredPatterns: ['\A#']
+
 Metrics/MethodLength:
   Max: 21
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']

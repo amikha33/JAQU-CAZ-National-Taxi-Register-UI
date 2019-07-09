@@ -43,8 +43,10 @@ group :test do
   gem 'capybara'
   gem 'cucumber-rails', require: false
   gem 'selenium-webdriver'
+  gem 'show_me_the_cookies'
   gem 'simplecov', require: false
   gem 'webdrivers'
+  gem 'webmock'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

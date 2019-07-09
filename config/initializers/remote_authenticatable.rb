@@ -19,18 +19,20 @@ module Devise
             auth_flow: 'USER_PASSWORD_AUTH',
             auth_parameters:
               {
-                'USERNAME' => params[:email],
+                'USERNAME' => params[:username],
                 'PASSWORD' => params[:password]
               }
           )
 
           if response
-            User.new
+            user = User.new
+            user.email = JSON.parse(response.challenge_parameters['userAttributes'])['email']
+            user
           else
             false
           end
         rescue Aws::CognitoIdentityProvider::Errors::NotAuthorizedException
-          # TO DO: Log errors
+          #TODO: Log errors
           false
         rescue StandardError
           false
@@ -51,7 +53,6 @@ module Devise
         def serialize_from_session(data, _salt)
           resource = new
           resource.email = data['email']
-          resource.auth_token = data['auth_token']
           resource
         end
 
@@ -64,8 +65,7 @@ module Devise
         def serialize_into_session(record)
           [
             {
-              email: record.email,
-              auth_token: record.auth_token
+              email: record.email
             },
             nil
           ]

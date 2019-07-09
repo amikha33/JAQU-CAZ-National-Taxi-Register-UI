@@ -25,10 +25,9 @@ module AuthenticationStrategies
       #
       # resource = resource.remote_authentication(auth_params)
       if validate(resource) { resource = resource.remote_authentication(auth_params) }
-        resource.email = auth_params[:email]
         success!(resource)
       else
-        fail!
+        fail!(:invalid)
       end
     end
   end
