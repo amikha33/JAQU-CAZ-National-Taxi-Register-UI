@@ -23,8 +23,8 @@ module AuthenticationStrategies
       # If the block returns true the resource will be logged in
       # If the block returns false the authentication will fail!
       #
-      # resource = resource.remote_authentication(auth_params)
-      if validate(resource) { resource = resource.remote_authentication(auth_params) }
+      # resource = resource.authentication(auth_params)
+      if validate(resource) { resource = resource.authentication(auth_params) }
         success!(resource)
       else
         fail!(:invalid)

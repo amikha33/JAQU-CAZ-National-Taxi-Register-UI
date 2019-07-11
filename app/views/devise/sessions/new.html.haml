@@ -1,9 +1,7 @@
 %main.govuk-main-wrapper#main-content{role: 'main'}
   %fieldset.govuk-fieldset
   %legend.govuk-fieldset__legend.govuk-fieldset__legend--xl
-    %h1.govuk-fieldset__heading
-      = t('.sign_in')
-    %br
+    %h1.govuk-heading-l Sign In
 
     - if alert
       = render 'shared/errors'
@@ -18,7 +16,7 @@
         = f.text_field :username, autofocus: true, autocomplete: 'username', class: 'govuk-input govuk-!-width-two-thirds'
       .govuk-form-group
         = f.label :password, class: 'govuk-label'
-        = f.password_field :password, autocomplete: '=password', class: 'govuk-input govuk-!-width-two-thirds'
+        = f.password_field :password, autocomplete: 'current-password', class: 'govuk-input govuk-!-width-two-thirds'
       .govuk-form-group
         = f.submit 'Continue', class: 'govuk-button'
 

@@ -1,83 +1,71 @@
 # frozen_string_literal: true
 
-# Scenario: View upload page without cookie
-When('I have no authentication cookie') do
-  cookie = get_me_the_cookie('_csv_uploader_session')
-  expect(cookie).to be_nil
-end
-
-# Scenario: View upload page with cookie that has not expired
-When('I navigate to a Upload page') do
-  visit upload_index_path
-end
-
-Then('I am redirected to the Sign in page') do
-  expect(page).to have_current_path(user_session_path)
-end
-
-Then('I should enter valid credentials and press the Continue') do
+# Scenario: Upload without file
+Given('I am on the Upload page') do
   sign_in_user
 end
 
-And('Cookie is created for my session') do
-  cookie = get_me_the_cookie('_csv_uploader_session')
-  expect(cookie).to_not be_nil
+When('I press "Upload" button') do
+  click_button 'Upload'
 end
 
-# Scenario: View upload page with cookie that has not expired
-When('I have authentication cookie that has not expired') do
-  visit new_user_session_path
-  sign_in_user
-
-  cookie = get_me_the_cookie('_csv_uploader_session')
-  expect(cookie).to_not be_nil
-  expect(cookie[:expires] > Time.current).to be true
-end
-
-Then('I am redirected to the Upload page') do
-  expect(page).to have_current_path(upload_index_path)
-end
-
-# Scenario: Sign in with invalid credentials
-Given('I am on the Sign in page') do
-  visit new_user_session_path
-end
-
-When('I enter invalid credentials') do
-  fill_in('user_email', with: 'user@example.com')
-  fill_in('user_password', with: 'invalid-password')
-
+# Scenario: Upload a csv file whose name is compliant with the naming rules
+When('I upload a valid csv file') do
   RSpec::Mocks.with_temporary_scope do
-    expect_any_instance_of(Aws::CognitoIdentityProvider::Client).to receive(:initiate_auth)
-      .and_return(false)
+    allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).and_return(true)
 
-    click_button 'Continue'
+    attach_file(:file, csv_file('CAZ-2020-01-08-AuthorityID-4321.csv'))
+    click_button 'Upload'
   end
 end
 
-Then('I remain on the Login page') do
-  expect(page).to have_current_path(new_user_session_path)
+#  Scenario: Upload a csv file whose name is not compliant with the naming rules
+When('I upload a csv file whose name format is invalid #1') do
+  attach_file(:file, csv_file('сAZ-2020-01-08-AuthorityID-4321.csv'))
+  click_button 'Upload'
 end
 
-# Scenario: View upload page with cookie that has expired
-Given('I have authentication cookie that has expired') do
-  # set default session_timeout_in_min
-  Rails.configuration.x.session_timeout_in_min = 15
+When('I upload a csv file whose name format is invalid #2') do
+  attach_file(:file, csv_file('CAZ-01-08-2020-AuthorityID-4321.csv'))
+  click_button 'Upload'
+end
 
-  travel_to(20.minutes.ago) do
-    sign_in_user
+When('I upload a csv file whose name format is invalid #3') do
+  attach_file(:file, csv_file('CAZ-2020-01--4321.csv'))
+  click_button 'Upload'
+end
+
+When('I upload a csv file whose name format is invalid #4') do
+  attach_file(:file, csv_file('CAZ-2020-01-08-AuthorityID-.csv'))
+  click_button 'Upload'
+end
+
+When('I upload a csv file whose name format is invalid #5') do
+  attach_file(:file, csv_file('CAZ-2020-01-08-Auth_orityID-4321.csv'))
+  click_button 'Upload'
+end
+
+When('I upload a csv file whose name format is invalid #6') do
+  attach_file(:file, csv_file('cCAZ-2020-01-08-AuthorityID-4321.CSV'))
+  click_button 'Upload'
+end
+
+#  Scenario: Upload a csv file format that is not .csv or .CSV
+When('I upload a csv file whose format that is not .csv or .CSV') do
+  attach_file(:file, csv_file('CAZ-2020-01-08-AuthorityID-4321.xlsx'))
+  click_button 'Upload'
+end
+
+#  Upload a valid csv file during error is encountered writing to S3
+When('I upload a csv file during error on S3') do
+  RSpec::Mocks.with_temporary_scope do
+    allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).and_return(false)
+
+    attach_file(:file, csv_file('CAZ-2020-01-08-AuthorityID-4321.csv'))
+    click_button 'Upload'
   end
-
-  cookie = get_me_the_cookie('_csv_uploader_session')
-  expect(cookie).to_not be_nil
-  expect(cookie[:expires] < Time.current).to be true
 end
 
-# Scenario: Sign out
-Given('I am signed in') do
-  sign_in_user
-end
-
-When('I request to sign out') do
-  click_link 'Logout'
+def csv_file(filename)
+  File.join('spec', 'fixtures', 'files', filename)
 end

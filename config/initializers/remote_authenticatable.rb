@@ -10,33 +10,41 @@ module Devise
       # a resource instance
       #
       # If the authentication fails you should return false
-      def remote_authentication(params)
-        client = Aws::CognitoIdentityProvider::Client.new
-
-        begin
-          response = client.initiate_auth(
-            client_id: ENV['AWS_COGNITO_CLIENT_ID'],
-            auth_flow: 'USER_PASSWORD_AUTH',
-            auth_parameters:
-              {
-                'USERNAME' => params[:username],
-                'PASSWORD' => params[:password]
-              }
-          )
-
-          if response
-            user = User.new
-            user.email = JSON.parse(response.challenge_parameters['userAttributes'])['email']
-            user
-          else
-            false
-          end
-        rescue Aws::CognitoIdentityProvider::Errors::NotAuthorizedException
-          #TODO: Log errors
-          false
-        rescue StandardError
+      def authentication(params)
+        response = auth_user(params)
+        if response
+          parse_user_data(response)
+        else
           false
         end
+      rescue Aws::CognitoIdentityProvider::Errors::NotAuthorizedException
+        # TODO: Log errors
+        false
+      rescue StandardError
+        false
+      end
+
+      private
+
+      def auth_user(params)
+        client = Aws::CognitoIdentityProvider::Client.new
+
+        client.initiate_auth(
+          client_id: ENV['AWS_COGNITO_CLIENT_ID'],
+          auth_flow: 'USER_PASSWORD_AUTH',
+          auth_parameters:
+            {
+              'USERNAME' => params[:username],
+              'PASSWORD' => params[:password]
+            }
+        )
+      end
+
+      def parse_user_data(response)
+        user = User.new
+        user_attributes = response.challenge_parameters['userAttributes']
+        user.email = JSON.parse(user_attributes)['email'] if user_attributes
+        user
       end
 
       module ClassMethods

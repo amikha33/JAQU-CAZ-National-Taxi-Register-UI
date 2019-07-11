@@ -8,7 +8,7 @@ describe 'User singing in', type: :request do
   let(:params) do
     {
       user: {
-        email: email,
+        username: email,
         password: password
       }
     }
@@ -40,8 +40,12 @@ describe 'User singing in', type: :request do
 
     context 'when correct credentials given' do
       before do
+        response = OpenStruct.new(challenge_parameters: {
+                                    'USER_ID_FOR_SRP' => 'user@example.com',
+                                    'userAttributes' => '{"email":""}'
+                                  })
         expect_any_instance_of(Aws::CognitoIdentityProvider::Client).to receive(:initiate_auth)
-          .and_return(true)
+          .and_return(response)
       end
 
       it 'logs user in' do

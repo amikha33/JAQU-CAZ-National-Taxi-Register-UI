@@ -7,12 +7,15 @@ AllCops:
 Style/Documentation:
   Enabled: false
 
+Style/GuardClause:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 99
   IgnoredPatterns: ['\A#']
-
-Metrics/MethodLength:
-  Max: 21
 
 Metrics/BlockLength:
   ExcludedMethods: ['describe', 'context']

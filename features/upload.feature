@@ -1,40 +1,39 @@
-Feature: Welcome
+Feature: Upload
   In order to read the page
   As a Licensing Authority
-  I want to see the upload page
+  I want to upload a CSV file
 
-  Scenario: View upload page without cookie
-    Given I have no authentication cookie
-    When I navigate to a Upload page
-    Then I am redirected to the Sign in page
-      And I should see "Sign In"
-      And I should see "Centralised Taxi and PHV Data Maintenance" title
-    Then I should enter valid credentials and press the Continue
-    When I should see "Taxi/PHV Data Upload"
-      And Cookie is created for my session
+  Scenario: Upload without file
+    Given I am on the Upload page
+    When I press "Upload" button
+    Then I should see "Select a CSV"
 
-  Scenario: View upload page with cookie that has not expired
-    Given I have authentication cookie that has not expired
-    When I navigate to a Upload page
-    Then I am redirected to the Upload page
-      And I should see "Taxi/PHV Data Upload"
+  Scenario: Upload a csv file whose name is compliant with the naming rules
+    Given I am on the Upload page
+    When I upload a valid csv file
+    Then I should see "Result of upload"
 
-  Scenario: View upload page with cookie that has expired
-    Given I have authentication cookie that has expired
-    When I navigate to a Upload page
-    Then I am redirected to the Sign in page
-      And I should see "Sign In"
+  Scenario: Upload a csv file whose name is not compliant with the naming rules
+    Given I am on the Upload page
+    When I upload a csv file whose name format is invalid #1
+    Then I should see "The selected file must be named correctly"
+    When I upload a csv file whose name format is invalid #2
+    Then I should see "The selected file must be named correctly"
+    When I upload a csv file whose name format is invalid #3
+    Then I should see "The selected file must be named correctly"
+    When I upload a csv file whose name format is invalid #4
+    Then I should see "The selected file must be named correctly"
+    When I upload a csv file whose name format is invalid #5
+    Then I should see "The selected file must be named correctly"
+    When I upload a csv file whose name format is invalid #6
+    Then I should see "The selected file must be named correctly"
 
-  Scenario: Sign in with invalid credentials
-    Given I am on the Sign in page
-    When I enter invalid credentials
-    Then I remain on the Login page
-      And I should see "The username or password you entered is incorrect"
+  Scenario: Upload a csv file format that is not .csv or .CSV
+    Given I am on the Upload page
+    When I upload a csv file whose format that is not .csv or .CSV
+    Then I should see "The selected file must be a CSV"
 
-  Scenario: Sign out
-    Given I am signed in
-    When I request to sign out
-    Then I am redirected to the Sign in page
-    When I navigate to a Upload page
-    Then I am redirected to the Sign in page
-      And I should see "Sign In"
+  Scenario: Upload a valid csv file during error is encountered writing to S3
+    Given I am on the Upload page
+    When I upload a csv file during error on S3
+    Then I should see "The selected file could not be uploaded – try again"

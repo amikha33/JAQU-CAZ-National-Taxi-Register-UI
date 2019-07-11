@@ -1,10 +1,26 @@
 %main.govuk-main-wrapper#main-content{role: 'main'}
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      %h1 Taxi/PHV Data Upload
-      - if user_signed_in?
-        %li
-          = link_to('Logout', destroy_user_session_path, method: :delete)
-      - else
-        %li
-          = link_to('Login', new_user_session_path)
+      %h1.govuk-heading-l Taxi/PHV Data Upload
+      - if alert
+        = render 'shared/errors'
+      %p
+        Use this page to upload Taxi/PHV data.
+        Your upload must be a CSV file with information in a specific format.
+        For information on this format see the
+        %a{href: data_rules_path} data rules.
+
+      = form_tag(import_upload_index_path, multipart: true) do
+        .govuk-form-group{class: ('govuk-form-group--error' if alert)}
+          %label.govuk-label{:for => "file-upload-1"}
+            Upload a file
+          - if alert
+            %span#file-upload-1-error.govuk-error-message
+              %span.govuk-visually-hidden Error:
+              = alert
+          %input#file-upload-1.govuk-file-upload{class:('govuk-file-upload--error' if alert),
+            "aria-describedby": "file-upload-1",
+            name: "file",
+            type: "file"}
+        .govuk-form-group
+          = submit_tag 'Upload', class: 'govuk-button'

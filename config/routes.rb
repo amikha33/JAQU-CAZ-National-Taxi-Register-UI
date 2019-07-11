@@ -3,6 +3,13 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  get 'upload/index'
   root 'upload#index'
+
+  resources :upload, only: %i[index] do
+    collection do
+      post :import
+    end
+  end
+
+  get :data_rules, to: 'upload#data_rules'
 end
