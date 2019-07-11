@@ -1,0 +1,33 @@
+kind: pipeline
+name: ci
+
+steps:
+  - name: build-test
+    image: docker
+    commands:
+    - docker build -t vehicle-compliance-checker-frontend:latest --build-arg secret_key_base=secret .
+    - docker run --rm -e COMPLIANCE_CHECKER_API_URL=http://localhost vehicle-compliance-checker-frontend rspec -f d
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+
+  # move rspec command to previous test to avoid loss of node_modules folder. 
+  # - name: test
+  #   image: vehicle-compliance-checker-frontend
+  #   pull: if-not-exists
+  #   commands:
+  #   - ls
+  #   - ls public
+  #   - rspec -f d
+  #   volumes:
+  #     - name: docker_sock
+  #       path: /var/run/docker.sock
+
+volumes:
+- name: docker_sock
+  host:
+    path: /var/run/docker.sock
+
+trigger:
+  event:
+  - pull_request

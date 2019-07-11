@@ -3,15 +3,11 @@ log/*
 .byebug_history
 .git
 .gitignore
-.dockerignore
+.drone.yml
 .github
 .scannerwork
 coverage
-node_modules
-spec
 .idea
-public/packs
-public/packs-test
 #config/ssl
 config/credentials/production.key
 db/development.sqlite3
