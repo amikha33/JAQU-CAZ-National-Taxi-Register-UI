@@ -34,4 +34,9 @@ end
 
 Given('I am on the Upload page') do
   sign_in_user
+  visit root_path
+end
+
+Given('I am on the Sign in page') do
+  visit new_user_session_path
 end

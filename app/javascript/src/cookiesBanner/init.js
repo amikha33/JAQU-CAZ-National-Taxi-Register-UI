@@ -1,7 +1,8 @@
 import './styles.scss'
 
 const cookieKey = 'seen_cookie_message';
-const monthInMS = 2629746000;
+const dayInMS = (1000 * 60 * 60 * 24);
+const yearInMS = dayInMS * 365 ;
 
 function init() {
     if(!hasSeenMessage()){
@@ -21,7 +22,7 @@ function hasSeenMessage(){
 
 function setCookie(){
     const date = new Date();
-    date.setTime(date.getTime() + monthInMS);
+    date.setTime(date.getTime() + yearInMS);
     document.cookie = cookieKey + '=true; expires=' + date.toGMTString();
 }
 

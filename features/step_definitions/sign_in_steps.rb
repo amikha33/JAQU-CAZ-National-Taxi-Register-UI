@@ -39,10 +39,6 @@ Then('I am redirected to the Upload page') do
 end
 
 # Scenario: Sign in with invalid credentials
-Given('I am on the Sign in page') do
-  visit new_user_session_path
-end
-
 When('I enter invalid credentials') do
   fill_in('user_username', with: 'user@example.com')
   fill_in('user_password', with: 'invalid-password')

@@ -2,11 +2,11 @@
   'aria-label': 'Show or hide Top Level Navigation', role: 'button', type: 'button'} Menu
 %nav
   %ul#navigation.govuk-header__navigation{"aria-label" => "Top Level Navigation"}
-    %li.govuk-header__navigation-item.govuk-header__navigation-item--active
-      %a.govuk-header__link{:href => upload_index_path}
+    %li.govuk-header__navigation-item
+      %a.govuk-header__link{href: upload_index_path}
         Upload
     %li.govuk-header__navigation-item
-      %a.govuk-header__link{:href => data_rules_path}
+      %a.govuk-header__link{href: data_rules_path}
         Data rules
     %li.govuk-header__navigation-item
       %a
