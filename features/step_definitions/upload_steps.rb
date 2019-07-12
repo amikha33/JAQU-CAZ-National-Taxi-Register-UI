@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 # Scenario: Upload without file
-Given('I am on the Upload page') do
-  sign_in_user
-end
-
 When('I press "Upload" button') do
   click_button 'Upload'
 end

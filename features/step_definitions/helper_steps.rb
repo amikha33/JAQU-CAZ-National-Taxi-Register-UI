@@ -31,3 +31,7 @@ end
 Then('I press the Continue') do
   click_button 'Continue'
 end
+
+Given('I am on the Upload page') do
+  sign_in_user
+end

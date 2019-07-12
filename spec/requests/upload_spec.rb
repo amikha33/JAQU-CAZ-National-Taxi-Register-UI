@@ -48,4 +48,15 @@ describe UploadController, type: :request do
       end
     end
   end
+
+  describe 'GET #data_rules' do
+    subject(:http_request) { get data_rules_path }
+
+    before { sign_in User.new }
+
+    it 'returns a success response' do
+      http_request
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
