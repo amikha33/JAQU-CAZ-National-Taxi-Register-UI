@@ -2,6 +2,17 @@ kind: pipeline
 name: ci
 
 steps:
+
+  # Clean agent images and containers to prevent disk space overuse
+  - name: clean agent
+    image: docker
+    commands:
+    - docker system prune -f
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+
+  # Build docker images
   - name: build
     image: docker
     commands:
@@ -9,6 +20,17 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
+
+  # Trigger unit tests
+  - name: unit tests
+    image: docker
+    commands:
+    - docker run --rm test-ntr rspec -f d
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+
+  # Invoke static code analysis through Ruby libraries
   - name: static code analysis
     image: docker
     commands:
@@ -17,6 +39,8 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
+
+  # Invoke security analysis through Ruby libraries
   - name: security tests
     image: docker
     commands:
@@ -26,13 +50,8 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
-  - name: unit tests
-    image: docker
-    commands:
-    - docker run --rm test-ntr rspec -f d
-    volumes:
-      - name: docker_sock
-        path: /var/run/docker.sock
+
+  # Execute integration/scenario tests
   - name: integration tests
     image: docker
     commands:
@@ -40,6 +59,75 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
+        
+    # Invoke terraform scripts to ensure ecr is available for deploy step.
+  - name: initialise ecr
+    image: hashicorp/terraform:0.12.3
+    commands:
+      - git clone https://github.com/InformedSolutions/JAQU-CAZ-IAC.git
+      - cd JAQU-CAZ-IAC/terraform/projects/ntr-web/environments/dev
+      - terraform init
+      - terraform workspace select dev || terraform workspace new dev
+      - terraform apply -target=module.ecr -auto-approve
+    environment:
+      TF_VAR_access_key:
+        from_secret: aws_access_key_id
+      TF_VAR_secret_key:
+        from_secret: aws_secret_access_key
+    when:
+      event:
+        exclude:
+        - pull_request
+
+  # Push built image to ECR registry
+  - name: publish image to ecr
+    image: plugins/ecr
+    settings:
+      access_key:
+        from_secret: aws_access_key_id
+      secret_key:
+        from_secret: aws_secret_access_key
+      repo: 018330602464.dkr.ecr.eu-west-2.amazonaws.com/ntr-web
+      registry: 018330602464.dkr.ecr.eu-west-2.amazonaws.com
+      dockerfile: Dockerfile.build
+      region: eu-west-2
+      tags:
+        - latest
+        - ${DRONE_BUILD_NUMBER}
+      build_args:
+        - secret_key_base=${DRONE_COMMIT}
+    when:
+      event:
+        exclude:
+        - pull_request
+
+  # Invoke terraform scripts with tagged image number
+  - name: deploy
+    image: hashicorp/terraform:0.12.3
+    commands:
+      - cd JAQU-CAZ-IAC/terraform/projects/ntr-web/environments/dev
+      - terraform init
+      - terraform workspace select dev
+      - terraform apply -auto-approve
+    environment:
+      TF_VAR_access_key:
+        from_secret: aws_access_key_id
+      TF_VAR_secret_key:
+        from_secret: aws_secret_access_key
+      TF_VAR_s3_aws_access_key_id:
+        from_secret: aws_access_key_id
+      TF_VAR_s3_aws_secret_access_key:
+        from_secret: aws_secret_access_key
+      TF_VAR_build_number: ${DRONE_BUILD_NUMBER}
+      TF_VAR_secret_key_base: ${DRONE_COMMIT}
+      TF_VAR_google_analytics_id: test
+      TF_VAR_session_timeout: 15
+      TF_VAR_taxi_phv_register_api_url: https://jaqu-caz.herokuapp.com/
+      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+    when:
+      event:
+        exclude:
+        - pull_request
 
 volumes:
 - name: docker_sock
@@ -47,5 +135,8 @@ volumes:
     path: /var/run/docker.sock
 
 trigger:
+  branch:
+  - develop
   event:
   - pull_request
+  - push
