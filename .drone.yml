@@ -133,7 +133,7 @@ steps:
       - terraform init
       - terraform workspace select dev
       - terraform apply -auto-approve
-   environment:
+    environment:
       TF_VAR_access_key:
         from_secret: aws_access_key_id
       TF_VAR_secret_key:
