@@ -15,7 +15,7 @@
           %span#govuk-error-message.govuk-error-message
             - if alert
               %span.govuk-visually-hidden Error:
-              Can't be empty
+              = alert
           = f.text_field :username, autofocus: true, autocomplete: 'username', class: "govuk-input govuk-!-width-two-thirds #{'govuk-input--error' if alert}"
         .govuk-form-group{class: ('govuk-form-group--error' if alert)}
           = f.label :password, class: 'govuk-label'
