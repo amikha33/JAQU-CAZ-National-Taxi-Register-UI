@@ -100,7 +100,7 @@ steps:
         from_secret: aws_secret_access_key
     when:
       event:
-        # exclude:
+        exclude:
         - pull_request
 
   # Push built image to ECR registry
@@ -122,7 +122,7 @@ steps:
         - secret_key_base=${DRONE_COMMIT}
     when:
       event:
-        # exclude:
+        exclude:
         - pull_request
 
   # Invoke terraform scripts with tagged image number
@@ -133,10 +133,6 @@ steps:
       - git checkout feature/NO_JIRA/refactor-ntr-environments
       - terraform init
       - terraform workspace select dev
-      - terraform apply -auto-approve
-      - cd ../sit
-      - terraform init
-      - terraform workspace select sit
       - terraform apply -auto-approve
     environment:
       TF_VAR_access_key:
@@ -155,7 +151,7 @@ steps:
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
     when:
       event:
-        # exclude:
+        exclude:
         - pull_request
 
 
