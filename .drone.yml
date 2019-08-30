@@ -133,7 +133,7 @@ steps:
       - terraform init
       - terraform workspace select dev
       - terraform apply -auto-approve
-      - cd JAQU-CAZ-IAC/terraform/projects/ntr-web/environments/sit
+      - cd ../sit
       - terraform init
       - terraform workspace select sit
       - terraform apply -auto-approve
