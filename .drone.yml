@@ -133,6 +133,10 @@ steps:
       - terraform init
       - terraform workspace select dev
       - terraform apply -auto-approve
+      - cd JAQU-CAZ-IAC/terraform/projects/ntr-web/environments/sit
+      - terraform init
+      - terraform workspace select sit
+      - terraform apply -auto-approve
     environment:
       TF_VAR_access_key:
         from_secret: aws_access_key_id
@@ -150,8 +154,10 @@ steps:
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
     when:
       event:
-        exclude:
+        # exclude:
         - pull_request
+
+
 
 volumes:
 - name: docker_sock
