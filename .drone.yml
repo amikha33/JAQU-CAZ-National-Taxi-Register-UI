@@ -205,7 +205,7 @@ get:
   
 ---
 kind: secret
-name: github_ssh_key
+name: github_private_key
 get:
   path: /secrets/drone.global
-  name: githubSSH
+  name: githubPrivateKey
