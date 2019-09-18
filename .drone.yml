@@ -273,7 +273,7 @@ steps:
         from_secret: browserstack_username
       BS_AUTHKEY:
         from_secret: browserstack_auth_key
-      BASEURL_NTR: 'http://ntr-web-dev-1233262176.eu-west-2.elb.amazonaws.com'
+      BASEURL_NTR: 'http://ntr-alb-dev-1163176755.eu-west-2.elb.amazonaws.com/'
       VALID_USERNAME: 'edmond.chhung@informed.com'
       VALID_PASSWORD: 'Edc123.,'
       BROWSER_SET: 'min'
