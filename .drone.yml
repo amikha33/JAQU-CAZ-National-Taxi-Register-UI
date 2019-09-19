@@ -186,7 +186,7 @@ steps:
   - name: await ecs rollout
     image: docker
     environment:
-      build_id_url: http://ntr-alb-dev-1163176755.eu-west-2.elb.amazonaws.com/build_id
+      build_id_url: http://ntr-alb-dev-2119620688.eu-west-2.elb.amazonaws.com/build_id
       build_id: ${DRONE_BUILD_NUMBER}
     commands:
       - apk add curl
@@ -251,7 +251,7 @@ steps:
         from_secret: browserstack_username
       BS_AUTHKEY:
         from_secret: browserstack_auth_key
-      BASEURL_NTR: 'http://ntr-alb-dev-1163176755.eu-west-2.elb.amazonaws.com'
+      BASEURL_NTR: 'http://ntr-alb-dev-2119620688.eu-west-2.elb.amazonaws.com'
       VALID_USERNAME: 'edmond.chhung@informed.com'
       VALID_PASSWORD: 'Edc123.,'
       BROWSER_SET: 'min'
