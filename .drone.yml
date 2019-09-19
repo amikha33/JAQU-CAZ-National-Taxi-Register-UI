@@ -90,17 +90,21 @@ steps:
   - name: initialise ecr
     image: hashicorp/terraform:0.12.3
     commands:
-      - mkdir /root/.ssh
-      - echo -n "$GIT_PRIVATE_SSH" > /root/.ssh/id_rsa
-      - chmod 600 /root/.ssh/id_rsa
-      - touch /root/.ssh/known_hosts
-      - chmod 600 /root/.ssh/known_hosts
+      - apk update && apk add bash
+      - mkdir ~/.ssh
+      - echo -n "$GIT_PRIVATE_SSH" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - touch ~/.ssh/known_hosts
+      - chmod 600 ~/.ssh/known_hosts
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
-      - cd JAQU-CAZ-IAC/terraform/projects/ntr-web/environments/global
-      - terraform init
-      - terraform workspace select default || terraform workspace new default
-      - terraform apply -auto-approve
+      - cd JAQU-CAZ-IAC
+      - cd terraform/projects/ntr/layers/00.global
+      - PATH=$PATH:../../../../bin/
+      - chmod +x ../../../../bin/tf
+      - tf init
+      - tf workspace select default
+      - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
         from_secret: aws_access_key_id
@@ -141,10 +145,22 @@ steps:
   - name: deploy to dev
     image: hashicorp/terraform:0.12.3
     commands:
-      - cd JAQU-CAZ-IAC/terraform/projects/ntr-web/environments/dev
-      - terraform init
-      - terraform workspace select dev
-      - terraform apply -auto-approve
+      - apk update && apk add bash
+      - cd JAQU-CAZ-IAC
+      - cd terraform/projects/ntr/layers/01.networking
+      - PATH=$PATH:../../../../bin/
+      - chmod +x ../../../../bin/tf
+      - tf init
+      - tf workspace select dev
+      - tf apply -auto-approve
+      - cd ../02.backends
+      - tf init
+      - tf workspace select dev
+      - tf apply -auto-approve
+      - cd ../04.web
+      - tf init
+      - tf workspace select dev
+      - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
         from_secret: aws_access_key_id
@@ -158,7 +174,6 @@ steps:
       TF_VAR_secret_key_base: ${DRONE_COMMIT}
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_taxi_phv_register_api_url: https://fibjnh6awf.execute-api.eu-west-2.amazonaws.com/dev
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
     when:
       event:
@@ -166,49 +181,12 @@ steps:
         - pull_request
       branch: develop
 
-  # Invoke terraform scripts with tagged image number
-  - name: deploy to sit
-    image: hashicorp/terraform:0.12.3
-    commands:
-      - mkdir /root/.ssh
-      - echo -n "$GIT_PRIVATE_SSH" > /root/.ssh/id_rsa
-      - chmod 600 /root/.ssh/id_rsa
-      - touch /root/.ssh/known_hosts
-      - chmod 600 /root/.ssh/known_hosts
-      - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
-      - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
-      - cd JAQU-CAZ-IAC/terraform/projects/ntr-web/environments/sit
-      - terraform init
-      - terraform workspace select sit
-      - terraform apply -auto-approve
-    environment:
-      TF_VAR_access_key:
-        from_secret: aws_access_key_id
-      TF_VAR_secret_key:
-        from_secret: aws_secret_access_key
-      TF_VAR_s3_aws_access_key_id:
-        from_secret: aws_access_key_id
-      TF_VAR_s3_aws_secret_access_key:
-        from_secret: aws_secret_access_key
-      TF_VAR_build_number: latest
-      TF_VAR_secret_key_base: ${DRONE_COMMIT}
-      TF_VAR_google_analytics_id: UA-144774549-1
-      TF_VAR_session_timeout: 15
-      TF_VAR_taxi_phv_register_api_url: https://50a4xal3ve.execute-api.eu-west-2.amazonaws.com/sit
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
-      GIT_PRIVATE_SSH:
-        from_secret: github_private_key
-    when:
-      event:
-        exclude:
-        - pull_request
-      branch: release/*
 
   # Build docker image
   - name: await ecs rollout
     image: docker
     environment:
-      build_id_url: http://ntr-web-dev-1233262176.eu-west-2.elb.amazonaws.com/build_id
+      build_id_url: http://ntr-alb-dev-1163176755.eu-west-2.elb.amazonaws.com/build_id
       build_id: ${DRONE_BUILD_NUMBER}
     commands:
       - apk add curl
@@ -273,7 +251,7 @@ steps:
         from_secret: browserstack_username
       BS_AUTHKEY:
         from_secret: browserstack_auth_key
-      BASEURL_NTR: 'http://ntr-web-dev-1233262176.eu-west-2.elb.amazonaws.com'
+      BASEURL_NTR: 'http://ntr-alb-dev-1163176755.eu-west-2.elb.amazonaws.com'
       VALID_USERNAME: 'edmond.chhung@informed.com'
       VALID_PASSWORD: 'Edc123.,'
       BROWSER_SET: 'min'
