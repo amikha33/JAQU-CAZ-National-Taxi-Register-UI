@@ -211,11 +211,11 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
-    when:
-      event:
-        exclude:
-        - pull_request
-      branch: develop
+        # when:
+        #event:
+        #exclude:
+        #- pull_request
+        #branch: develop
 
   
     # Build end to end tests docker image
