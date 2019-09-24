@@ -13,7 +13,7 @@ var config = {
         hideElements: [".govuk-header__logotype-crown", ".govuk-footer__licence-logo"]
     },
     urls: [
-        '${BASE_URL}',,
+        '${BASE_URL}',
         '${BASE_URL}/cookies',
         {
             "url": '${BASE_URL}/passwords/reset',
