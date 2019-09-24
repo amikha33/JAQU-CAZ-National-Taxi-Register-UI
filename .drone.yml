@@ -181,6 +181,36 @@ steps:
         - pull_request
       branch: develop
 
+    # Build pa11y-ci image
+  - name: build pa11y-ci image
+    image: docker
+    commands:
+      - cd pa11y
+      - docker build -t pa11y-ci .
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    # when:
+    #   event:
+    #     exclude:
+    #     - pull_request
+    #   branch: develop
+        
+  # Trigger accessibility test
+  - name: accessibility tests
+    image: pa11y-ci
+    pull: never
+    environment:
+      BASE_URL: http://vccs-alb-dev-193923475.eu-west-2.elb.amazonaws.com
+    commands:
+      - mkdir screenshots
+      - /usr/local/bin/pa11y-ci -c pa11y/.pa11yci.conf.js
+    # when:
+    #   event:
+    #     exclude:
+    #     - pull_request
+    #   branch: develop
+
 
   # Build docker image
   - name: await ecs rollout
