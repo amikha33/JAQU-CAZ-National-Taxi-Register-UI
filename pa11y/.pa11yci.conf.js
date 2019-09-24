@@ -35,8 +35,6 @@ var config = {
             "actions": [
                 "set field #user_username to edmond,chhung@informed.com",
                 "set field #user_password to Edc123.,",
-                "click element .govuk-button--start",
-                "wait for element #vrn to be visible",
                 "click element input[type=submit]",
                 "wait for element #file-upload-1 to be visible",
                 "click element #data-rules",
@@ -47,8 +45,6 @@ var config = {
             "actions": [
                 "set field #user_username to edmond,chhung@informed.com",
                 "set field #user_password to Edc123.,",
-                "click element .govuk-button--start",
-                "wait for element #vrn to be visible",
                 "click element input[type=submit]",
                 "wait for element #file-upload-1 to be visible"
             ]
