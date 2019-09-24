@@ -201,7 +201,7 @@ steps:
     image: pa11y-ci
     pull: never
     environment:
-      BASE_URL: http://vccs-alb-dev-193923475.eu-west-2.elb.amazonaws.com
+      BASE_URL: http://ntr-alb-dev-2119620688.eu-west-2.elb.amazonaws.com
     commands:
       - mkdir screenshots
       - /usr/local/bin/pa11y-ci -c pa11y/.pa11yci.conf.js
