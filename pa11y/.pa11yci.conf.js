@@ -16,39 +16,16 @@ var config = {
         '${BASE_URL}',
         '${BASE_URL}/cookies',
         {
-            "url": '${BASE_URL}/passwords/reset',
-            "actions": [
-                "click element #forgot-password",
-                "set field #user_username to edmond,chhung@informed.com",
-            ]
-        },
-        {
-            "url": '${BASE_URL}/passwords/confirm_reset',
-            "actions": [
-                "click element #forgot-password",
-                "set field #user_username to edmond,chhung@informed.com",
-                "click element input[type=submit]",
-            ]
-        },
-        {
-            "url": '${BASE_URL}/upload/data_rules',
-            "actions": [
-                "set field #user_username to edmond,chhung@informed.com",
-                "set field #user_password to Edc123.,",
-                "click element input[type=submit]",
-                "wait for element #file-upload-1 to be visible",
-                "click element #data-rules",
-            ]
-        },
-        {
             "url": '${BASE_URL}',
             "actions": [
-                "set field #user_username to edmond,chhung@informed.com",
+                "set field #user_username to edmond.chhung@informed.com",
                 "set field #user_password to Edc123.,",
                 "click element input[type=submit]",
+                'screen capture login.png',
                 "wait for element #file-upload-1 to be visible"
+
             ]
-        },
+        }
     ]
 };
 
