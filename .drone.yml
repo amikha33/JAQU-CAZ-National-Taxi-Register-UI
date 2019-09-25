@@ -190,11 +190,11 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
-    # when:
-    #   event:
-    #     exclude:
-    #     - pull_request
-    #   branch: develop
+    when:
+      event:
+        exclude:
+        - pull_request
+      # branch: develop
         
   # Trigger accessibility test
   - name: accessibility tests
@@ -205,11 +205,11 @@ steps:
     commands:
       - mkdir screenshots
       - /usr/local/bin/pa11y-ci -c pa11y/.pa11yci.conf.js
-    # when:
-    #   event:
-    #     exclude:
-    #     - pull_request
-    #   branch: develop
+    when:
+      event:
+        exclude:
+        - pull_request
+      # branch: develop
 
 
   # Build docker image
