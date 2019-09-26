@@ -258,7 +258,7 @@ steps:
       SCREENSHOT_TYPE: 'base'
       VCCS_USER: 'vccsservice'
       VCCS_PASSWORD: 'Password001!'
-      BUILD: 'NTR-UI-' + ${DRONE_BUILD_NUMBER}
+      BUILD: NTR-UI-${DRONE_BUILD_NUMBER}
       SPECTRE: false
       LOCATION: browserstack
     commands:
