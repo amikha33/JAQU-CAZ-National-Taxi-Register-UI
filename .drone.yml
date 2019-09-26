@@ -258,16 +258,16 @@ steps:
       SCREENSHOT_TYPE: 'base'
       VCCS_USER: 'vccsservice'
       VCCS_PASSWORD: 'Password001!'
-      BUILD: ${DRONE_BUILD_NUMBER}
+      BUILD: ${DRONE_BUILD_NUMBER + '-UI'}
       SPECTRE: false
       LOCATION: browserstack
     commands:
       - cd JAQU-CAZ-QA-selenium
       - cucumber -t @NTR --retry 3
-    when:
-      event:
-        exclude:
-        - pull_request
+    # when:
+    #   event:
+    #     exclude:
+    #     - pull_request
 
 volumes:
 - name: docker_sock
