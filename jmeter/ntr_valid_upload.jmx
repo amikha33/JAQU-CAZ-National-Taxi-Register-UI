@@ -15,7 +15,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="host" elementType="Argument">
             <stringProp name="Argument.name">host</stringProp>
-            <stringProp name="Argument.value">http://ntr-alb-dev-253331897.eu-west-2.elb.amazonaws.com/</stringProp>
+            <stringProp name="Argument.value">https://dev-upload.taxiphvdata.co.uk/build_id/</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="scheme" elementType="Argument">

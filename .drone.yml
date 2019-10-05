@@ -99,7 +99,6 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout feature/NTR-491/revert-codedeploy-changes
       - cd terraform/projects/ntr/layers/00.global
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -186,7 +185,7 @@ steps:
   - name: await ecs rollout
     image: docker
     environment:
-      build_id_url: http://ntr-alb-dev-253331897.eu-west-2.elb.amazonaws.com/build_id
+      build_id_url: https://dev-upload.taxiphvdata.co.uk/build_id
       build_id: ${DRONE_BUILD_NUMBER}
     commands:
       - apk add curl
@@ -220,7 +219,7 @@ steps:
     image: pa11y-ci
     pull: never
     environment:
-      BASE_URL: http://ntr-alb-dev-253331897.eu-west-2.elb.amazonaws.com
+      BASE_URL: https://dev-upload.taxiphvdata.co.uk/build_id
     commands:
       - mkdir screenshots
       - /usr/local/bin/pa11y-ci -c pa11y/.pa11yci.conf.js
@@ -280,7 +279,7 @@ steps:
         from_secret: browserstack_username
       BS_AUTHKEY:
         from_secret: browserstack_auth_key
-      BASEURL_NTR: 'http://ntr-alb-dev-253331897.eu-west-2.elb.amazonaws.com/'
+      BASEURL_NTR: 'https://dev-upload.taxiphvdata.co.uk/build_id'
       VALID_USERNAME: 'edmond.chhung@informed.com'
       VALID_PASSWORD: 'Edc123.,'
       BROWSER_SET: 'mid'
