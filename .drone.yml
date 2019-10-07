@@ -177,7 +177,24 @@ steps:
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
     when:
       event:
-        exclude:
+        - pull_request
+      branch: develop
+
+
+  - name: codedeploy ui dev
+    image: golang:alpine
+    commands:
+      - apk add --update bash python python-dev py-pip build-base
+      - pip install awscli
+      - aws deploy create-deployment --application-name ntr-codedeploy-service-dev --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-dev --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/dev/appspec.yaml
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      AWS_DEFAULT_REGION: eu-west-2
+    when:
+      event:
         - pull_request
       branch: develop
 
