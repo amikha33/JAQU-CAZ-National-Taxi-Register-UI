@@ -114,7 +114,6 @@ steps:
         from_secret: github_private_key
     when:
       event:
-        exclude:
         - pull_request
       branch: develop
 
@@ -137,7 +136,6 @@ steps:
         - secret_key_base=${DRONE_COMMIT}
     when:
       event:
-        exclude:
         - pull_request
       branch: develop
 
