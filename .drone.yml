@@ -238,7 +238,7 @@ steps:
     image: pa11y-ci
     pull: never
     environment:
-      BASE_URL: https://dev-upload.taxiphvdata.co.uk/build_id
+      BASE_URL: https://dev-upload.taxiphvdata.co.uk/
     commands:
       - mkdir screenshots
       - /usr/local/bin/pa11y-ci -c pa11y/.pa11yci.conf.js
