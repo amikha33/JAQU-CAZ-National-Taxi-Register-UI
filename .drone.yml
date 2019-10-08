@@ -151,15 +151,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select ${environment}
+      - tf workspace select dev
       - tf apply -auto-approve
       - cd ../02.backends
       - tf init
-      - tf workspace select ${environment}
+      - tf workspace select dev
       - tf apply -auto-approve
       - cd ../04.web
       - tf init
-      - tf workspace select ${environment}
+      - tf workspace select dev
       - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
@@ -302,7 +302,7 @@ steps:
       event:
         exclude:
         - pull_request
-      # branch: develop
+      branch: develop
 
   # Trigger accessibility test
   - name: accessibility tests
@@ -317,7 +317,7 @@ steps:
       event:
         exclude:
         - pull_request
-      # branch: develop
+      branch: develop
 
   # Execute jMeter scripts via taurus
   - name: micro-performance tests
@@ -359,6 +359,7 @@ steps:
       event:
         exclude:
         - pull_request
+      branch: develop
 
     # Run end to end tests
   - name: run end to end tests
@@ -386,6 +387,7 @@ steps:
       event:
         exclude:
         - pull_request
+      branch: develop
 
 volumes:
 - name: docker_sock
