@@ -21,7 +21,7 @@ trigger:
   branch:
     - develop
     - release/*
-    - staging
+    - staging/*
     - master
   event:
     - pull_request
