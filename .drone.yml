@@ -12,16 +12,6 @@ global-variables:
       from_secret: aws_account_id
     GIT_PRIVATE_SSH:
       from_secret: github_private_key
-  environment: &aws_credentials
-    TF_VAR_access_key:
-      from_secret: aws_access_key_id
-    TF_VAR_secret_key:
-      from_secret: aws_secret_access_key
-    TF_VAR_account_id:
-      from_secret: aws_account_id
-    GIT_PRIVATE_SSH:
-      from_secret: github_private_key
-
 
   ################################################# End YAML Anchors ########################################################
 
@@ -255,7 +245,11 @@ steps:
       - pip install awscli
       - aws deploy create-deployment --application-name ntr-codedeploy-service-dev --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-dev --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/dev/appspec.yaml
     environment:
-      <<: *aws_credentials
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      AWS_DEFAULT_REGION: eu-west-2
     when:
       event:
         exclude:
@@ -434,7 +428,11 @@ steps:
       - pip install awscli
       - aws deploy create-deployment --application-name ntr-codedeploy-service-sit --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-sit --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/sit/appspec.yaml
     environment:
-      <<: *aws_credentials
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      AWS_DEFAULT_REGION: eu-west-2
     when:
       event:
         exclude:
@@ -485,7 +483,11 @@ steps:
       - tf apply -auto-approve
     environment:
       <<: *shared_terraform_credentials
-      <<: *aws_credentials
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      AWS_DEFAULT_REGION: eu-west-2
       TF_VAR_s3_aws_access_key_id:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
@@ -508,7 +510,11 @@ steps:
       - pip install awscli
       - aws deploy create-deployment --application-name ntr-codedeploy-service-preprod --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-preprod --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/preprod/appspec.yaml
     environment:
-      <<: *aws_credentials
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      AWS_DEFAULT_REGION: eu-west-2
     when:
       event:
         exclude:
@@ -549,7 +555,11 @@ steps:
       - tf apply -auto-approve
     environment:
       <<: *shared_terraform_credentials
-      <<: *aws_credentials
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      AWS_DEFAULT_REGION: eu-west-2
       TF_VAR_s3_aws_access_key_id:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
