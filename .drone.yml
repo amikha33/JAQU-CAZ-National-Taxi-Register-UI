@@ -139,7 +139,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: develop
 
   # Invoke terraform scripts with tagged image number
   - name: deploy to dev
