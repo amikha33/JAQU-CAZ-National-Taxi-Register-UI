@@ -495,7 +495,7 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: release/*
+      branch: staging
 
   - name: codedeploy ui pre-prod
     image: golang:alpine
@@ -573,7 +573,7 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base
       - pip install awscli
-      - aws deploy create-deployment --application-name ntr-codedeploy-service-preprod --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-preprod --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/preprod/appspec.yaml
+      - aws deploy create-deployment --application-name ntr-codedeploy-service-prod --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-prod --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/prod/appspec.yaml
     environment:
       AWS_ACCESS_KEY_ID:
         from_secret: aws_access_key_id
@@ -587,7 +587,7 @@ steps:
       branch: master
 
 
-  ########################################## End Pre-prod Only #######################################################
+  ########################################## End Production Only #######################################################
 
 
 
