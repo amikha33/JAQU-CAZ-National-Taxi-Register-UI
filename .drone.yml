@@ -1,7 +1,33 @@
+  ################################################### YAML Anchors ########################################################
+
+  # Note that these are used when common environment variables are present in a step to reduce repetition - see terraform steps
+
+global-variables:
+  environment: &shared_terraform_credentials
+    TF_VAR_access_key:
+      from_secret: aws_access_key_id
+    TF_VAR_secret_key:
+      from_secret: aws_secret_access_key
+    TF_VAR_account_id:
+      from_secret: aws_account_id
+    GIT_PRIVATE_SSH:
+      from_secret: github_private_key
+
+  ################################################# End YAML Anchors ########################################################
+
 kind: pipeline
-name: ci
+name: ntr-web
+trigger:
+  branch:
+    - develop
+    - release/*
+  event:
+    - pull_request
+    - push
 
 steps:
+
+  ################################################### Global Steps ########################################################
 
   # Clean agent images and containers to prevent disk space overuse
   - name: clean agent
@@ -67,25 +93,6 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
 
-  # Invoke sonar scan
-  - name: sonar scan
-    image: aosapps/drone-sonar-plugin
-    environment:
-      sonar_host:
-        from_secret: sonar_host
-      sonar_token:
-        from_secret: sonar_token
-      sonar.ruby.coverage.reportPaths: coverage/.resultset.json
-    commands:
-      - sonar-scanner
-        -Dsonar.projectKey=${DRONE_REPO}
-        -Dsonar.projectName=${DRONE_REPO}
-        -Dsonar.host.url=$sonar_host
-        -Dsonar.login=$sonar_token
-        -Dproject.settings=./sonar-project.properties
-    when:
-      branch: develop
-
   # Invoke terraform scripts to ensure ecr is available for deploy step.
   - name: initialise ecr
     image: hashicorp/terraform:0.12.3
@@ -106,17 +113,11 @@ steps:
       - tf workspace select default
       - tf apply -auto-approve
     environment:
-      TF_VAR_access_key:
-        from_secret: aws_access_key_id
-      TF_VAR_secret_key:
-        from_secret: aws_secret_access_key
-      GIT_PRIVATE_SSH:
-        from_secret: github_private_key
+      <<: *shared_terraform_credentials
     when:
       event:
         exclude:
         - pull_request
-      branch: develop
 
   # Push built image to ECR registry
   - name: publish image to ecr
@@ -139,6 +140,31 @@ steps:
       event:
         exclude:
         - pull_request
+
+  ################################################### End Global Steps #######################################################
+
+
+
+  ################################################### Development Only #######################################################
+
+  # Invoke sonar scan
+  - name: sonar scan
+    image: aosapps/drone-sonar-plugin
+    environment:
+      sonar_host:
+        from_secret: sonar_host
+      sonar_token:
+        from_secret: sonar_token
+      sonar.ruby.coverage.reportPaths: coverage/.resultset.json
+    commands:
+      - sonar-scanner
+        -Dsonar.projectKey=${DRONE_REPO}
+        -Dsonar.projectName=${DRONE_REPO}
+        -Dsonar.host.url=$sonar_host
+        -Dsonar.login=$sonar_token
+        -Dproject.settings=./sonar-project.properties
+    when:
+      branch: develop
 
   # Invoke terraform scripts with tagged image number
   - name: deploy to dev
@@ -181,7 +207,6 @@ steps:
         - pull_request
       branch: develop
 
-
   - name: codedeploy ui dev
     image: golang:alpine
     commands:
@@ -200,77 +225,6 @@ steps:
         - pull_request
       branch: develop
 
-  # Invoke terraform scripts with tagged image number
-  - name: deploy to sit
-    image: hashicorp/terraform:0.12.3
-    commands:
-      - apk update && apk add bash
-      - mkdir ~/.ssh
-      - echo -n "$GIT_PRIVATE_SSH" > ~/.ssh/id_rsa
-      - chmod 600 ~/.ssh/id_rsa
-      - touch ~/.ssh/known_hosts
-      - chmod 600 ~/.ssh/known_hosts
-      - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
-      - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
-      - cd JAQU-CAZ-IAC
-      - git checkout release/ntr-production
-      - cd terraform/projects/ntr/layers/01.networking
-      - PATH=$PATH:../../../../bin/
-      - chmod +x ../../../../bin/tf
-      - tf init
-      - tf workspace select sit
-      - tf apply -auto-approve
-      - cd ../02.backends
-      - tf init
-      - tf workspace select sit
-      - tf apply -auto-approve
-      - cd ../04.web
-      - tf init
-      - tf workspace select sit
-      - tf apply -auto-approve
-    environment:
-      TF_VAR_access_key:
-        from_secret: aws_access_key_id
-      TF_VAR_secret_key:
-        from_secret: aws_secret_access_key
-      TF_VAR_s3_aws_access_key_id:
-        from_secret: aws_access_key_id
-      TF_VAR_s3_aws_secret_access_key:
-        from_secret: aws_secret_access_key
-      TF_VAR_build_number: ${DRONE_BUILD_NUMBER}
-      TF_VAR_secret_key_base: ${DRONE_COMMIT}
-      TF_VAR_google_analytics_id: UA-144774549-1
-      TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
-      GIT_PRIVATE_SSH:
-        from_secret: github_private_key
-      environment: sit
-    when:
-      event:
-        exclude:
-        - pull_request
-      branch: release/*
-
-
-  - name: codedeploy ui sit
-    image: golang:alpine
-    commands:
-      - apk add --update bash python python-dev py-pip build-base
-      - pip install awscli
-      - aws deploy create-deployment --application-name ntr-codedeploy-service-sit --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-sit --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/sit/appspec.yaml
-    environment:
-      AWS_ACCESS_KEY_ID:
-        from_secret: aws_access_key_id
-      AWS_SECRET_ACCESS_KEY:
-        from_secret: aws_secret_access_key
-      AWS_DEFAULT_REGION: eu-west-2
-    when:
-      event:
-        exclude:
-        - pull_request
-      branch: release/*
-
-  # Build docker image
   - name: await ecs rollout
     image: docker
     environment:
@@ -388,6 +342,94 @@ steps:
         - pull_request
       branch: develop
 
+  ################################################# End Development Only #######################################################      
+
+
+
+
+
+
+  ################################################# SIT Only #######################################################
+
+  # Invoke terraform scripts with tagged image number
+  - name: deploy to sit
+    image: hashicorp/terraform:0.12.3
+    commands:
+      - apk update && apk add bash
+      - mkdir ~/.ssh
+      - echo -n "$GIT_PRIVATE_SSH" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - touch ~/.ssh/known_hosts
+      - chmod 600 ~/.ssh/known_hosts
+      - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
+      - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
+      - cd JAQU-CAZ-IAC
+      - git checkout release/ntr-production
+      - cd terraform/projects/ntr/layers/01.networking
+      - PATH=$PATH:../../../../bin/
+      - chmod +x ../../../../bin/tf
+      - tf init
+      - tf workspace select sit
+      - tf apply -auto-approve
+      - cd ../02.backends
+      - tf init
+      - tf workspace select sit
+      - tf apply -auto-approve
+      - cd ../04.web
+      - tf init
+      - tf workspace select sit
+      - tf apply -auto-approve
+    environment:
+      TF_VAR_access_key:
+        from_secret: aws_access_key_id
+      TF_VAR_secret_key:
+        from_secret: aws_secret_access_key
+      TF_VAR_s3_aws_access_key_id:
+        from_secret: aws_access_key_id
+      TF_VAR_s3_aws_secret_access_key:
+        from_secret: aws_secret_access_key
+      TF_VAR_build_number: ${DRONE_BUILD_NUMBER}
+      TF_VAR_secret_key_base: ${DRONE_COMMIT}
+      TF_VAR_google_analytics_id: UA-144774549-1
+      TF_VAR_session_timeout: 15
+      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      GIT_PRIVATE_SSH:
+        from_secret: github_private_key
+      environment: sit
+    when:
+      event:
+        exclude:
+        - pull_request
+      branch: release/*
+
+
+  - name: codedeploy ui sit
+    image: golang:alpine
+    commands:
+      - apk add --update bash python python-dev py-pip build-base
+      - pip install awscli
+      - aws deploy create-deployment --application-name ntr-codedeploy-service-sit --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-sit --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/sit/appspec.yaml
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      AWS_DEFAULT_REGION: eu-west-2
+    when:
+      event:
+        exclude:
+        - pull_request
+      branch: release/*
+
+
+  ############################################## End SIT Only #######################################################
+
+
+
+
+  ################################################# Volumes #########################################################
+
+
 volumes:
 - name: docker_sock
   host:
@@ -400,6 +442,15 @@ trigger:
   event:
     - pull_request
     - push
+
+
+  ############################################### End Volumes ########################################################
+
+
+
+
+  ################################################ Secrets #########################################################
+
 
 # Note the below values are pulled from AWS Secrets Manager via the aws-secrets Drone plugin
 ---
