@@ -26,6 +26,8 @@ trigger:
   event:
     - pull_request
     - push
+concurrency:
+  limit: 1
 
 steps:
 
@@ -308,7 +310,7 @@ steps:
       - gem install csv
       - ruby jmeter/generate_taxi.rb
       - mv CAZ-2020-01-08-100-1.csv jmeter
-      - bzt jmeter/ntr_valid_upload.jmx jmeter/assertion.yml
+      - bzt -o modules.jmeter.properties.hostname=dev-upload.taxiphvdata.co.uk jmeter/ntr_valid_upload.jmx jmeter/assertion.yml
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
@@ -352,7 +354,7 @@ steps:
         from_secret: browserstack_username
       BS_AUTHKEY:
         from_secret: browserstack_auth_key
-      BASEURL_NTR: 'https://dev-upload.taxiphvdata.co.uk/build_id'
+      BASEURL_NTR: 'https://dev-upload.taxiphvdata.co.uk'
       VALID_USERNAME: 'edmond.chhung@informed.com'
       VALID_PASSWORD: 'Edc123.,'
       BROWSER_SET: 'mid'

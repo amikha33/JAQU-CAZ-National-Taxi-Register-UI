@@ -1,5 +1,6 @@
 reporting:
 - module: passfail
   criteria:
-  - "fail>1% , continue as failed"
+  - "fail > 80% for 5s, continue as failed"
+  - "avg-rt of homepage > 500ms for 2s, continue as failed"
 
