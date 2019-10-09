@@ -463,6 +463,7 @@ steps:
       - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
       - export TF_VAR_build_number=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
       - cd JAQU-CAZ-IAC
+      - git checkout release/ntr-production
       - cd terraform/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -534,6 +535,7 @@ steps:
       - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-preprod --services ntr-preprod-ecs-service | jq --raw-output '.services[0].taskDefinition'`
       - export TF_VAR_build_number=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
       - cd JAQU-CAZ-IAC
+      - git checkout release/ntr-production
       - cd terraform/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
