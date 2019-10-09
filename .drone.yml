@@ -607,14 +607,6 @@ volumes:
   host:
     path: /var/run/docker.sock
 
-trigger:
-  branch:
-    - develop
-    - release/*
-  event:
-    - pull_request
-    - push
-
 
   ############################################### End Volumes ########################################################
 
