@@ -21,7 +21,7 @@ trigger:
   branch:
     - develop
     - release/*
-    - staging/*
+    - staging
     - master
   event:
     - pull_request
@@ -38,9 +38,10 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
 
+
   ################################################# DEV/SIT Shared Steps ########################################################
 
-  # Build docker images
+  # Build docker image
   - name: build
     image: docker
     commands:
