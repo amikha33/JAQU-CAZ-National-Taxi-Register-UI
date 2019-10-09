@@ -21,13 +21,13 @@ trigger:
   branch:
     - develop
     - release/*
+    - staging
+    - master
   event:
     - pull_request
     - push
 
 steps:
-
-  ################################################### Global Steps ########################################################
 
   # Clean agent images and containers to prevent disk space overuse
   - name: clean agent
@@ -38,6 +38,8 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
 
+  ################################################# DEV/SIT Shared Steps ########################################################
+
   # Build docker images
   - name: build
     image: docker
@@ -46,6 +48,10 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
+    when:
+      branch:
+        - develop
+        - release/*
 
   # Trigger unit tests
   - name: unit tests
@@ -59,6 +65,10 @@ steps:
       - yarn install
       - cp .env.example .env
       - rspec -f d
+    when:
+      branch:
+        - develop
+        - release/*
 
   # Execute integration/scenario tests
   - name: integration tests
@@ -69,6 +79,10 @@ steps:
         path: /var/run/docker.sock
     commands:
       - cucumber
+    when:
+      branch:
+        - develop
+        - release/*
 
   # Invoke static code analysis through Ruby libraries
   - name: static code analysis (Ruby)
@@ -80,6 +94,10 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
+    when:
+      branch:
+        - develop
+        - release/*
 
   # Invoke security analysis through Ruby libraries
   - name: security tests (Ruby)
@@ -92,6 +110,10 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
+    when:
+      branch:
+        - develop
+        - release/*
 
   # Invoke terraform scripts to ensure ecr is available for deploy step.
   - name: initialise ecr
@@ -115,6 +137,9 @@ steps:
     environment:
       <<: *shared_terraform_credentials
     when:
+      branch:
+        - develop
+        - release/*
       event:
         exclude:
         - pull_request
@@ -137,11 +162,14 @@ steps:
       build_args:
         - secret_key_base=${DRONE_COMMIT}
     when:
+      branch:
+        - develop
+        - release/*
       event:
         exclude:
         - pull_request
 
-  ################################################### End Global Steps #######################################################
+  ################################################# End DEV/SIT Shared Steps #######################################################
 
 
 
@@ -393,7 +421,6 @@ steps:
         exclude:
         - pull_request
       branch: release/*
-
 
   - name: codedeploy ui sit
     image: golang:alpine
