@@ -12,6 +12,16 @@ global-variables:
       from_secret: aws_account_id
     GIT_PRIVATE_SSH:
       from_secret: github_private_key
+  environment: &aws_credentials
+    TF_VAR_access_key:
+      from_secret: aws_access_key_id
+    TF_VAR_secret_key:
+      from_secret: aws_secret_access_key
+    TF_VAR_account_id:
+      from_secret: aws_account_id
+    GIT_PRIVATE_SSH:
+      from_secret: github_private_key
+
 
   ################################################# End YAML Anchors ########################################################
 
@@ -245,11 +255,7 @@ steps:
       - pip install awscli
       - aws deploy create-deployment --application-name ntr-codedeploy-service-dev --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-dev --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/dev/appspec.yaml
     environment:
-      AWS_ACCESS_KEY_ID:
-        from_secret: aws_access_key_id
-      AWS_SECRET_ACCESS_KEY:
-        from_secret: aws_secret_access_key
-      AWS_DEFAULT_REGION: eu-west-2
+      <<: *aws_credentials
     when:
       event:
         exclude:
@@ -404,10 +410,7 @@ steps:
       - tf workspace select sit
       - tf apply -auto-approve
     environment:
-      TF_VAR_access_key:
-        from_secret: aws_access_key_id
-      TF_VAR_secret_key:
-        from_secret: aws_secret_access_key
+      <<: *shared_terraform_credentials
       TF_VAR_s3_aws_access_key_id:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
@@ -417,8 +420,6 @@ steps:
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
-      GIT_PRIVATE_SSH:
-        from_secret: github_private_key
       environment: sit
     when:
       event:
@@ -433,11 +434,7 @@ steps:
       - pip install awscli
       - aws deploy create-deployment --application-name ntr-codedeploy-service-sit --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-sit --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/sit/appspec.yaml
     environment:
-      AWS_ACCESS_KEY_ID:
-        from_secret: aws_access_key_id
-      AWS_SECRET_ACCESS_KEY:
-        from_secret: aws_secret_access_key
-      AWS_DEFAULT_REGION: eu-west-2
+      <<: *aws_credentials
     when:
       event:
         exclude:
@@ -461,8 +458,8 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-sit --region eu-west-2 --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
-      - export TF_VAR_build_number=`aws ecs describe-task-definition --region eu-west-2 --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
+      - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
+      - export TF_VAR_build_number=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
       - mkdir ~/.ssh
       - echo -n "$GIT_PRIVATE_SSH" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
@@ -487,10 +484,8 @@ steps:
       - tf workspace select preprod
       - tf apply -auto-approve
     environment:
-      TF_VAR_access_key:
-        from_secret: aws_access_key_id
-      TF_VAR_secret_key:
-        from_secret: aws_secret_access_key
+      <<: *shared_terraform_credentials
+      <<: *aws_credentials
       TF_VAR_s3_aws_access_key_id:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
@@ -499,8 +494,6 @@ steps:
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
-      GIT_PRIVATE_SSH:
-        from_secret: github_private_key
       environment: preprod
     when:
       event:
@@ -515,11 +508,7 @@ steps:
       - pip install awscli
       - aws deploy create-deployment --application-name ntr-codedeploy-service-preprod --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name ntr-codedeploy-service-preprod --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/preprod/appspec.yaml
     environment:
-      AWS_ACCESS_KEY_ID:
-        from_secret: aws_access_key_id
-      AWS_SECRET_ACCESS_KEY:
-        from_secret: aws_secret_access_key
-      AWS_DEFAULT_REGION: eu-west-2
+      <<: *aws_credentials
     when:
       event:
         exclude:
@@ -540,15 +529,8 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-preprod --region eu-west-2 --services ntr-preprod-ecs-service | jq --raw-output '.services[0].taskDefinition'`
-      - export TF_VAR_build_number=`aws ecs describe-task-definition --region eu-west-2 --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
-      - mkdir ~/.ssh
-      - echo -n "$GIT_PRIVATE_SSH" > ~/.ssh/id_rsa
-      - chmod 600 ~/.ssh/id_rsa
-      - touch ~/.ssh/known_hosts
-      - chmod 600 ~/.ssh/known_hosts
-      - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
-      - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
+      - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-preprod --services ntr-preprod-ecs-service | jq --raw-output '.services[0].taskDefinition'`
+      - export TF_VAR_build_number=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
       - cd JAQU-CAZ-IAC
       - git checkout master
       - cd terraform/projects/ntr/layers/01.networking
@@ -566,10 +548,8 @@ steps:
       - tf workspace select prod
       - tf apply -auto-approve
     environment:
-      TF_VAR_access_key:
-        from_secret: aws_access_key_id
-      TF_VAR_secret_key:
-        from_secret: aws_secret_access_key
+      <<: *shared_terraform_credentials
+      <<: *aws_credentials
       TF_VAR_s3_aws_access_key_id:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
@@ -578,8 +558,6 @@ steps:
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
-      GIT_PRIVATE_SSH:
-        from_secret: github_private_key
       environment: prod
     when:
       event:
