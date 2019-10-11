@@ -16,6 +16,7 @@ global-variables:
   ################################################# End YAML Anchors ########################################################
 
 kind: pipeline
+type: docker
 name: ntr-web
 trigger:
   branch:
