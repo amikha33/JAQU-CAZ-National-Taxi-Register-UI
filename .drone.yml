@@ -25,7 +25,11 @@ kind: pipeline
 type: docker
 name: ntr-web-dev
 trigger:
-  branch: develop
+  branch:
+    - develop
+  event:
+    - pull_request
+    - push
 concurrency:
   limit: 1
 volumes:
