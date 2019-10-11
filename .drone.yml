@@ -15,29 +15,26 @@ global-variables:
 
   ################################################# End YAML Anchors ########################################################
 
+
+
+
+
+  #################################################### DEV Steps ############################################################
+
 kind: pipeline
 type: docker
-name: ntr-web
+name: ntr-web-dev
 trigger:
   branch:
     - develop
-    - release/*
-    - staging
-    - master
-  event:
-    - pull_request
-    - push
 concurrency:
   limit: 1
-
 volumes:
 - name: docker_sock
   host:
-    path: /var/run/docker.sock
+    path: /var/run/docker.sock 
 
 steps:
-
-  ################################################# DEV/SIT Shared Steps ########################################################
 
   # Clean agent images and containers to prevent disk space overuse
   - name: clean agent
@@ -48,7 +45,6 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
 
-
   # Build docker image
   - name: build
     image: docker
@@ -57,10 +53,6 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
-    when:
-      branch:
-        - develop
-        - release/*
 
   # Trigger unit tests
   - name: unit tests
@@ -74,10 +66,6 @@ steps:
       - yarn install
       - cp .env.example .env
       - rspec -f d
-    when:
-      branch:
-        - develop
-        - release/*
 
   # Execute integration/scenario tests
   - name: integration tests
@@ -88,10 +76,6 @@ steps:
         path: /var/run/docker.sock
     commands:
       - cucumber
-    when:
-      branch:
-        - develop
-        - release/*
 
   # Invoke static code analysis through Ruby libraries
   - name: static code analysis (Ruby)
@@ -103,10 +87,6 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
-    when:
-      branch:
-        - develop
-        - release/*
 
   # Invoke security analysis through Ruby libraries
   - name: security tests (Ruby)
@@ -119,10 +99,6 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
-    when:
-      branch:
-        - develop
-        - release/*
 
   # Invoke terraform scripts to ensure ecr is available for deploy step.
   - name: initialise ecr
@@ -146,14 +122,28 @@ steps:
     environment:
       <<: *shared_terraform_credentials
     when:
-      branch:
-        - develop
-        - release/*
       event:
         exclude:
         - pull_request
 
-  # Push built image to ECR registry
+  # Invoke sonar scan
+  - name: sonar scan
+    image: aosapps/drone-sonar-plugin
+    environment:
+      SONAR_HOST:
+        from_secret: sonar_host
+      SONAR_TOKEN:
+        from_secret: sonar_token
+      sonar.ruby.coverage.reportPaths: coverage/.resultset.json
+    commands:
+      - sonar-scanner
+        -Dsonar.projectKey=${DRONE_REPO}
+        -Dsonar.projectName=${DRONE_REPO}
+        -Dsonar.host.url=$SONAR_HOST
+        -Dsonar.login=$SONAR_TOKEN
+        -Dproject.settings=./sonar-project.properties
+
+ # Push built image to ECR registry
   - name: publish image to ecr
     image: plugins/ecr
     settings:
@@ -171,37 +161,9 @@ steps:
       build_args:
         - secret_key_base=${DRONE_COMMIT}
     when:
-      branch:
-        - develop
-        - release/*
       event:
         exclude:
         - pull_request
-
-  ################################################# End DEV/SIT Shared Steps #######################################################
-
-
-
-  ################################################### Development Only #######################################################
-
-  # Invoke sonar scan
-  - name: sonar scan
-    image: aosapps/drone-sonar-plugin
-    environment:
-      sonar_host:
-        from_secret: sonar_host
-      sonar_token:
-        from_secret: sonar_token
-      sonar.ruby.coverage.reportPaths: coverage/.resultset.json
-    commands:
-      - sonar-scanner
-        -Dsonar.projectKey=${DRONE_REPO}
-        -Dsonar.projectName=${DRONE_REPO}
-        -Dsonar.host.url=$sonar_host
-        -Dsonar.login=$sonar_token
-        -Dproject.settings=./sonar-project.properties
-    when:
-      branch: develop
 
   # Invoke terraform scripts with tagged image number
   - name: deploy to dev
@@ -242,7 +204,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: develop
 
   - name: codedeploy ui dev
     image: golang:alpine
@@ -260,7 +221,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: develop
 
   - name: await ecs rollout
     image: docker
@@ -277,8 +237,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: 
-        - develop
 
     # Build pa11y-ci image
   - name: build pa11y-ci image
@@ -293,7 +251,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: develop
 
   # Trigger accessibility test
   - name: accessibility tests
@@ -308,7 +265,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: develop
 
   # Execute jMeter scripts via taurus
   - name: micro-performance tests
@@ -325,7 +281,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: develop
 
     # Build end to end tests docker image
   - name: build end to end test image
@@ -350,7 +305,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: develop
 
     # Run end to end tests
   - name: run end to end tests
@@ -378,16 +332,124 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: develop
-
-  ################################################# End Development Only #######################################################      
 
 
+  ################################################# End DEV Steps ############################################################
 
 
 
 
-  ################################################# SIT Only #######################################################
+
+
+
+
+
+
+
+
+  #################################################### SIT Steps ############################################################
+
+
+kind: pipeline
+type: docker
+name: ntr-web-sit
+trigger:
+  branch:
+    - release/*
+concurrency:
+  limit: 1
+volumes:
+- name: docker_sock
+  host:
+    path: /var/run/docker.sock 
+
+steps:
+
+  # Clean agent images and containers to prevent disk space overuse
+  - name: clean agent
+    image: docker
+    commands:
+    - docker system prune -f
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+
+  # Build docker image
+  - name: build
+    image: docker
+    commands:
+    - docker build -f Dockerfile.test -t test-national-taxi-register-frontend:latest .
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+
+  # Trigger unit tests
+  - name: unit tests
+    image: test-national-taxi-register-frontend
+    pull: never
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    commands:
+      - bundle install
+      - yarn install
+      - cp .env.example .env
+      - rspec -f d
+
+  # Execute integration/scenario tests
+  - name: integration tests
+    image: test-national-taxi-register-frontend
+    pull: never
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    commands:
+      - cucumber
+
+  # Invoke static code analysis through Ruby libraries
+  - name: static code analysis (Ruby)
+    image: test-national-taxi-register-frontend
+    pull: never
+    commands:
+      - rubocop
+      - govuk-lint-sass app/javascript
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+
+  # Invoke security analysis through Ruby libraries
+  - name: security tests (Ruby)
+    image: test-national-taxi-register-frontend
+    pull: never
+    commands:
+       - bundle audit check --update
+       - yarn audit
+       - brakeman
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+
+ # Push built image to ECR registry
+  - name: publish image to ecr
+    image: plugins/ecr
+    settings:
+      access_key:
+        from_secret: aws_access_key_id
+      secret_key:
+        from_secret: aws_secret_access_key
+      repo: 018330602464.dkr.ecr.eu-west-2.amazonaws.com/ntr-web
+      registry: 018330602464.dkr.ecr.eu-west-2.amazonaws.com
+      dockerfile: Dockerfile.build
+      region: eu-west-2
+      tags:
+        - release
+        - ${DRONE_BUILD_NUMBER}
+      build_args:
+        - secret_key_base=${DRONE_COMMIT}
+    when:
+      event:
+        exclude:
+        - pull_request
 
   # Invoke terraform scripts with tagged image number
   - name: deploy to sit
@@ -426,7 +488,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: release/*
 
   - name: codedeploy ui sit
     image: golang:alpine
@@ -444,18 +505,41 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: release/*
 
-
-  ############################################## End SIT Only #######################################################
-
+  ################################################# End SIT Steps ############################################################
 
 
 
 
 
 
-  ############################################# Pre-prod Only #######################################################
+
+
+
+
+
+
+
+
+
+
+
+  #################################################### Pre-prod Steps ############################################################
+
+kind: pipeline
+type: docker
+name: ntr-web-preprod
+trigger:
+  branch:
+    - staging
+concurrency:
+  limit: 1
+volumes:
+- name: docker_sock
+  host:
+    path: /var/run/docker.sock 
+
+steps:
 
   # Invoke terraform scripts with tagged image number
   - name: deploy to pre-prod
@@ -508,7 +592,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: staging
 
   - name: codedeploy ui pre-prod
     image: golang:alpine
@@ -526,15 +609,51 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: staging
 
-
-  ########################################## End Pre-prod Only #######################################################
-
+  ################################################# End Preprod Steps ############################################################
 
 
 
-  ############################################ Production Only #######################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ################################################## Production Steps ############################################################
+
+kind: pipeline
+type: docker
+name: ntr-web-prod
+trigger:
+  branch:
+    - master
+concurrency:
+  limit: 1
+volumes:
+- name: docker_sock
+  host:
+    path: /var/run/docker.sock 
+
+steps:
 
   # Invoke terraform scripts with tagged image number
   - name: deploy to prod
@@ -580,7 +699,6 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: master
 
   - name: codedeploy ui prod
     image: golang:alpine
@@ -598,10 +716,9 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: master
 
+  ################################################# End Prod Steps ############################################################
 
-  ########################################## End Production Only #######################################################
 
 
 
