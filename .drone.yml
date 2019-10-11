@@ -271,7 +271,8 @@ steps:
       event:
         exclude:
         - pull_request
-      branch: develop
+      branch: 
+        - develop
 
     # Build pa11y-ci image
   - name: build pa11y-ci image
@@ -615,6 +616,7 @@ volumes:
 
 
 
+
   ################################################ Secrets #########################################################
 
 
@@ -667,3 +669,5 @@ name: browserstack_username
 get:
   path: /secret/drone.global
   name: browserStackUsername
+  
+  ################################################ End Secrets #########################################################
