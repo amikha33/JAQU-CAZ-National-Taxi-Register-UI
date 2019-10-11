@@ -1,24 +1,3 @@
-  ################################################### YAML Anchors ########################################################
-
-  # Note that these are used when common environment variables are present in a step to reduce repetition - see terraform steps
-
-global-variables:
-  environment: &shared_terraform_credentials
-    TF_VAR_access_key:
-      from_secret: aws_access_key_id
-    TF_VAR_secret_key:
-      from_secret: aws_secret_access_key
-    TF_VAR_account_id:
-      from_secret: aws_account_id
-    GIT_PRIVATE_SSH:
-      from_secret: github_private_key
-
-  ################################################# End YAML Anchors ########################################################
-
-
-
-
-
   #################################################### DEV Steps ############################################################
 
 kind: pipeline
@@ -123,7 +102,14 @@ steps:
       - tf workspace select default
       - tf apply -auto-approve
     environment:
-      <<: *shared_terraform_credentials
+      TF_VAR_access_key:
+        from_secret: aws_access_key_id
+      TF_VAR_secret_key:
+        from_secret: aws_secret_access_key
+      TF_VAR_account_id:
+        from_secret: aws_account_id
+      GIT_PRIVATE_SSH:
+        from_secret: github_private_key
     when:
       event:
         exclude:
@@ -476,7 +462,14 @@ steps:
       - tf workspace select sit
       - tf apply -auto-approve
     environment:
-      <<: *shared_terraform_credentials
+      TF_VAR_access_key:
+        from_secret: aws_access_key_id
+      TF_VAR_secret_key:
+        from_secret: aws_secret_access_key
+      TF_VAR_account_id:
+        from_secret: aws_account_id
+      GIT_PRIVATE_SSH:
+        from_secret: github_private_key
       TF_VAR_s3_aws_access_key_id:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
@@ -576,7 +569,14 @@ steps:
       - tf workspace select preprod
       - tf apply -auto-approve
     environment:
-      <<: *shared_terraform_credentials
+      TF_VAR_access_key:
+        from_secret: aws_access_key_id
+      TF_VAR_secret_key:
+        from_secret: aws_secret_access_key
+      TF_VAR_account_id:
+        from_secret: aws_account_id
+      GIT_PRIVATE_SSH:
+        from_secret: github_private_key
       AWS_ACCESS_KEY_ID:
         from_secret: aws_access_key_id
       AWS_SECRET_ACCESS_KEY:
@@ -682,7 +682,14 @@ steps:
       - tf workspace select prod
       - tf apply -auto-approve
     environment:
-      <<: *shared_terraform_credentials
+      TF_VAR_access_key:
+        from_secret: aws_access_key_id
+      TF_VAR_secret_key:
+        from_secret: aws_secret_access_key
+      TF_VAR_account_id:
+        from_secret: aws_account_id
+      GIT_PRIVATE_SSH:
+        from_secret: github_private_key
       AWS_ACCESS_KEY_ID:
         from_secret: aws_access_key_id
       AWS_SECRET_ACCESS_KEY:
