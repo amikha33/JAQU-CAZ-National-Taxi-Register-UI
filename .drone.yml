@@ -68,7 +68,6 @@ steps:
 
 
 
-
   #################################################### DEV Steps ############################################################
 
 kind: pipeline
@@ -223,6 +222,7 @@ steps:
       event:
         - push
 
+
   # Invoke terraform scripts with tagged image number
   - name: deploy to dev
     image: hashicorp/terraform:0.12.3
@@ -351,6 +351,10 @@ steps:
 
 
 
+
+
+
+
   #################################################### SIT Steps ############################################################
 
 
@@ -464,15 +468,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf plan
       - cd ../02.backends
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf plan
       - cd ../04.web
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf plan
     environment:
       TF_VAR_access_key:
@@ -515,15 +519,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf apply -auto-approve
       - cd ../02.backends
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf apply -auto-approve
       - cd ../04.web
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
@@ -681,15 +685,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf plan
       - cd ../02.backends
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf plan
       - cd ../04.web
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf plan
     environment:
       TF_VAR_access_key:
@@ -747,15 +751,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf apply -auto-approve
       - cd ../02.backends
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf apply -auto-approve
       - cd ../04.web
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
@@ -853,15 +857,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf plan
       - cd ../02.backends
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf plan
       - cd ../04.web
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf plan
     environment:
       TF_VAR_access_key:
@@ -912,15 +916,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf apply -auto-approve
       - cd ../02.backends
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf apply -auto-approve
       - cd ../04.web
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
@@ -965,10 +969,8 @@ steps:
       event:
         - push
 
+
   ################################################# End Prod Steps ############################################################
-
-
-
 
 
 
