@@ -1,17 +1,47 @@
 # frozen_string_literal: true
 
+##
+# This class is used to authorize a user account and to sign uploaded CSV documents.
 class User
   # required by Devise
   include ActiveModel::Validations
   include ActiveModel::Validations::Callbacks
   extend Devise::Models
 
+  # Allows to use validation callbacks.
   define_model_callbacks :validation
-  devise :remote_authenticatable, :timeoutable
+  # Allow remote authentication with devise.
+  devise :remote_authenticatable
+  # Takes care of verifying whether a user session has already expired or not.
+  devise :timeoutable
 
-  attr_accessor :email, :username
+  # Attribute that is being used to authorize a user and use it in csv uploading.
+  attr_accessor :email, :username, :aws_status, :aws_session, :sub,
+                :confirmation_code, :hashed_password
 
-  # Latest devise(v4.6.2) tries to initialize this class with values
-  # ignore it for now
+  # Overrides default initializer for compliance with Devise Gem.
   def initialize(options = {}); end
+
+  # Used in devise and should return nil when the object is not persisted.
+  def to_key
+    nil
+  end
+
+  # Returns a serialized hash of your object.
+  #
+  # ==== Example
+  #   user = User.new
+  #   user.email = 'example@email.com'
+  #   user #<User email: example@email.com, username: nil, ...>
+  #   user.serializable_hash #{:email=>"example@email.com", :username=>nil, ...}
+  def serializable_hash(_options = nil)
+    {
+      email: email,
+      username: username,
+      aws_status: aws_status,
+      aws_session: aws_session,
+      sub: sub,
+      hashed_password: hashed_password
+    }
+  end
 end

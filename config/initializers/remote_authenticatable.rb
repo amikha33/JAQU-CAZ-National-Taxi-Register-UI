@@ -11,40 +11,10 @@ module Devise
       #
       # If the authentication fails you should return false
       def authentication(params)
-        response = auth_user(params)
-        if response
-          parse_user_data(response)
-        else
-          false
-        end
-      rescue Aws::CognitoIdentityProvider::Errors::NotAuthorizedException
-        # TODO: Log errors
-        false
-      rescue StandardError
-        false
-      end
-
-      private
-
-      def auth_user(params)
-        client = Aws::CognitoIdentityProvider::Client.new
-
-        client.initiate_auth(
-          client_id: ENV['AWS_COGNITO_CLIENT_ID'],
-          auth_flow: 'USER_PASSWORD_AUTH',
-          auth_parameters:
-            {
-              'USERNAME' => params[:username],
-              'PASSWORD' => params[:password]
-            }
+        Cognito::AuthUser.call(
+          username: params[:username],
+          password: params[:password]
         )
-      end
-
-      def parse_user_data(response)
-        user = User.new
-        user_attributes = response.challenge_parameters['userAttributes']
-        user.email = JSON.parse(user_attributes)['email'] if user_attributes
-        user
       end
 
       module ClassMethods
@@ -57,10 +27,11 @@ module Devise
         # returned in serialize_into_session
         #
         # Recreates a resource from session data
-        #
         def serialize_from_session(data, _salt)
           resource = new
-          resource.email = data['email']
+          resource.serializable_hash.keys.each do |key|
+            resource.public_send("#{key}=", data[key.to_s])
+          end
           resource
         end
 
@@ -71,12 +42,7 @@ module Devise
         # You might want to include some authentication data
         #
         def serialize_into_session(record)
-          [
-            {
-              email: record.email
-            },
-            nil
-          ]
+          [record.serializable_hash.transform_keys(&:to_s), nil]
         end
       end
     end

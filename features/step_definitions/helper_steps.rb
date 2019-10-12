@@ -1,23 +1,42 @@
 # frozen_string_literal: true
 
 def sign_in_user
+  allow(Cognito::AuthUser).to receive(:call).and_return(unchallenged_cognito_user)
   visit new_user_session_path
-  fill_in('user_username', with: 'user@example.com')
-  fill_in('user_password', with: '12345678')
-
-  RSpec::Mocks.with_temporary_scope do
-    expect_any_instance_of(Aws::CognitoIdentityProvider::Client).to receive(:initiate_auth)
-      .and_return(cognito_response)
-
-    click_button 'Continue'
-  end
+  basic_sign_in
 end
 
-def cognito_response
-  OpenStruct.new(challenge_parameters: {
-                   'USER_ID_FOR_SRP' => 'user@example.com',
-                   'userAttributes' => '{"email":""}'
-                 })
+def sign_in_challenged_user
+  allow(Cognito::AuthUser).to receive(:call).and_return(challenged_cognito_user)
+  visit new_user_session_path
+  basic_sign_in
+end
+
+def basic_sign_in
+  fill_in('user_username', with: 'user@example.com')
+  fill_in('user_password', with: '12345678')
+  click_button 'Continue'
+end
+
+def unchallenged_cognito_user
+  user = cognito_user
+  user.aws_status = 'OK'
+  user.aws_session = nil
+  user
+end
+
+def challenged_cognito_user
+  user = cognito_user
+  user.aws_status = 'FORCE_NEW_PASSWORD'
+  user.aws_session = SecureRandom.uuid
+  user
+end
+
+def cognito_user
+  user = User.new
+  user.username = 'user'
+  user.email = 'user@example.com'
+  user
 end
 
 Then('I should see {string}') do |string|
@@ -32,11 +51,39 @@ Then('I press the Continue') do
   click_button 'Continue'
 end
 
+Then('I press {string} button') do |string|
+  click_button string
+end
+
+Then('I press {string} link') do |string|
+  click_link string
+end
+
 Given('I am on the Upload page') do
   sign_in_user
-  visit root_path
+  visit authenticated_root_path
 end
 
 Given('I am on the Sign in page') do
   visit new_user_session_path
+end
+
+Then('I am redirected to the root page') do
+  expect(page).to have_current_path('/')
+end
+
+Then('I am redirected to the Upload page') do
+  expect(page).to have_current_path(authenticated_root_path)
+end
+
+Then('I should see {string} link') do |string|
+  expect(page).to have_link(string)
+end
+
+Then('I should not see {string} link') do |string|
+  expect(page).not_to have_link(string)
+end
+
+When('I refresh the page') do
+  visit page.current_path
 end

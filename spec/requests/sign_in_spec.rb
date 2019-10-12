@@ -28,30 +28,28 @@ describe 'User singing in', type: :request do
 
     context 'when incorrect credentials given' do
       before do
-        expect_any_instance_of(Aws::CognitoIdentityProvider::Client).to receive(:initiate_auth)
-          .and_return(false)
+        expect(Cognito::AuthUser).to receive(:call).and_return(false)
       end
 
       it 'shows `The username or password you entered is incorrect` message' do
         http_request
-        expect(response.body).to include('The username or password you entered is incorrect')
+        expect(response.body).to include(I18n.t('devise.failure.invalid'))
       end
     end
 
     context 'when correct credentials given' do
       before do
-        response = OpenStruct.new(challenge_parameters: {
-                                    'USER_ID_FOR_SRP' => 'user@example.com',
-                                    'userAttributes' => '{"email":""}'
-                                  })
-        expect_any_instance_of(Aws::CognitoIdentityProvider::Client).to receive(:initiate_auth)
-          .and_return(response)
+        expect(Cognito::AuthUser).to receive(:call).and_return(User.new)
       end
 
       it 'logs user in' do
         http_request
+        expect(controller.current_user).not_to be(nil)
+      end
+
+      it 'redirects to root' do
+        http_request
         expect(response).to redirect_to(root_path)
-        get root_path
       end
     end
   end

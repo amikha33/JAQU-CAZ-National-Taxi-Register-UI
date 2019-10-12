@@ -30,4 +30,27 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  email:
+    errors:
+      invalid_format: 'The email is in an invalid format'
+      required: 'Email is required'
+      too_long: 'The email exceeds the limit of 45 characters'
+  password:
+    errors:
+      complexity: 'Password must be at least 8 characters long, include at least one upper case letter and a number'
+      code_mismatch: 'Provided confirmation code does not match or is expired'
+      code_required: 'Confirmation code is required'
+      passwords_required: 'Password and password confirmation are required'
+      confirmation_required: 'Password confirmation is required'
+      password_required: 'Password is required'
+      password_equality: 'Password and password confirmation must be the same'
+      password_unchanged: 'New password must be different than your temporary one'
+  expired_session: 'Your session has expired'
+  csv:
+    errors:
+      base: 'The selected file could not be uploaded – try again'
+      no_file: 'Select a CSV'
+      invalid_ext: 'The selected file must be a CSV'
+      invalid_name: 'The selected file must be named correctly'
+  upload:
+    delivery_error: 'There was an error sending your confirmation email. Your data has still been saved.'

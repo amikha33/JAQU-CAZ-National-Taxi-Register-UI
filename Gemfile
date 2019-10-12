@@ -5,21 +5,23 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 
-gem 'rails', '~> 6.0.0.rc1'
+gem 'rails', '~> 6.0'
 
 gem 'activerecord-nulldb-adapter'
 gem 'aws-sdk-cognitoidentityprovider'
+gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'
 gem 'bootsnap', require: false
 gem 'brakeman'
 gem 'bundler-audit'
 gem 'devise'
 gem 'haml'
+gem 'httparty'
 gem 'logstash-logger'
 gem 'puma'
 gem 'rubocop-rails'
 gem 'sass-rails'
-gem 'turbolinks'
+gem 'sdoc', require: false
 gem 'webpacker'
 
 group :development, :test do
@@ -42,6 +44,7 @@ end
 group :test do
   gem 'capybara'
   gem 'cucumber-rails', require: false
+  gem 'rails-controller-testing'
   gem 'selenium-webdriver'
   gem 'show_me_the_cookies'
   gem 'simplecov', require: false

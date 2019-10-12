@@ -26,6 +26,13 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
+  # https://blog.bigbinary.com/2015/10/31/rails-5-allows-setting-custom-http-headers-for-assets.html
+  config.public_file_server.headers = {
+    'Cache-Control' => 'public, s-maxage=31536000, max-age=15552000',
+    'Expires' => 1.year.from_now.to_formatted_s(:rfc822).to_s,
+    'X-Content-Type-Options' => 'nosniff'
+  }
+
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
 
@@ -48,7 +55,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -112,4 +119,7 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context =
   # ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  #
+  # Hide rendering of partials
+  config.action_view.logger = nil
 end

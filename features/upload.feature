@@ -8,10 +8,27 @@ Feature: Upload
     When I press "Upload" button
     Then I should see "Select a CSV"
 
-  Scenario: Upload a csv file whose name is compliant with the naming rules
+  Scenario: Upload a csv file and redirect to processing page
     Given I am on the Upload page
     When I upload a valid csv file
-    Then I should see "Result of upload"
+    Then I should see "Validating submission"
+      And I should see "If the page does not refresh automatically in 30 seconds click here."
+    When I press refresh page link
+    Then I am redirected to the Success page
+      And I should see "Upload successful"
+      And I receive a success upload email
+    When I refresh the page
+    Then I should not receive a success upload email again
+
+  Scenario: Upload a csv file and redirect to error page when api response not running or finished
+    Given I am on the Upload page
+    When I upload a valid csv file
+    Then I should see "Validating submission"
+      And I should see "If the page does not refresh automatically in 30 seconds click here."
+    When I press refresh page link when api response not running or finished
+    Then I am redirected to the Upload page
+      And I should see "There was a problem"
+      And I should see "Uploaded file is not valid"
 
   Scenario: Upload a csv file whose name is not compliant with the naming rules
     Given I am on the Upload page
@@ -37,3 +54,8 @@ Feature: Upload
     Given I am on the Upload page
     When I upload a csv file during error on S3
     Then I should see "The selected file could not be uploaded – try again"
+
+  Scenario: Show processing page without uploaded csv file
+    Given I am on the Upload page
+    When I want go to processing page
+    Then I am redirected to the root page
