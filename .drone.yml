@@ -849,8 +849,15 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-preprod --services ntr-preprod-ecs-service | jq --raw-output '.services[0].taskDefinition'`
+      - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
       - export TF_VAR_build_number=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
+      - mkdir ~/.ssh
+      - echo -n "$GIT_PRIVATE_SSH" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - touch ~/.ssh/known_hosts
+      - chmod 600 ~/.ssh/known_hosts
+      - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
+      - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
       - git checkout master
       - cd terraform/projects/ntr/layers/01.networking
@@ -908,8 +915,15 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-preprod --services ntr-preprod-ecs-service | jq --raw-output '.services[0].taskDefinition'`
+      - TASKDEF=`aws ecs describe-services --cluster ntr-ecs-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
       - export TF_VAR_build_number=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
+      - mkdir ~/.ssh
+      - echo -n "$GIT_PRIVATE_SSH" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - touch ~/.ssh/known_hosts
+      - chmod 600 ~/.ssh/known_hosts
+      - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
+      - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
       - git checkout master
       - cd terraform/projects/ntr/layers/01.networking
