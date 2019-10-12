@@ -497,6 +497,14 @@ steps:
       event:
         - pull_request
 
+  - name: provisioning warning
+    image: docker:git
+    commands:
+      - echo "Pipeline failed. If a deployment is being made for the first time into an environment terraform backends will not yet exist which means this is to be expected. If not terraform related, please see logs for further details"
+    when:
+      status:
+        - failure
+
   - name: deploy to sit
     image: hashicorp/terraform:0.12.3
     commands:
@@ -710,6 +718,14 @@ steps:
       event:
         - pull_request
 
+  - name: provisioning warning
+    image: docker:git
+    commands:
+      - echo "Pipeline failed. If a deployment is being made for the first time into an environment terraform backends will not yet exist which means this is to be expected. If not terraform related, please see logs for further details"
+    when:
+      status:
+        - failure
+
   # Invoke terraform scripts with tagged image number
   - name: deploy to pre-prod
     image: hashicorp/terraform:0.12.3
@@ -873,6 +889,14 @@ steps:
     when:
       event:
         - pull_request
+
+  - name: provisioning warning
+    image: docker:git
+    commands:
+      - echo "Pipeline failed. If a deployment is being made for the first time into an environment terraform backends will not yet exist which means this is to be expected. If not terraform related, please see logs for further details"
+    when:
+      status:
+        - failure
 
   # Invoke terraform scripts with tagged image number
   - name: deploy to prod
