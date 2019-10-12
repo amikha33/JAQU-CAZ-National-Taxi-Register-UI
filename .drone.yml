@@ -233,15 +233,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select dev
+      - tf workspace select dev || tf workspace new dev
       - tf apply -auto-approve
       - cd ../02.backends
       - tf init
-      - tf workspace select dev
+      - tf workspace select dev || tf workspace new dev
       - tf apply -auto-approve
       - cd ../04.web
       - tf init
-      - tf workspace select dev
+      - tf workspace select dev || tf workspace new dev
       - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
@@ -464,15 +464,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf plan
       - cd ../02.backends
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf plan
       - cd ../04.web
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf plan
     environment:
       TF_VAR_access_key:
@@ -515,15 +515,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf apply -auto-approve
       - cd ../02.backends
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf apply -auto-approve
       - cd ../04.web
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit || tf workspace new sit
       - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
@@ -681,15 +681,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf plan
       - cd ../02.backends
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf plan
       - cd ../04.web
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf plan
     environment:
       TF_VAR_access_key:
@@ -747,15 +747,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf apply -auto-approve
       - cd ../02.backends
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf apply -auto-approve
       - cd ../04.web
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || tf workspace new preprod
       - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
@@ -853,15 +853,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf plan
       - cd ../02.backends
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf plan
       - cd ../04.web
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf plan
     environment:
       TF_VAR_access_key:
@@ -912,15 +912,15 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf apply -auto-approve
       - cd ../02.backends
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf apply -auto-approve
       - cd ../04.web
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || tf workspace new prod
       - tf apply -auto-approve
     environment:
       TF_VAR_access_key:
