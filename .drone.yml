@@ -233,7 +233,7 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select dev
+      - tf workspace select dev  || terraform workspace new dev
       - tf apply -auto-approve
       - cd ../02.backends
       - tf init
@@ -464,7 +464,7 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select sit
+      - tf workspace select sit  || terraform workspace new sit
       - tf plan
       - cd ../02.backends
       - tf init
@@ -681,7 +681,7 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select preprod
+      - tf workspace select preprod || terraform workspace new preprod
       - tf plan
       - cd ../02.backends
       - tf init
@@ -853,7 +853,7 @@ steps:
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
       - tf init
-      - tf workspace select prod
+      - tf workspace select prod || terraform workspace new prod
       - tf plan
       - cd ../02.backends
       - tf init
