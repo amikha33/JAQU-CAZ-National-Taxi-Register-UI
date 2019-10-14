@@ -463,7 +463,6 @@ steps:
     commands:
       - apk update && apk add bash
       - cd JAQU-CAZ-IAC
-      - git checkout master
       - cd terraform/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -514,7 +513,6 @@ steps:
     commands:
       - apk update && apk add bash
       - cd JAQU-CAZ-IAC
-      - git checkout master
       - cd terraform/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
