@@ -45,6 +45,7 @@ steps:
   - name: run owasp zap tests
     image: owasp-zap-testing
     pull: never
+    failure: ignore
     environment:
       ZAP: true
       ZAP_PROXY_URL: 'zap:8080'
@@ -84,9 +85,6 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
-    when:
-      status:
-        - failure
 
     # Run end to end tests
   - name: run end to end tests
@@ -108,9 +106,6 @@ steps:
     commands:
       - cd JAQU-CAZ-QA-selenium
       - cucumber -t @NTR --retry 3
-    when:
-      status:
-        - failure
 
   ################################################# End Nightly Steps ############################################################
 
@@ -138,6 +133,7 @@ volumes:
 - name: docker_sock
   host:
     path: /var/run/docker.sock
+
       
 steps:
 
