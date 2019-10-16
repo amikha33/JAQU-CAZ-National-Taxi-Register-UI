@@ -71,7 +71,7 @@ steps:
     image: docker:git
     commands:
       - cd JAQU-CAZ-QA-selenium
-      - docker build -t selenium-jaqu .
+      - docker build -t selenium-jaqu -f Dockerfile .
     environment:
       GIT_PRIVATE_SSH:
         from_secret: github_private_key
