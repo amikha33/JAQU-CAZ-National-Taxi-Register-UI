@@ -5,6 +5,7 @@ AllCops:
   TargetRubyVersion: 2.6.3
   Exclude:
     - 'jmeter/**/*' 
+    - 'node_modules/**/*'
 
 Style/Documentation:
   Enabled: false
