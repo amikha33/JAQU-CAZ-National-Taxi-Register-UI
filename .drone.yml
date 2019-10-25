@@ -280,7 +280,8 @@ steps:
       TF_VAR_s3_aws_secret_access_key:
         from_secret: aws_secret_access_key
       TF_VAR_build_number: ${DRONE_BUILD_NUMBER}
-      TF_VAR_secret_key_base: ${DRONE_COMMIT}
+      TF_VAR_secret_key_base:
+        from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
@@ -525,7 +526,8 @@ steps:
       TF_VAR_s3_aws_secret_access_key:
         from_secret: aws_secret_access_key
       TF_VAR_build_number: ${DRONE_BUILD_NUMBER}
-      TF_VAR_secret_key_base: ${DRONE_COMMIT}
+      TF_VAR_secret_key_base:
+        from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
@@ -582,7 +584,8 @@ steps:
       TF_VAR_s3_aws_secret_access_key:
         from_secret: aws_secret_access_key
       TF_VAR_build_number: ${DRONE_BUILD_NUMBER}
-      TF_VAR_secret_key_base: ${DRONE_COMMIT}
+      TF_VAR_secret_key_base:
+        from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
@@ -752,7 +755,8 @@ steps:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
         from_secret: aws_secret_access_key
-      TF_VAR_secret_key_base: ${DRONE_COMMIT}
+      TF_VAR_secret_key_base:
+        from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
@@ -818,7 +822,8 @@ steps:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
         from_secret: aws_secret_access_key
-      TF_VAR_secret_key_base: ${DRONE_COMMIT}
+      TF_VAR_secret_key_base:
+        from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
@@ -931,7 +936,8 @@ steps:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
         from_secret: aws_secret_access_key
-      TF_VAR_secret_key_base: ${DRONE_COMMIT}
+      TF_VAR_secret_key_base:
+        from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
@@ -997,7 +1003,8 @@ steps:
         from_secret: aws_access_key_id
       TF_VAR_s3_aws_secret_access_key:
         from_secret: aws_secret_access_key
-      TF_VAR_secret_key_base: ${DRONE_COMMIT}
+      TF_VAR_secret_key_base:
+        from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
       TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
@@ -1082,5 +1089,12 @@ name: browserstack_username
 get:
   path: /secret/drone.global
   name: browserStackUsername
+
+---
+kind: secret
+name: ntr_ruby_secret
+get:
+  path: /secret/drone.global
+  name: ntrRubySecret
 
   ################################################ End Secrets #########################################################
