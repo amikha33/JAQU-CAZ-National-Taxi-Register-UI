@@ -849,6 +849,22 @@ steps:
       event:
         - push
 
+  - name: await ecs rollout
+    image: docker
+    environment:
+      build_id_url: https://preprod-upload.taxiphvdata.co.uk/build_id
+    commands:
+      - TASKDEF=`aws ecs describe-services --cluster ntr-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
+      - export build_id=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
+      - apk add curl
+      - sh build_utils/check_build_number.sh
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    when:
+      event:
+        - push
+
   ################################################# End Preprod Steps ############################################################
 
 ---
@@ -1026,6 +1042,22 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       AWS_DEFAULT_REGION: eu-west-2
+    when:
+      event:
+        - push
+
+  - name: await ecs rollout
+    image: docker
+    environment:
+      build_id_url: https://upload.taxiphvdata.co.uk/build_id
+    commands:
+      - TASKDEF=`aws ecs describe-services --cluster ntr-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
+      - export build_id=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
+      - apk add curl
+      - sh build_utils/check_build_number.sh
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
     when:
       event:
         - push
