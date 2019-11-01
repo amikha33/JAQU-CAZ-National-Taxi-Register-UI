@@ -853,7 +853,14 @@ steps:
     image: docker
     environment:
       build_id_url: https://preprod-upload.taxiphvdata.co.uk/build_id
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      AWS_DEFAULT_REGION: eu-west-2
     commands:
+      - apk add --update bash python python-dev py-pip build-base
+      - pip install awscli
       - TASKDEF=`aws ecs describe-services --cluster ntr-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
       - export build_id=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
       - apk add curl
@@ -1050,7 +1057,14 @@ steps:
     image: docker
     environment:
       build_id_url: https://upload.taxiphvdata.co.uk/build_id
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      AWS_DEFAULT_REGION: eu-west-2
     commands:
+      - apk add --update bash python python-dev py-pip build-base
+      - pip install awscli
       - TASKDEF=`aws ecs describe-services --cluster ntr-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
       - export build_id=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
       - apk add curl
