@@ -618,7 +618,9 @@ steps:
       AWS_DEFAULT_REGION: eu-west-2
       APPLICATION_NAME: ntr-codedeploy-service-sit
       DEPLOYMENT_GROUP: ntr-codedeploy-service-sit
-      env: sit
+      PROJECT: ntr
+      DEPLOY_ENVIRONMENT: sit
+      LAMBDA_BUCKET: jaqu-projects-lambda-bucket
     when:
       event:
         - push
@@ -861,7 +863,9 @@ steps:
       AWS_DEFAULT_REGION: eu-west-2
       APPLICATION_NAME: ntr-codedeploy-service-preprod
       DEPLOYMENT_GROUP: ntr-codedeploy-service-preprod
-      env: preprod
+      PROJECT: ntr
+      DEPLOY_ENVIRONMENT: preprod
+      LAMBDA_BUCKET: jaqu-projects-lambda-bucket
     when:
       event:
         - push
@@ -1070,7 +1074,9 @@ steps:
       AWS_DEFAULT_REGION: eu-west-2
       APPLICATION_NAME: ntr-codedeploy-service-prod
       DEPLOYMENT_GROUP: ntr-codedeploy-service-prod
-      env: prod
+      PROJECT: ntr
+      DEPLOY_ENVIRONMENT: prod
+      LAMBDA_BUCKET: jaqu-projects-lambda-bucket
     when:
       event:
         - push
