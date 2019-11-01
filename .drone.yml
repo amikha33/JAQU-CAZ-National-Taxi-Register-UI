@@ -294,7 +294,7 @@ steps:
   - name: codedeploy ui dev
     image: golang:alpine
     commands:
-      - apk add --update bash python python-dev py-pip build-base
+      - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
       - while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do echo "waiting - $count"; sleep 60; let "count++"; done
       - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
@@ -602,7 +602,7 @@ steps:
   - name: codedeploy ui sit
     image: golang:alpine
     commands:
-      - apk add --update bash python python-dev py-pip build-base
+      - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
       - while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do echo "waiting - $count"; sleep 60; let "count++"; done
       - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
@@ -844,7 +844,7 @@ steps:
   - name: codedeploy ui pre-prod
     image: golang:alpine
     commands:
-      - apk add --update bash python python-dev py-pip build-base
+      - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
       - while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do echo "waiting - $count"; sleep 60; let "count++"; done
       - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
@@ -871,7 +871,7 @@ steps:
         from_secret: aws_secret_access_key
       AWS_DEFAULT_REGION: eu-west-2
     commands:
-      - apk add --update bash python python-dev py-pip build-base
+      - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
       - TASKDEF=`aws ecs describe-services --cluster ntr-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
       - export build_id=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
@@ -1052,7 +1052,7 @@ steps:
   - name: codedeploy ui prod
     image: golang:alpine
     commands:
-      - apk add --update bash python python-dev py-pip build-base
+      - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
       - while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do echo "waiting - $count"; sleep 60; let "count++"; done
       - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
@@ -1079,7 +1079,7 @@ steps:
         from_secret: aws_secret_access_key
       AWS_DEFAULT_REGION: eu-west-2
     commands:
-      - apk add --update bash python python-dev py-pip build-base
+      - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
       - TASKDEF=`aws ecs describe-services --cluster ntr-cluster-sit --services ntr-sit-ecs-service | jq --raw-output '.services[0].taskDefinition'`
       - export build_id=`aws ecs describe-task-definition --task-definition $TASKDEF | jq --raw-output '.taskDefinition.containerDefinitions[0].image' | cut -f 2 -d ':'`
