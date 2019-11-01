@@ -296,17 +296,20 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - bash -c "count=1; while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
-      - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
+      - aws s3 cp s3://$LAMBDA_BUCKET/$PROJECT/$DEPLOY_ENVIRONMENT/wait_deploy.sh .
+      - bash wait_deploy.sh $APPLICATION_NAME $DEPLOYMENT_GROUP
+      - aws deploy create-deployment --application-name $APPLICATION_NAME --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $DEPLOYMENT_GROUP --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=$PROJECT/$DEPLOY_ENVIRONMENT/appspec.yaml
     environment:
       AWS_ACCESS_KEY_ID:
         from_secret: aws_access_key_id
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       AWS_DEFAULT_REGION: eu-west-2
-      application_name: ntr-codedeploy-service-dev
-      deployment_group: ntr-codedeploy-service-dev
-      env: dev
+      APPLICATION_NAME: ntr-codedeploy-service-dev
+      DEPLOYMENT_GROUP: ntr-codedeploy-service-dev
+      PROJECT: ntr
+      DEPLOY_ENVIRONMENT: dev
+      LAMBDA_BUCKET: jaqu-projects-lambda-bucket
     when:
       event:
         - push
@@ -604,16 +607,17 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - bash -c "count=1; while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
-      - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
+      - aws s3 cp s3://$LAMBDA_BUCKET/$PROJECT/$DEPLOY_ENVIRONMENT/wait_deploy.sh .
+      - bash wait_deploy.sh $APPLICATION_NAME $DEPLOYMENT_GROUP
+      - aws deploy create-deployment --application-name $APPLICATION_NAME --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $DEPLOYMENT_GROUP --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
     environment:
       AWS_ACCESS_KEY_ID:
         from_secret: aws_access_key_id
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       AWS_DEFAULT_REGION: eu-west-2
-      application_name: ntr-codedeploy-service-sit
-      deployment_group: ntr-codedeploy-service-sit
+      APPLICATION_NAME: ntr-codedeploy-service-sit
+      DEPLOYMENT_GROUP: ntr-codedeploy-service-sit
       env: sit
     when:
       event:
@@ -846,16 +850,17 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - bash -c "count=1; while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
-      - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
+      - aws s3 cp s3://$LAMBDA_BUCKET/$PROJECT/$DEPLOY_ENVIRONMENT/wait_deploy.sh .
+      - bash wait_deploy.sh $APPLICATION_NAME $DEPLOYMENT_GROUP
+      - aws deploy create-deployment --application-name $APPLICATION_NAME --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $DEPLOYMENT_GROUP --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
     environment:
       AWS_ACCESS_KEY_ID:
         from_secret: aws_access_key_id
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       AWS_DEFAULT_REGION: eu-west-2
-      application_name: ntr-codedeploy-service-preprod
-      deployment_group: ntr-codedeploy-service-preprod
+      APPLICATION_NAME: ntr-codedeploy-service-preprod
+      DEPLOYMENT_GROUP: ntr-codedeploy-service-preprod
       env: preprod
     when:
       event:
@@ -1054,16 +1059,17 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - bash -c "count=1; while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
-      - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
+      - aws s3 cp s3://$LAMBDA_BUCKET/$PROJECT/$DEPLOY_ENVIRONMENT/wait_deploy.sh .
+      - bash wait_deploy.sh $APPLICATION_NAME $DEPLOYMENT_GROUP
+      - aws deploy create-deployment --application-name $APPLICATION_NAME --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $DEPLOYMENT_GROUP --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
     environment:
       AWS_ACCESS_KEY_ID:
         from_secret: aws_access_key_id
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       AWS_DEFAULT_REGION: eu-west-2
-      application_name: ntr-codedeploy-service-prod
-      deployment_group: ntr-codedeploy-service-prod
+      APPLICATION_NAME: ntr-codedeploy-service-prod
+      DEPLOYMENT_GROUP: ntr-codedeploy-service-prod
       env: prod
     when:
       event:
