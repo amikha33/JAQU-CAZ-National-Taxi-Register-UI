@@ -296,7 +296,7 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - bash -c "while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
+      - bash -c "count=1; while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
       - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
     environment:
       AWS_ACCESS_KEY_ID:
@@ -604,7 +604,7 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - bash -c "while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
+      - bash -c "count=1; while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
       - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
     environment:
       AWS_ACCESS_KEY_ID:
@@ -846,7 +846,7 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - bash -c "while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
+      - bash -c "count=1; while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
       - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
     environment:
       AWS_ACCESS_KEY_ID:
@@ -1054,7 +1054,7 @@ steps:
     commands:
       - apk add --update bash python python-dev py-pip build-base jq
       - pip install awscli
-      - bash -c "while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
+      - bash -c "count=1; while [[ $(aws deploy list-deployments --include-only-statuses 'InProgress' --application-name $application_name --deployment-group-name $deployment_group | jq .deployments | wc -l) -gt 1 && $count -lt 10 ]]; do sleep 60; let count++; done"
       - aws deploy create-deployment --application-name $application_name --deployment-config-name CodeDeployDefault.ECSAllAtOnce --deployment-group-name $deployment_group --description "Deployment ECS" --s3-location bucket=jaqu-projects-lambda-bucket,bundleType=yaml,key=ntr/$env/appspec.yaml
     environment:
       AWS_ACCESS_KEY_ID:
