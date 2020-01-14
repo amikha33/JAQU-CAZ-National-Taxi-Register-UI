@@ -173,7 +173,8 @@ steps:
     pull: never
     commands:
        - bundle audit check --update
-       - yarn audit
+       # Exclude node-sass till https://github.com/sass/node-sass/issues/2816 is fixed
+       - yarn run improved-yarn-audit --exclude 961
        - brakeman
     volumes:
       - name: docker_sock
@@ -466,7 +467,8 @@ steps:
     pull: never
     commands:
        - bundle audit check --update
-       - yarn audit
+       # Exclude node-sass till https://github.com/sass/node-sass/issues/2816 is fixed
+       - yarn run improved-yarn-audit --exclude 961
        - brakeman
     volumes:
       - name: docker_sock
