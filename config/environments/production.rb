@@ -95,7 +95,6 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors
   # config.action_mailer.raise_delivery_errors = false
 
-
   # Prepend all log lines with the request id tag.
   config.log_tags = %i[request_id]
 
