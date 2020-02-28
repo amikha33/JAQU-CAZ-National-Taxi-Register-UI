@@ -39,7 +39,8 @@ module CsvUploader
     config.action_mailer.logger = nil
 
     # Use custom logging formatter so that IP addresses are removed.
-    config.logger = LogStashLogger.new(type: :stdout,
-      formatter: Formatter)
+    config.logger = LogStashLogger.new(type: :stdout, formatter: Formatter)
+
+    config.log_level = :debug
   end
 end

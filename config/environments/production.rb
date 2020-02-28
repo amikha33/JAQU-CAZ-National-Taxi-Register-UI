@@ -114,7 +114,7 @@ Rails.application.configure do
   logger = LogStashLogger.new(type: :stdout)
 
   # Use tagged logging to include request id on production.
-  config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  config.logger = ActiveSupport::TaggedLogging.new(logger)
 
   # Do not dump schema after migrations.
   # config.active_record.dump_schema_after_migration = false
