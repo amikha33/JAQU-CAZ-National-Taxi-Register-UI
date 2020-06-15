@@ -14,7 +14,7 @@ module ApplicationHelper
     Rails.configuration.x.service_name
   end
 
-  # Returns configured contact email address, eg. 'TaxiandPHVCentralised.Database@defra.gov.uk'.
+  # Returns configured contact email address, eg. 'TaxiPHVDatabase.Support@informed.com'.
   def service_email
     Rails.configuration.x.service_email
   end
