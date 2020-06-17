@@ -22,7 +22,7 @@ module CsvUploader
     # name of service
     config.x.service_name = 'Taxi and PHV Data Portal'
     # email address for sending emails, eg 'from@example.com'
-    default_email = 'TaxiPHVDatabase.Support@informed.com'
+    default_email = 'TaxiandPHVCentralised.Database@defra.gov.uk'
     config.x.service_email = ENV.fetch('SES_FROM_EMAIL', default_email)
 
     config.time_zone = 'London'
