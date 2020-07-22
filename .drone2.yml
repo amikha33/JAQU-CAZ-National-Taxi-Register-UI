@@ -48,7 +48,7 @@ steps:
     environment:
       ZAP: true
       ZAP_PROXY_URL: 'zap'
-      BASEURL_NTR: 'https://dev2-upload.taxiphvdata.co.uk'
+      BASEURL_NTR: 'https://dev-upload.taxiphvdata.co.uk'
       VALID_USERNAME: 'tester@informed.com'
       VALID_PASSWORD: 'Tester123..'
       SCREENSHOT_TYPE: 'base'
@@ -74,7 +74,7 @@ steps:
         from_secret: browserstack_username
       BS_AUTHKEY:
         from_secret: browserstack_auth_key
-      BASEURL_NTR: 'https://dev2-upload.taxiphvdata.co.uk'
+      BASEURL_NTR: 'https://dev-upload.taxiphvdata.co.uk'
       VALID_USERNAME: 'tester@informed.com'
       VALID_PASSWORD: 'Tester123..'
       BROWSER_SET: 'mid'
@@ -226,7 +226,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_baseline
+      - git checkout lower_dev
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -267,7 +267,7 @@ steps:
         from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      TF_VAR_feedback_url: https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX
       environment: dev
     when:
       event:
@@ -302,7 +302,7 @@ steps:
   - name: await ecs rollout
     image: docker:19.03.11-git
     environment:
-      build_id_url: https://dev2-upload.taxiphvdata.co.uk/build_id
+      build_id_url: https://dev-upload.taxiphvdata.co.uk/build_id
       build_id: ${DRONE_BUILD_NUMBER}
     commands:
       - apk add curl
@@ -481,7 +481,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_controlled
+      - git checkout controlled_st
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -523,7 +523,7 @@ steps:
         from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      TF_VAR_feedback_url: https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX
       environment: st
     when:
       event:
@@ -550,7 +550,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_baseline
+      - git checkout controlled_st
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -591,7 +591,7 @@ steps:
         from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      TF_VAR_feedback_url: https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX
       environment: st
     when:
       event:
@@ -626,7 +626,7 @@ steps:
   - name: await ecs rollout
     image: alpine:3.11.6
     environment:
-      build_id_url: https://st2-upload.taxiphvdata.co.uk/build_id
+      build_id_url: https://st-upload.taxiphvdata.co.uk/build_id
       build_id: ${DRONE_BUILD_NUMBER}
     commands:
       - apk add curl
@@ -763,7 +763,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_controlled
+      - git checkout controlled_sit
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -805,7 +805,7 @@ steps:
         from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      TF_VAR_feedback_url: https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX
       environment: sit
     when:
       event:
@@ -832,7 +832,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_baseline
+      - git checkout controlled_sit
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -873,7 +873,7 @@ steps:
         from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      TF_VAR_feedback_url: https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX
       environment: sit
     when:
       event:
@@ -908,7 +908,7 @@ steps:
   - name: await ecs rollout
     image: docker:19.03.11-git
     environment:
-      build_id_url: https://sit2-upload.taxiphvdata.co.uk/build_id
+      build_id_url: https://sit-upload.taxiphvdata.co.uk/build_id
       build_id: ${DRONE_BUILD_NUMBER}
     commands:
       - apk add curl
@@ -955,7 +955,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_staging
+      - git checkout staging_preprod
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -996,7 +996,7 @@ steps:
         from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      TF_VAR_feedback_url: https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX
       environment: preprod
     when:
       event:
@@ -1028,7 +1028,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_baseline
+      - git checkout staging_preprod
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -1069,7 +1069,7 @@ steps:
         from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      TF_VAR_feedback_url: https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX
       environment: preprod
     when:
       event:
@@ -1104,7 +1104,7 @@ steps:
   - name: await ecs rollout
     image: alpine:3.11.6
     environment:
-      build_id_url: https://preprod2-upload.taxiphvdata.co.uk/build_id
+      build_id_url: https://preprod-upload.taxiphvdata.co.uk/build_id
       SRC_AWS_ACCOUNT_ROLE: arn:aws:iam::072187228077:role/jaqu-controlledServiceRole
       AWS_ACCESS_KEY_ID:
         from_secret: jaqu_controlled_aws_access_key_id
@@ -1251,7 +1251,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_staging
+      - git checkout staging_uat
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -1293,7 +1293,7 @@ steps:
         from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      TF_VAR_feedback_url: https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX
       environment: uat
     when:
       event:
@@ -1320,7 +1320,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_baseline
+      - git checkout staging_uat
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -1361,7 +1361,7 @@ steps:
         from_secret: ntr_ruby_secret
       TF_VAR_google_analytics_id: UA-144774549-1
       TF_VAR_session_timeout: 15
-      TF_VAR_feedback_url: https://www.surveymonkey.co.uk/r/2T8BX2D
+      TF_VAR_feedback_url: https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX
       environment: uat
     when:
       event:
@@ -1396,7 +1396,7 @@ steps:
   - name: await ecs rollout
     image: alpine:3.11.6
     environment:
-      build_id_url: https://uat2-upload.taxiphvdata.co.uk/build_id
+      build_id_url: https://uat-upload.taxiphvdata.co.uk/build_id
       build_id: ${DRONE_BUILD_NUMBER}
     commands:
       - apk add curl
@@ -1443,7 +1443,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_prod
+      - git checkout prod_live
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
@@ -1516,7 +1516,7 @@ steps:
       - ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts 2> /dev/null
       - git clone git@github.com:InformedSolutions/JAQU-CAZ-IAC.git
       - cd JAQU-CAZ-IAC
-      - git checkout iac_restructure_baseline
+      - git checkout prod_live
       - cd terraform-iac/projects/ntr/layers/01.networking
       - PATH=$PATH:../../../../bin/
       - chmod +x ../../../../bin/tf
