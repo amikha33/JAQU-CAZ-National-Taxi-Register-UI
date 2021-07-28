@@ -17,7 +17,7 @@
 %p
   We allow Google to use or share our analytics data. You can find out more about how Google
   use this information in their
-  = succeed '.' do 
+  = succeed '.' do
     = external_link_to('Privacy Policy',
                        'https://policies.google.com/technologies/partner-sites',
                        id: 'privacy-policy-link')
@@ -42,3 +42,7 @@
       %th.govuk-table__header{scope: 'row'} _gid
       %td.govuk-table__cell Identifies you to the service
       %td.govuk-table__cell 24 hours
+    %tr.govuk-table__row
+      %th.govuk-table__header{scope: 'row'}= "_gat_#{ENV['GOOGLE_ANALYTICS_ID']}"
+      %td.govuk-table__cell Used to manage the rate at which page view requests are made
+      %td.govuk-table__cell 1 minute
