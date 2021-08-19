@@ -11,6 +11,8 @@ updates:
       interval: "weekly"
       timezone: "UTC"
       time: "19:00"
+    allow:
+      - dependency-type: "production"
     # Increase the version requirements for npm
     # only when required
     versioning-strategy: increase-if-necessary
@@ -20,9 +22,14 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+      timezone: "UTC"
+      time: "19:00"
+    allow:
+      - dependency-type: "production"
     # Increase the version requirements for npm
     # only when required
     versioning-strategy: increase-if-necessary
+    open-pull-requests-limit: 0
 
   - package-ecosystem: "docker" # See documentation for possible values
     directory: "/" # Location of package manifests

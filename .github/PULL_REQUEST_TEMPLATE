@@ -1,7 +1,9 @@
-<!--- When merging branch to dev please use the SQUASH AND MERGE --->
+<!--- When merging the branch to dev please use the SQUASH AND MERGE --->
 
 <!--- Before you open a PR: --->
-<!--- !!! make a code review at least once a day (before standup?) !!! --->
+<!--- !!! Check application with WAVE Browser Extensions --->
+<!--- https://wave.webaim.org/extension --->
+<!--- !!! Make a code review at least once a day (before standup?) !!! --->
 
 ## Motivation and Context
 <!--- Why is this change required? What problem does it solve? -->
@@ -21,7 +23,7 @@
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 - [ ] It contains only changes required by issue (does not contain other PR)
-- [ ] Includes a link to an issue (if apply)
+- [ ] Includes link to an issue (if apply)
 - [ ] I have added tests to cover my changes.
 
 <!--- Branch naming conventions: --->
