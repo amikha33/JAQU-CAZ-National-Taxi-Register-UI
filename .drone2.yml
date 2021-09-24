@@ -271,7 +271,7 @@ steps:
         - push
 
   - name: codedeploy ui dev
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     commands:
       - apk add --update bash python3 python3-dev py3-pip build-base jq
       - pip3 install awscli
@@ -596,7 +596,7 @@ steps:
         - push
 
   - name: codedeploy ui st
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     commands:
       - apk add --update bash python3 python3-dev py3-pip build-base jq
       - pip3 install awscli
@@ -622,7 +622,7 @@ steps:
         - push
 
   - name: await ecs rollout
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     environment:
       build_id_url: https://st-ntr-web.cleanairzone.defra.gov.uk/build_id
       build_id: ${DRONE_BUILD_NUMBER}
@@ -986,7 +986,7 @@ steps:
       - deploy to sit
 
   - name: codedeploy ui sit
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     commands:
       - apk add --update bash python3 python3-dev py3-pip build-base jq
       - pip3 install awscli
@@ -1014,7 +1014,7 @@ steps:
       - deploy to sit
 
   - name: codedeploy ui sit2
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     commands:
       - apk add --update bash python3 python3-dev py3-pip build-base jq
       - pip3 install awscli
@@ -1346,7 +1346,7 @@ steps:
       - deploy to preprod
 
   - name: codedeploy ui preprod
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     commands:
       - apk add --update bash python3 python3-dev py3-pip build-base jq
       - pip3 install awscli
@@ -1374,7 +1374,7 @@ steps:
       - deploy to preprod
 
   - name: codedeploy ui preprod2
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     commands:
       - apk add --update bash python3 python3-dev py3-pip build-base jq
       - pip3 install awscli
@@ -1402,7 +1402,7 @@ steps:
       - deploy to preprod2
 
   - name: await ecs rollout
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     environment:
       build_id_url: https://preprod-ntr-web.cleanairzone.defra.gov.uk/build_id
       SRC_AWS_ACCOUNT_ROLE: arn:aws:iam::072187228077:role/jaqu-controlledServiceRole
@@ -1430,7 +1430,7 @@ steps:
       - codedeploy ui preprod
 
   - name: await ecs rollout (preprod2)
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     environment:
       build_id_url: https://preprod2-ntr-web.cleanairzone.defra.gov.uk/build_id
       SRC_AWS_ACCOUNT_ROLE: arn:aws:iam::072187228077:role/jaqu-controlledServiceRole
@@ -1700,7 +1700,7 @@ steps:
         - push
 
   - name: codedeploy ui uat
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     commands:
       - apk add --update bash python3 python3-dev py3-pip build-base jq
       - pip3 install awscli
@@ -1726,7 +1726,7 @@ steps:
         - push
 
   - name: await ecs rollout
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     environment:
       build_id_url: https://uat-upload.taxiphvdata.co.uk/build_id
       build_id: ${DRONE_BUILD_NUMBER}
@@ -1896,7 +1896,7 @@ steps:
         - push
 
   - name: codedeploy ui prod
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     commands:
       - apk add --update bash python3 python3-dev py3-pip build-base jq
       - pip3 install awscli
@@ -1922,7 +1922,7 @@ steps:
         - push
 
   - name: await ecs rollout
-    image: alpine:3.11.6
+    image: alpine:3.14.0
     environment:
       build_id_url: https://taxiphvdata.drive-clean-air-zone.service.gov.uk/build_id
       SRC_AWS_ACCOUNT_ROLE: arn:aws:iam::360470905865:role/jaqu-stagingServiceRole
