@@ -61,7 +61,7 @@ describe Cognito::ForgotPassword::RateLimitVerification do
         expect(Cognito::ForgotPassword::UpdateUser).not_to have_received(:call)
       end
 
-      it 'raises `Cognito::CallException` exception with proper params ' do
+      it 'raises `Cognito::CallException` exception with proper params' do
         expect { service_call }.to raise_exception(Cognito::CallException, '') { |exception|
           exception.message.empty?
           exception.path == '/passwords/confirm_reset'

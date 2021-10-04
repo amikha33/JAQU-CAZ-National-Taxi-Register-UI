@@ -1,6 +1,7 @@
 <!--- When merging the branch to dev please use the SQUASH AND MERGE --->
 
 <!--- Before you open a PR: --->
+<!--- !!! Run `rake build` to run all tests and checks --->
 <!--- !!! Check application with WAVE Browser Extensions --->
 <!--- https://wave.webaim.org/extension --->
 <!--- !!! Make a code review at least once a day (before standup?) !!! --->

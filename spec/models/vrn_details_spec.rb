@@ -95,7 +95,7 @@ describe VrnDetails do
 
   describe '.licensing_authorities' do
     context 'when `active` value is true' do
-      it 'returns a string of licensing authorities ' do
+      it 'returns a string of licensing authorities' do
         expect(subject.licensing_authorities).to eq('Birmingham, Leeds')
       end
     end

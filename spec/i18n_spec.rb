@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/LineLength
-
 require 'i18n/tasks'
 
 describe I18n do
@@ -34,4 +32,3 @@ describe I18n do
     expect(inconsistent_interpolations).to be_empty, error_message
   end
 end
-# rubocop:enable Layout/LineLength

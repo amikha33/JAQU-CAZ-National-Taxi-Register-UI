@@ -129,8 +129,8 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
     commands:
-      - yarn install
-      - rspec -f d
+      - yarn install --quiet
+      - bundle exec rspec
 
   # Execute integration/scenario tests
   - name: integration tests
@@ -405,8 +405,8 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
     commands:
-      - yarn install
-      - rspec -f d
+      - yarn install --quiet
+      - bundle exec rspec
 
   # Execute integration/scenario tests
   - name: integration tests
@@ -689,8 +689,8 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
     commands:
-      - yarn install
-      - rspec -f d
+      - yarn install --quiet
+      - bundle exec rspec
     depends_on:
       - build
 
@@ -1509,8 +1509,8 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
     commands:
-      - yarn install
-      - rspec -f d
+      - yarn install --quiet
+      - bundle exec rspec
 
   # Execute integration/scenario tests
   - name: integration tests

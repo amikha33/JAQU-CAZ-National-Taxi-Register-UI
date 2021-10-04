@@ -41,7 +41,7 @@ describe Cognito::ForgotPassword::UpdateUser do
   end
 
   context 'when `Cognito::Client.instance.admin_update_user_attributes`
-           call fails with proper params' do
+ call fails with proper params' do
     context 'and service raises `ServiceError`' do
       before do
         allow(Cognito::Client.instance).to receive(:admin_update_user_attributes).with(

@@ -36,7 +36,7 @@ class PaginatedVrnHistory
 
   # Returns the index of the first changes on the page
   def range_start
-    page * per_page - (per_page - 1)
+    (page * per_page) - (per_page - 1)
   end
 
   # Returns the index of the last changes on the page

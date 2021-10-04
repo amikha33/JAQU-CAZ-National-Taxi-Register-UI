@@ -9,7 +9,6 @@ AllCops:
   NewCops: enable
 
 Layout/LineLength:
-  Max: 110
   IgnoredPatterns: ['(\A|\s)#']
 
 Metrics/BlockLength:
