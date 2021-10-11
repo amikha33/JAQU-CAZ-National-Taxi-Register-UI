@@ -39,12 +39,12 @@ class UploadController < ApplicationController
   # * +current_user+ - an instance of the User class
   #
   def import
-    CsvUploadService.call(file: file, user: current_user)
+    result = CsvUploadService.call(file: file, user: current_user)
     correlation_id = SecureRandom.uuid
-    job_name = RegisterCheckerApi.register_job(file.original_filename, correlation_id)
+    job_name = RegisterCheckerApi.register_job(result.filename, correlation_id)
     session[:job] = {
       name: job_name,
-      filename: file.original_filename,
+      filename: result.filename,
       submission_time: submission_time,
       correlation_id: correlation_id
     }

@@ -6,6 +6,10 @@
 class CsvUploadService < BaseService
   # regular expression for validating filename.
   NAME_FORMAT = /^CAZ-([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))-([a-zA-Z0-9]+)$/
+
+  # Attributes used externally
+  attr_reader :filename
+
   ##
   # Initializer method.
   #
@@ -26,6 +30,7 @@ class CsvUploadService < BaseService
   def call
     validate
     upload_to_s3
+    self
   end
 
   private
@@ -84,7 +89,7 @@ class CsvUploadService < BaseService
   #
   # Returns a boolean.
   def upload_to_s3
-    log_action('Uploading file to s3')
+    log_action('Uploading file to S3')
     return true if aws_call
 
     raise CsvUploadFailureException, I18n.t('csv.errors.base')
@@ -97,7 +102,7 @@ class CsvUploadService < BaseService
   #
   # Returns a boolean.
   def aws_call
-    s3_object = AMAZON_S3_CLIENT.bucket(bucket_name).object(file.original_filename)
+    s3_object = AMAZON_S3_CLIENT.bucket(bucket_name).object(renamed_filename)
     s3_object.upload_file(file, metadata: metadata)
   end
 
@@ -111,6 +116,11 @@ class CsvUploadService < BaseService
   # Returns a string.
   def bucket_name
     ENV.fetch('S3_AWS_BUCKET', 'S3_AWS_BUCKET')
+  end
+
+  # Add to uploaded filename additional data.
+  def renamed_filename
+    @filename = "#{file.original_filename.split('.')[0]}_#{user.sub}_#{Time.current.to_i}.csv"
   end
 
   # Attributes used internally to save values.

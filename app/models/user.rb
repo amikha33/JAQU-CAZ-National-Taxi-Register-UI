@@ -16,7 +16,7 @@ class User
   devise :timeoutable
 
   # Attribute that is being used to authorize a user and use it in csv uploading.
-  attr_accessor :email, :username, :groups, :aws_status, :aws_session, :preferred_username,
+  attr_accessor :email, :username, :groups, :aws_status, :aws_session, :sub, :preferred_username,
                 :confirmation_code, :hashed_password, :login_ip
 
   # Overrides default initializer for compliance with Devise Gem.
@@ -39,13 +39,14 @@ class User
   #   user.groups = ['ntr.search.dev']
   #   user #<User email: example@email.com, username: nil, ...>
   #   user.serializable_hash #{:email=>"example@email.com", :username=>nil, ...}
-  def serializable_hash(_options = nil)
+  def serializable_hash(_options = nil) # rubocop:disable Metrics/MethodLength
     {
       email: email,
       username: username,
       groups: groups,
       aws_status: aws_status,
       aws_session: aws_session,
+      sub: sub,
       preferred_username: preferred_username,
       hashed_password: hashed_password,
       login_ip: login_ip

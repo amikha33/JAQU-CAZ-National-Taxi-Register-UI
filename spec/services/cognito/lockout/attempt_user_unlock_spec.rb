@@ -9,7 +9,7 @@ describe Cognito::Lockout::AttemptUserUnlock do
   let(:unlockable) { true }
 
   before do
-    user_data_stub = instance_double('Cognito::Lockout::UserData', unlockable?: unlockable)
+    user_data_stub = instance_double(Cognito::Lockout::UserData, unlockable?: unlockable)
     allow(Cognito::Lockout::UserData).to receive(:new).and_return(user_data_stub)
     allow(Cognito::Lockout::UpdateUser).to receive(:call)
       .with(username: username, failed_logins: 0, lockout_time: nil)

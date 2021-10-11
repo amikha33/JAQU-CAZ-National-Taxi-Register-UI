@@ -5,13 +5,9 @@ require 'rails_helper'
 describe 'UploadController - POST #import', type: :request do
   subject { post import_upload_index_path, params: { file: csv_file } }
 
-  let(:file_path) do
-    File.join(
-      'spec',
-      'fixtures', 'files', 'csv', 'CAZ-2020-01-08-AuthorityID.csv'
-    )
-  end
   let(:csv_file) { fixture_file_upload(file_path) }
+  let(:file_path) { File.join('spec', 'fixtures', 'files', 'csv', 'CAZ-2020-01-08-AuthorityID.csv') }
+  let(:filename) { 'CAZ-2020-01-08-AuthorityID_1431a5ea-1048-446e-b4c8-2151e333e96f_1633598919.csv' }
 
   before { sign_in create_user }
 
@@ -19,7 +15,8 @@ describe 'UploadController - POST #import', type: :request do
     let(:job_name) { 'name' }
 
     before do
-      allow(CsvUploadService).to receive(:call).and_return(true)
+      stub = instance_double(CsvUploadService, filename: filename)
+      allow(CsvUploadService).to receive(:call).and_return(stub)
       allow(RegisterCheckerApi).to receive(:register_job).and_return(job_name)
       subject
     end
@@ -33,7 +30,7 @@ describe 'UploadController - POST #import', type: :request do
     end
 
     it 'sets filename in session' do
-      expect(session[:job][:filename]).to eq(file_path.split('/').last)
+      expect(session[:job][:filename]).to eq(filename)
     end
   end
 

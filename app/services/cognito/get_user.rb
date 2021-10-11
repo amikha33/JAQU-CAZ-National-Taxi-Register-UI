@@ -33,9 +33,10 @@ module Cognito
     private
 
     # Sets the details of current user using Cognito response.
-    def update_user
+    def update_user # rubocop:disable Metrics/AbcSize
       user.username = user_data.username
       user.email = extract_attr('email')
+      user.sub = extract_attr('sub')
       user.aws_status = 'OK'
       user.preferred_username = preferred_username || sub
       update_preferred_username

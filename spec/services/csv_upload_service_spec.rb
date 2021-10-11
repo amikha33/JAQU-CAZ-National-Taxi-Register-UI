@@ -3,9 +3,12 @@
 require 'rails_helper'
 
 describe CsvUploadService do
-  subject(:service_call) { described_class.call(file: file, user: create_user) }
+  subject(:service_call) { described_class.call(file: file, user: user) }
 
-  let(:file) { fixture_file_upload(csv_file('CAZ-2020-01-08-AuthorityID.csv')) }
+  let(:file) { fixture_file_upload(csv_file("#{filename}.csv")) }
+  let(:filename) { 'CAZ-2020-01-08-AuthorityID' }
+  let(:user) { create_user(sub: sub) }
+  let(:sub) { SecureRandom.uuid }
 
   describe '#call' do
     context 'with valid params' do
@@ -14,23 +17,23 @@ describe CsvUploadService do
         allow(Aws::S3::Object).to receive(:new).and_return(mock)
       end
 
-      it 'returns true' do
-        expect(service_call).to be true
-      end
-
       context 'lowercase extension format' do
-        let(:file) { fixture_file_upload(csv_file('CAZ-2020-01-08-AuthorityID.csv')) }
+        let(:file) { fixture_file_upload(csv_file("#{filename}.csv")) }
 
-        it 'returns true' do
-          expect(service_call).to be true
+        it 'returns an instance' do
+          expect(subject).to be_an_instance_of(described_class)
+        end
+
+        it 'returns the proper file name' do
+          freeze_time { expect(subject.filename).to eq("#{filename}_#{sub}_#{Time.current.to_i}.csv") }
         end
       end
 
       context 'uppercase extension format' do
-        let(:file) { fixture_file_upload(csv_file('CAZ-2020-01-08-AuthorityID.CSV')) }
+        let(:file) { fixture_file_upload(csv_file("#{filename}.CSV")) }
 
-        it 'returns true' do
-          expect(service_call).to be true
+        it 'returns an instance' do
+          expect(subject).to be_an_instance_of(described_class)
         end
       end
     end
@@ -56,7 +59,7 @@ describe CsvUploadService do
       end
 
       context 'when S3 raises an exception' do
-        before { stub_request(:put, /CAZ-2020-01-08-AuthorityID.csv/).to_return(status: 500, body: '') }
+        before { stub_request(:put, //).to_return(status: 500, body: '') }
 
         it 'raises a proper exception' do
           expect { service_call }.to raise_exception(CsvUploadFailureException)
@@ -64,7 +67,7 @@ describe CsvUploadService do
       end
 
       context 'when file size is too big' do
-        let(:file) { fixture_file_upload(csv_file('CAZ-2020-01-08-AuthorityID.csv')) }
+        let(:file) { fixture_file_upload(csv_file("#{filename}.csv")) }
 
         before { allow(file).to receive(:size).and_return(52_428_801) }
 

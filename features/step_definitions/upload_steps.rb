@@ -11,13 +11,11 @@ end
 # Scenario: Upload a csv file and redirect to processing page
 When('I upload a valid csv file') do
   allow(SecureRandom).to receive(:uuid).and_return(correlation_id)
-  allow(CsvUploadService).to receive(:call).and_return(true)
-  allow(RegisterCheckerApi).to receive(:register_job)
-    .with('CAZ-2020-01-08-AuthorityID.csv', correlation_id)
-    .and_return(job_name)
-
-  allow(RegisterCheckerApi).to receive(:job_status)
-    .with(job_name, correlation_id).and_return('RUNNING')
+  filename = 'CAZ-2020-01-08-AuthorityID-08_1431a5ea-1048-446e-b4c8-2151e333e96f_1633598919.csv'
+  stub = instance_double(CsvUploadService, filename: filename)
+  allow(CsvUploadService).to receive(:call).and_return(stub)
+  allow(RegisterCheckerApi).to receive(:register_job).with(filename, correlation_id).and_return(job_name)
+  allow(RegisterCheckerApi).to receive(:job_status).with(job_name, correlation_id).and_return('RUNNING')
 
   attach_file(:file, csv_file('CAZ-2020-01-08-AuthorityID.csv'))
   click_button 'Upload'

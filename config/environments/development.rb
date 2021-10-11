@@ -62,6 +62,6 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # Use to have access to the application via custom DNS localy
-  config.hosts << 'ntr-ui.caz'
+  # Use to have access to the application via custom DNS locally.
+  config.hosts << 'ntr'
 end
