@@ -3,415 +3,505 @@
   <ID>Ruby</ID>
   <OriginalElement>ApplicationController</OriginalElement>
   <nodes>
-    <node x="436.75000000000045" y="3249.5">Responders::ControllerMethod</node>
-    <node x="2350.3750000000005" y="1756.0">Rake::FileUtilsExt</node>
-    <node x="287.0" y="4788.0">ActiveSupport::Configurable::ClassMethods</node>
-    <node x="2339.3750000000005" y="229.0">FileUtils</node>
-    <node x="3430.1250000000005" y="3647.0">Cognito::ConfirmForgotPassword</node>
-    <node x="4497.875" y="3249.5">VehiclesCheckerApi</node>
-    <node x="2194.1250000000005" y="3153.0">ConfirmResetPasswordForm</node>
-    <node x="3188.1250000000005" y="3647.0">Cognito::AuthUser</node>
-    <node x="2434.8750000000005" y="1986.0">Rake::DSL</node>
-    <node x="807.8569209039551" y="2297.0">ActiveSupport::DescendantsTracker</node>
-    <node x="4212.625" y="2696.5">BaseApi</node>
-    <node x="4334.625" y="2696.5">ApplicationRecord</node>
-    <node x="549.5000000000005" y="3707.0">ActionController::Base</node>
-    <node x="2840.8750000000005" y="2070.0">ActiveSupport::Tryable</node>
-    <node x="1058.0000000000005" y="4287.0">VehiclesController</node>
-    <node x="2363.3750000000005" y="0.0">FileUtils::StreamUtils_</node>
-    <node x="784.0000000000005" y="4251.0">PasswordsController</node>
-    <node x="2962.8750000000005" y="2082.0">Kernel</node>
-    <node x="635.8569209039551" y="2321.0">ActiveSupport::Configurable</node>
-    <node x="2154.3343220338984" y="2587.0">PaginatedVrnHistory</node>
-    <node x="2998.1250000000005" y="3129.0">ExampleCsv</node>
-    <node x="771.6250000000005" y="2539.0">AbstractController::Base</node>
-    <node x="509.50000000000045" y="3949.0">ApplicationController</node>
-    <node x="2528.3343220338984" y="2599.0">VrnDetails</node>
-    <node x="3074.8750000000005" y="1986.0">Cucumber::Glue::Dsl</node>
-    <node x="4800.625" y="2321.5">Module::Concerning</node>
-    <node x="241.0" y="4443.5">StaticPagesController</node>
-    <node x="3637.1250000000005" y="3165.0">Ses::SendSuccessEmail</node>
-    <node x="2567.8750000000005" y="2046.0">PP::ObjectMixin</node>
-    <node x="2486.1250000000005" y="3213.0">ResetPasswordForm</node>
-    <node x="4761.625" y="3249.5">Class</node>
-    <node x="2719.3750000000005" y="2334.5">Object</node>
-    <node x="4764.625" y="2695.5">Module</node>
-    <node x="2272.8750000000005" y="2083.0">BasicObject</node>
-    <node x="3037.3343220338984" y="2683.0">Cognito::CallException</node>
-    <node x="3193.1250000000005" y="3225.0">Cognito::CognitoBaseService</node>
-    <node x="484.0" y="4788.0">RSpec::Mocks::AnyInstance</node>
-    <node x="1866.1250000000005" y="3081.5">SearchVrnForm</node>
-    <node x="818.0" y="4788.0">Ses</node>
-    <node x="3644.4518361581922" y="2671.5">User</node>
-    <node x="2806.1250000000005" y="3201.0">EmailValidator</node>
-    <node x="2370.6425141242944" y="3647.0">Cognito::GetUser</node>
-    <node x="845.6250000000005" y="3225.0">UploadMailer</node>
-    <node x="0.0" y="4431.5">ErrorsController</node>
-    <node x="1017.6250000000005" y="3237.0">NewPasswordException</node>
-    <node x="3692.1250000000005" y="3683.0">Cognito::ForgotPassword</node>
-    <node x="2755.3343220338984" y="2599.0">NewPasswordForm</node>
-    <node x="3425.1250000000005" y="3092.5">CsvUploadService</node>
-    <node x="3849.1250000000005" y="3249.5">RegisterCheckerApi</node>
-    <node x="1269.6250000000005" y="3249.5">CsvUploadFailureException</node>
-    <node x="671.0" y="4788.0">Cognito</node>
-    <node x="0.0" y="4788.0">ApplicationHelper</node>
-    <node x="503.00000000000045" y="4311.0">UploadController</node>
-    <node x="3221.8343220338984" y="2671.5">BaseService</node>
-    <node x="648.7500000000005" y="2961.0">ActionController::Metal</node>
-    <node x="4081.1250000000005" y="3249.5">AwsCredentialsApi</node>
-    <node x="2396.3343220338984" y="2671.0">BaseForm</node>
-    <node x="1156.1250000000005" y="2696.5">ApplicationException</node>
-    <node x="1832.1250000000005" y="2683.5">MultipleAttributesBaseForm</node>
-    <node x="2517.6425141242944" y="3647.0">Cognito::RespondToAuthChallenge</node>
-    <node x="1408.1250000000005" y="2575.0">HistoricalVrnDetails</node>
-    <node x="625.5000000000005" y="2683.0">ActionController::Testing::Functional</node>
-    <node x="4556.625" y="2587.0">VrnHistory</node>
-    <node x="1660.1250000000005" y="2623.0">ApiException</node>
+    <node x="4578.666149068323" y="320.0">Cognito::ForgotPassword::Reset</node>
+    <node x="1809.5144927536253" y="240.0">Responders::ControllerMethod</node>
+    <node x="312.6247412008306" y="240.0">ApplicationMailer</node>
+    <node x="215.0" y="555.0">ActiveSupport::Configurable::ClassMethods</node>
+    <node x="2142.291925465841" y="240.0">VehiclesCheckerApi</node>
+    <node x="553.7919254658407" y="240.0">ConfirmResetPasswordForm</node>
+    <node x="3279.1661490683227" y="320.0">Cognito::AuthUser</node>
+    <node x="2542.1661490683227" y="320.0">Cognito::ForgotPassword::RateLimitVerification</node>
+    <node x="568.0" y="555.0">Security</node>
+    <node x="132.29140786749713" y="80.0">ActiveSupport::DescendantsTracker</node>
+    <node x="2272.1661490683227" y="160.0">BaseApi</node>
+    <node x="4389.583333333333" y="160.0">ApplicationRecord</node>
+    <node x="299.11024844720487" y="320.0">ActionController::Base</node>
+    <node x="2046.166149068323" y="0.0">ActiveSupport::Tryable</node>
+    <node x="384.0" y="480.0">VehiclesController</node>
+    <node x="4964.666149068323" y="320.0">Cognito::Lockout::AttemptUserUnlock</node>
+    <node x="2908.1661490683227" y="320.0">Cognito::Lockout::UserData</node>
+    <node x="175.0" y="480.0">PasswordsController</node>
+    <node x="2156.1661490683227" y="0.0">Kernel</node>
+    <node x="4154.666149068323" y="320.0">Cognito::UpdatePreferredUsername</node>
+    <node x="337.2914078674971" y="80.0">ActiveSupport::Configurable</node>
+    <node x="2782.6661490683227" y="160.0">PaginatedVrnHistory</node>
+    <node x="3219.791925465841" y="240.0">ExampleCsv</node>
+    <node x="360.6247412008304" y="160.0">AbstractController::Base</node>
+    <node x="236.11024844720487" y="400.0">ApplicationController</node>
+    <node x="3490.4161490683227" y="160.0">SessionsController</node>
+    <node x="1703.166149068323" y="160.0">VrnDetails</node>
+    <node x="4820.666149068323" y="320.0">Cognito::ForgotPassword::UpdateUser</node>
+    <node x="4557.083333333333" y="80.0">Module::Concerning</node>
+    <node x="576.0" y="480.0">StaticPagesController</node>
+    <node x="3525.791925465841" y="240.0">Ses::SendSuccessEmail</node>
+    <node x="2060.1661490683227" y="160.0">InvalidHostException</node>
+    <node x="981.666149068323" y="160.0">UsernameAndPassword</node>
+    <node x="820.7919254658407" y="240.0">ResetPasswordForm</node>
+    <node x="2037.416149068323" y="80.0">Object</node>
+    <node x="4593.583333333333" y="240.0">Class</node>
+    <node x="1902.166149068323" y="0.0">BasicObject</node>
+    <node x="4583.583333333333" y="160.0">Module</node>
+    <node x="652.6247412008304" y="160.0">Cognito::CallException</node>
+    <node x="3926.791925465841" y="240.0">Cognito::CognitoBaseService</node>
+    <node x="398.0" y="555.0">RSpec::Mocks::AnyInstance</node>
+    <node x="4039.6661490683227" y="320.0">Cognito::ForgotPassword::Confirm</node>
+    <node x="2802.791925465841" y="240.0">Security::RefererXssHandler</node>
+    <node x="4171.083333333333" y="240.0">SearchVrnForm</node>
+    <node x="849.0" y="555.0">Ses</node>
+    <node x="1971.166149068323" y="160.0">User</node>
+    <node x="3362.791925465841" y="240.0">EmailValidator</node>
+    <node x="2426.1661490683227" y="320.0">Cognito::GetUser</node>
+    <node x="391.6102484472051" y="320.0">UploadMailer</node>
+    <node x="0.0" y="480.0">ErrorsController</node>
+    <node x="1365.5144927536253" y="240.0">NewPasswordException</node>
+    <node x="3845.6661490683227" y="320.0">Cognito::Lockout::VerifyInvalidLogins</node>
+    <node x="2582.6661490683227" y="160.0">NewPasswordForm</node>
+    <node x="2615.791925465841" y="240.0">CsvUploadService</node>
+    <node x="4676.666149068323" y="320.0">Cognito::Lockout::UpdateUser</node>
+    <node x="2343.291925465841" y="240.0">RegisterCheckerApi</node>
+    <node x="2310.1661490683227" y="320.0">Cognito::ForgotPassword::GetUser</node>
+    <node x="1108.5144927536253" y="240.0">CsvUploadFailureException</node>
+    <node x="709.0" y="555.0">Cognito</node>
+    <node x="0.0" y="555.0">ApplicationHelper</node>
+    <node x="793.0" y="480.0">UploadController</node>
+    <node x="3211.1661490683227" y="160.0">BaseService</node>
+    <node x="214.6247412008306" y="240.0">ActionController::Metal</node>
+    <node x="2994.791925465841" y="240.0">BackLinkHistoryService</node>
+    <node x="808.6247412008304" y="160.0">BaseForm</node>
+    <node x="2755.1661490683227" y="320.0">Cognito::Lockout::IsUserLocked</node>
+    <node x="1394.3747412008304" y="160.0">ApplicationException</node>
+    <node x="4409.666149068323" y="320.0">Cognito::GetUserGroups</node>
+    <node x="4122.583333333333" y="160.0">MultipleAttributesBaseForm</node>
+    <node x="3683.4161490683227" y="160.0">Cognito::Client</node>
+    <node x="3032.1661490683227" y="320.0">Cognito::RespondToAuthChallenge</node>
+    <node x="450.6247412008304" y="160.0">HistoricalVrnDetails</node>
+    <node x="1600.5144927536253" y="240.0">RefererXssException</node>
+    <node x="3714.791925465841" y="240.0">Security::HostHeaderValidator</node>
+    <node x="206.6247412008306" y="160.0">ActionController::Testing::Functional</node>
+    <node x="1836.166149068323" y="160.0">VrnHistory</node>
+    <node x="1211.666149068323" y="160.0">ApiException</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="FileUtils" target="FileUtils::StreamUtils_">
-      <point x="-52.5" y="-738.5" />
-      <point x="2391.8750000000005" y="204.0" />
-      <point x="2403.8750000000005" y="204.0" />
-      <point x="-40.5" y="89.5" />
+    <edge source="Module" target="Object" relationship="REALIZATION">
+      <point x="-23.0" y="-15.0" />
+      <point x="4606.583333333333" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Cognito::ForgotPassword" target="Cognito::CognitoBaseService">
-      <point x="0.0" y="-90.0" />
-      <point x="3778.1250000000005" y="3617.0" />
-      <point x="3383.925" y="3617.0" />
-      <point x="84.80000000000004" y="54.0" />
+    <edge source="Cognito::GetUserGroups" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="4484.166149068323" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ErrorsController" target="ApplicationController">
-      <point x="0.0" y="-65.5" />
-      <point x="110.5" y="4221.0" />
-      <point x="534.3000000000004" y="4221.0" />
-      <point x="-99.20000000000005" y="126.0" />
+    <edge source="Class" target="Module" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="AbstractController::Base" target="ActiveSupport::DescendantsTracker">
-      <point x="0.0" y="-186.0" />
-      <point x="871.6250000000005" y="2519.0" />
-      <point x="913.8569209039551" y="2519.0" />
-      <point x="0.0" y="66.0" />
+    <edge source="Cognito::ForgotPassword::GetUser" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2358.1661490683227" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="NewPasswordForm" target="Object">
-      <point x="0.0" y="-126.0" />
-      <point x="2886.3343220338984" y="2519.0" />
-      <point x="2768.2500000000005" y="2519.0" />
-      <point x="2.875" y="28.5" />
+    <edge source="VrnDetails" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="1759.666149068323" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="AbstractController::Base" target="Object">
-      <point x="66.66666666666663" y="-186.0" />
-      <point x="938.291666666667" y="2449.0" />
-      <point x="2722.2500000000005" y="2449.0" />
-      <point x="-43.125" y="28.5" />
+    <edge source="ErrorsController" target="ApplicationController" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="77.5" y="455.0" />
+      <point x="334.11024844720487" y="455.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="BaseApi" target="Object">
-      <point x="0.0" y="-28.5" />
-      <point x="4263.625" y="2479.0" />
-      <point x="2791.2500000000005" y="2479.0" />
-      <point x="25.875" y="28.5" />
+    <edge source="NewPasswordForm" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2672.6661490683227" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ActionController::Base" target="Responders::ControllerMethod">
-      <point x="-42.0" y="-66.0" />
-      <point x="591.5000000000005" y="3627.0" />
-      <point x="532.7500000000005" y="3627.0" />
-      <point x="0.0" y="29.5" />
+    <edge source="BackLinkHistoryService" target="BaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3097.291925465841" y="215.0" />
+      <point x="3272.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="UploadMailer" target="AbstractController::Base">
-      <point x="0.0" y="-54.0" />
-      <point x="50.0" y="186.0" />
+    <edge source="Cognito::Lockout::VerifyInvalidLogins" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3932.6661490683227" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Cognito::AuthUser" target="Cognito::CognitoBaseService">
-      <point x="0.0" y="-126.0" />
-      <point x="1.4210854715202004E-14" y="54.0" />
+    <edge source="ActionController::Metal" target="AbstractController::Base" relationship="REALIZATION">
+      <point x="19.5" y="-15.0" />
+      <point x="273.1247412008306" y="215.0" />
+      <point x="395.6247412008304" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="UploadController" target="ApplicationController">
-      <point x="0.0" y="-186.0" />
-      <point x="0.0" y="126.0" />
+    <edge source="ApiException" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="1279.166149068323" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="VrnHistory" target="Object">
-      <point x="0.0" y="-138.0" />
-      <point x="4650.625" y="2459.0" />
-      <point x="2802.7500000000005" y="2459.0" />
-      <point x="37.375" y="28.5" />
+    <edge source="PaginatedVrnHistory" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2877.1661490683227" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Class" target="Module">
-      <point x="0.0" y="-29.5" />
-      <point x="0.0" y="29.5" />
+    <edge source="HistoricalVrnDetails" target="Object" relationship="REALIZATION">
+      <point x="2.2737367544323206E-13" y="-15.0" />
+      <point x="541.6247412008306" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="HistoricalVrnDetails" target="Object">
-      <point x="0.0" y="-150.0" />
-      <point x="1524.1250000000005" y="2469.0" />
-      <point x="2733.7500000000005" y="2469.0" />
-      <point x="-31.625" y="28.5" />
+    <edge source="Cognito::CallException" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="720.6247412008304" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Module" target="Object">
-      <point x="-34.0" y="-29.5" />
-      <point x="4798.625" y="2449.0" />
-      <point x="2808.5000000000005" y="2449.0" />
-      <point x="43.125" y="28.5" />
+    <edge source="Ses::SendSuccessEmail" target="BaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3610.291925465841" y="215.0" />
+      <point x="3272.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Ses::SendSuccessEmail" target="BaseService">
-      <point x="0.0" y="-114.0" />
-      <point x="3733.1250000000005" y="2931.0" />
-      <point x="3349.6343220338986" y="2931.0" />
-      <point x="56.80000000000018" y="53.5" />
+    <edge source="UploadController" target="ApplicationController" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="875.0" y="455.0" />
+      <point x="334.11024844720487" y="455.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="BaseForm" target="Object">
-      <point x="0.0" y="-54.0" />
-      <point x="2452.3343220338984" y="2509.0" />
-      <point x="2756.7500000000005" y="2509.0" />
-      <point x="-8.625" y="28.5" />
+    <edge source="SearchVrnForm" target="MultipleAttributesBaseForm" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="MultipleAttributesBaseForm" target="Object">
-      <point x="0.0" y="-41.5" />
-      <point x="1978.1250000000005" y="2489.0" />
-      <point x="2745.2500000000005" y="2489.0" />
-      <point x="-20.125" y="28.5" />
+    <edge source="UsernameAndPassword" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="1086.666149068323" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ApplicationException" target="Object">
-      <point x="0.0" y="-28.5" />
-      <point x="1272.1250000000005" y="2459.0" />
-      <point x="2728.0000000000005" y="2459.0" />
-      <point x="-37.375" y="28.5" />
+    <edge source="BaseApi" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2319.6661490683227" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="User" target="Object">
-      <point x="0.0" y="-53.5" />
-      <point x="3720.9518361581922" y="2489.0" />
-      <point x="2785.5000000000005" y="2489.0" />
-      <point x="20.125" y="28.5" />
+    <edge source="RefererXssException" target="ApplicationException" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="1695.0144927536253" y="215.0" />
+      <point x="1491.8747412008304" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ConfirmResetPasswordForm" target="BaseForm">
-      <point x="0.0" y="-126.0" />
-      <point x="2330.1250000000005" y="2941.0" />
-      <point x="2424.3343220338984" y="2941.0" />
-      <point x="-28.0" y="54.0" />
+    <edge source="RegisterCheckerApi" target="BaseApi" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2433.791925465841" y="215.0" />
+      <point x="2319.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ApiException" target="Object">
-      <point x="0.0" y="-102.0" />
-      <point x="1736.1250000000005" y="2479.0" />
-      <point x="2739.5000000000005" y="2479.0" />
-      <point x="-25.875" y="28.5" />
+    <edge source="ActionController::Base" target="Responders::ControllerMethod" relationship="REALIZATION">
+      <point x="17.5" y="-15.0" />
+      <point x="351.61024844720487" y="300.0" />
+      <point x="1894.5144927536253" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Rake::FileUtilsExt" target="FileUtils">
-      <point x="0.0" y="-90.0" />
-      <point x="0.0" y="738.5" />
+    <edge source="Module" target="Module::Concerning" relationship="REALIZATION">
+      <point x="23.0" y="-15.0" />
+      <point x="4652.583333333333" y="135.0" />
+      <point x="4616.583333333333" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="AbstractController::Base" target="ActiveSupport::Configurable">
-      <point x="-66.66666666666674" y="-186.0" />
-      <point x="804.9583333333337" y="2519.0" />
-      <point x="711.8569209039551" y="2519.0" />
-      <point x="0.0" y="42.0" />
+    <edge source="AbstractController::Base" target="ActiveSupport::DescendantsTracker" relationship="REALIZATION">
+      <point x="-23.33333333333337" y="-15.0" />
+      <point x="372.2914078674971" y="135.0" />
+      <point x="224.79140786749713" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Module" target="Module::Concerning">
-      <point x="34.0" y="-29.5" />
-      <point x="0.0" y="41.5" />
+    <edge source="EmailValidator" target="BaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3434.291925465841" y="215.0" />
+      <point x="3272.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Cognito::ConfirmForgotPassword" target="Cognito::CognitoBaseService">
-      <point x="0.0" y="-126.0" />
-      <point x="3551.1250000000005" y="3627.0" />
-      <point x="3341.5250000000005" y="3627.0" />
-      <point x="42.400000000000034" y="54.0" />
+    <edge source="AbstractController::Base" target="ActiveSupport::Configurable" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="395.6247412008304" y="135.0" />
+      <point x="402.2914078674971" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="EmailValidator" target="BaseService">
-      <point x="0.0" y="-78.0" />
-      <point x="2892.1250000000005" y="2931.0" />
-      <point x="3236.034322033898" y="2931.0" />
-      <point x="-56.799999999999955" y="53.5" />
+    <edge source="BaseService" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3272.6661490683227" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="StaticPagesController" target="ApplicationController">
-      <point x="0.0" y="-53.5" />
-      <point x="362.0" y="4231.0" />
-      <point x="583.9000000000005" y="4231.0" />
-      <point x="-49.60000000000002" y="126.0" />
+    <edge source="Cognito::ForgotPassword::RateLimitVerification" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2638.6661490683227" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="PasswordsController" target="ApplicationController">
-      <point x="0.0" y="-246.0" />
-      <point x="911.0000000000005" y="4231.0" />
-      <point x="683.1000000000004" y="4231.0" />
-      <point x="49.59999999999991" y="126.0" />
+    <edge source="ApplicationRecord" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="4476.583333333333" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ApplicationController" target="ActionController::Base">
-      <point x="0.0" y="-126.0" />
-      <point x="0.0" y="66.0" />
+    <edge source="Cognito::Lockout::UserData" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2960.1661490683227" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ActionController::Base" target="ActionController::Metal">
-      <point x="42.0" y="-66.0" />
-      <point x="675.5000000000005" y="3627.0" />
-      <point x="734.2500000000005" y="3627.0" />
-      <point x="0.0" y="318.0" />
+    <edge source="ActionController::Base" target="ActionController::Metal" relationship="REALIZATION">
+      <point x="-17.5" y="-15.0" />
+      <point x="316.61024844720487" y="300.0" />
+      <point x="253.6247412008306" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="CsvUploadService" target="BaseService">
-      <point x="0.0" y="-186.5" />
-      <point x="3521.1250000000005" y="2941.0" />
-      <point x="3321.2343220338985" y="2941.0" />
-      <point x="28.40000000000009" y="53.5" />
+    <edge source="Cognito::Lockout::UpdateUser" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="4738.666149068323" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="BaseService" target="Object">
-      <point x="0.0" y="-53.5" />
-      <point x="3292.8343220338984" y="2499.0" />
-      <point x="2779.7500000000005" y="2499.0" />
-      <point x="14.375" y="28.5" />
+    <edge source="VehiclesCheckerApi" target="BaseApi" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2232.791925465841" y="215.0" />
+      <point x="2319.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="NewPasswordException" target="ApplicationException">
-      <point x="0.0" y="-42.0" />
-      <point x="1133.6250000000005" y="2941.0" />
-      <point x="1214.1250000000005" y="2941.0" />
-      <point x="-58.0" y="28.5" />
+    <edge source="Security::RefererXssHandler" target="BaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2888.791925465841" y="215.0" />
+      <point x="3272.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Object" target="PP::ObjectMixin">
-      <point x="-7.666666666666515" y="-28.5" />
-      <point x="2757.708333333334" y="2257.0" />
-      <point x="2694.3750000000005" y="2257.0" />
-      <point x="0.0" y="65.5" />
+    <edge source="ApplicationMailer" target="AbstractController::Base" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Cognito::RespondToAuthChallenge" target="Cognito::CognitoBaseService">
-      <point x="0.0" y="-126.0" />
-      <point x="2643.6425141242944" y="3627.0" />
-      <point x="3256.7250000000004" y="3627.0" />
-      <point x="-42.39999999999999" y="54.0" />
+    <edge source="Cognito::CognitoBaseService" target="BaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="4017.791925465841" y="215.0" />
+      <point x="3272.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ExampleCsv" target="BaseService">
-      <point x="0.0" y="-150.0" />
-      <point x="3085.6250000000005" y="2941.0" />
-      <point x="3264.4343220338983" y="2941.0" />
-      <point x="-28.40000000000009" y="53.5" />
+    <edge source="Object" target="Kernel" relationship="REALIZATION">
+      <point x="21.75" y="-15.0" />
+      <point x="2102.6661490683227" y="60.0" />
+      <point x="2144.4161490683227" y="60.0" />
+      <point x="2144.4161490683227" y="50.0" />
+      <point x="2197.6661490683227" y="50.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Rake::DSL" target="Rake::FileUtilsExt">
-      <point x="0.0" y="-125.5" />
-      <point x="47.0" y="90.0" />
+    <edge source="BaseForm" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="863.1247412008304" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ActionController::Metal" target="ActionController::Testing::Functional">
-      <point x="-42.75" y="-318.0" />
-      <point x="0.0" y="42.0" />
+    <edge source="Object" target="BasicObject" relationship="REALIZATION">
+      <point x="-21.75" y="-15.0" />
+      <point x="2059.1661490683227" y="60.0" />
+      <point x="1964.166149068323" y="60.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Object" target="Kernel">
-      <point x="23.0" y="-28.5" />
-      <point x="2788.3750000000005" y="2267.0" />
-      <point x="3008.8750000000005" y="2267.0" />
-      <point x="0.0" y="29.5" />
+    <edge source="StaticPagesController" target="ApplicationController" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="674.5" y="455.0" />
+      <point x="334.11024844720487" y="455.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="VehiclesCheckerApi" target="BaseApi">
-      <point x="0.0" y="-29.5" />
-      <point x="4603.875" y="2941.0" />
-      <point x="4297.625" y="2941.0" />
-      <point x="34.0" y="28.5" />
+    <edge source="VehiclesController" target="ApplicationController" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="470.0" y="455.0" />
+      <point x="334.11024844720487" y="455.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="AwsCredentialsApi" target="BaseApi">
-      <point x="0.0" y="-29.5" />
-      <point x="0.0" y="28.5" />
+    <edge source="ExampleCsv" target="BaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3281.291925465841" y="215.0" />
+      <point x="3272.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ApplicationRecord" target="Object">
-      <point x="0.0" y="-28.5" />
-      <point x="4435.625" y="2469.0" />
-      <point x="2797.0000000000005" y="2469.0" />
-      <point x="31.625" y="28.5" />
+    <edge source="Cognito::Lockout::IsUserLocked" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2821.6661490683227" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Cognito::CognitoBaseService" target="BaseService">
-      <point x="0.0" y="-54.0" />
-      <point x="3299.1250000000005" y="2941.0" />
-      <point x="3292.8343220338984" y="2941.0" />
-      <point x="0.0" y="53.5" />
+    <edge source="SessionsController" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3576.9161490683227" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="PaginatedVrnHistory" target="Object">
-      <point x="0.0" y="-138.0" />
-      <point x="2265.3343220338984" y="2499.0" />
-      <point x="2751.0000000000005" y="2499.0" />
-      <point x="-14.375" y="28.5" />
+    <edge source="ApplicationController" target="ActionController::Base" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="SearchVrnForm" target="MultipleAttributesBaseForm">
-      <point x="0.0" y="-197.5" />
-      <point x="0.0" y="41.5" />
+    <edge source="ActionController::Metal" target="ActionController::Testing::Functional" relationship="REALIZATION">
+      <point x="-19.5" y="-15.0" />
+      <point x="234.1247412008306" y="215.0" />
+      <point x="263.1247412008306" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="VehiclesController" target="ApplicationController">
-      <point x="0.0" y="-210.0" />
-      <point x="1166.0000000000005" y="4221.0" />
-      <point x="732.7000000000003" y="4221.0" />
-      <point x="99.19999999999993" y="126.0" />
+    <edge source="AbstractController::Base" target="Object" relationship="REALIZATION">
+      <point x="23.33333333333337" y="-15.0" />
+      <point x="418.95807453416364" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Rake::FileUtilsExt" target="Rake::FileUtilsExt">
-      <point x="-47.0" y="90.0" />
-      <point x="2397.3750000000005" y="1956.0" />
-      <point x="2330.3750000000005" y="1956.0" />
-      <point x="2330.3750000000005" y="1846.0" />
-      <point x="-94.0" y="-0.0" />
+    <edge source="NewPasswordException" target="ApplicationException" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="1473.0144927536253" y="215.0" />
+      <point x="1491.8747412008304" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Object" target="ActiveSupport::Tryable">
-      <point x="7.666666666666515" y="-28.5" />
-      <point x="2773.041666666667" y="2257.0" />
-      <point x="2891.8750000000005" y="2257.0" />
-      <point x="0.0" y="41.5" />
+    <edge source="Cognito::ForgotPassword::Reset" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="4617.666149068323" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Cognito::CallException" target="Object">
-      <point x="0.0" y="-42.0" />
-      <point x="3118.3343220338984" y="2509.0" />
-      <point x="2774.0000000000005" y="2509.0" />
-      <point x="8.625" y="28.5" />
+    <edge source="Cognito::ForgotPassword::Confirm" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="4087.1661490683227" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="RegisterCheckerApi" target="BaseApi">
-      <point x="0.0" y="-29.5" />
-      <point x="3955.1250000000005" y="2941.0" />
-      <point x="4229.625" y="2941.0" />
-      <point x="-34.0" y="28.5" />
+    <edge source="InvalidHostException" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2156.1661490683227" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Object" target="BasicObject">
-      <point x="-38.333333333333485" y="-28.5" />
-      <point x="2727.041666666667" y="2277.0" />
-      <point x="2343.8750000000005" y="2277.0" />
-      <point x="0.0" y="28.5" />
+    <edge source="Cognito::Lockout::AttemptUserUnlock" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="5056.666149068323" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ResetPasswordForm" target="BaseForm">
-      <point x="0.0" y="-66.0" />
-      <point x="2587.1250000000005" y="2941.0" />
-      <point x="2480.3343220338984" y="2941.0" />
-      <point x="28.0" y="54.0" />
+    <edge source="ResetPasswordForm" target="BaseForm" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="914.7919254658407" y="215.0" />
+      <point x="863.1247412008304" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="ActionController::Metal" target="AbstractController::Base">
-      <point x="42.75" y="-318.0" />
-      <point x="777.0000000000005" y="2941.0" />
-      <point x="821.6250000000005" y="2941.0" />
-      <point x="-50.0" y="186.0" />
+    <edge source="CsvUploadService" target="BaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2699.291925465841" y="215.0" />
+      <point x="3272.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="CsvUploadFailureException" target="ApplicationException">
-      <point x="0.0" y="-29.5" />
-      <point x="1410.6250000000005" y="2941.0" />
-      <point x="1330.1250000000005" y="2941.0" />
-      <point x="58.0" y="28.5" />
+    <edge source="VrnHistory" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="1893.666149068323" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Cognito::GetUser" target="Cognito::CognitoBaseService">
-      <point x="0.0" y="-126.0" />
-      <point x="2434.1425141242944" y="3617.0" />
-      <point x="3214.3250000000003" y="3617.0" />
-      <point x="-84.8" y="54.0" />
+    <edge source="Cognito::RespondToAuthChallenge" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3145.6661490683227" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Object" target="Cucumber::Glue::Dsl">
-      <point x="38.333333333333485" y="-28.5" />
-      <point x="2803.708333333334" y="2277.0" />
-      <point x="3186.8750000000005" y="2277.0" />
-      <point x="0.0" y="125.5" />
+    <edge source="ApplicationException" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="1491.8747412008304" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="VrnDetails" target="Object">
-      <point x="0.0" y="-126.0" />
-      <point x="2631.8343220338984" y="2519.0" />
-      <point x="2762.5000000000005" y="2519.0" />
-      <point x="-2.875" y="28.5" />
+    <edge source="MultipleAttributesBaseForm" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="4246.083333333333" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
     </edge>
-    <edge source="Object" target="Rake::DSL">
-      <point x="-23.0" y="-28.5" />
-      <point x="2742.3750000000005" y="2267.0" />
-      <point x="2491.3750000000005" y="2267.0" />
-      <point x="0.0" y="125.5" />
+    <edge source="Object" target="ActiveSupport::Tryable" relationship="REALIZATION">
+      <point x="21.75" y="-15.0" />
+      <point x="2102.6661490683227" y="60.0" />
+      <point x="2144.4161490683227" y="60.0" />
+      <point x="2144.4161490683227" y="50.0" />
+      <point x="2091.1661490683227" y="50.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Cognito::AuthUser" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3331.6661490683227" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Cognito::Client" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3722.9161490683227" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="CsvUploadFailureException" target="ApplicationException" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="1227.0144927536253" y="215.0" />
+      <point x="1491.8747412008304" y="215.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Cognito::UpdatePreferredUsername" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="4272.166149068323" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="UploadMailer" target="ApplicationMailer" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="458.6102484472051" y="290.0" />
+      <point x="395.6247412008306" y="290.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="ConfirmResetPasswordForm" target="BaseForm" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="677.2919254658407" y="215.0" />
+      <point x="863.1247412008304" y="215.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Cognito::ForgotPassword::UpdateUser" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="4882.666149068323" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="PasswordsController" target="ApplicationController" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="269.5" y="455.0" />
+      <point x="334.11024844720487" y="455.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Cognito::GetUser" target="Cognito::CognitoBaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2474.1661490683227" y="300.0" />
+      <point x="4017.791925465841" y="300.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="User" target="Object" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="2005.666149068323" y="135.0" />
+      <point x="2080.9161490683227" y="135.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Security::HostHeaderValidator" target="BaseService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="3810.791925465841" y="215.0" />
+      <point x="3272.6661490683227" y="215.0" />
+      <point x="0.0" y="15.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.15614946795347687" x="719.0" y="2010.5" />
-  <SelectedNodes>
-    <node>ApplicationController</node>
-  </SelectedNodes>
-  <Categories>
-    <Category>Fields</Category>
-    <Category>Methods</Category>
-    <Category>Constants</Category>
-  </Categories>
+  <settings layout="Hierarchic" zoom="0.5983168891468369" showDependencies="false" x="1268.6148025996702" y="292.5" />
+  <SelectedNodes />
+  <Categories />
 </Diagram>
 
