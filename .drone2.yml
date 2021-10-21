@@ -55,7 +55,7 @@ steps:
       LOCATION: local
     commands:
       - cd JAQU-CAZ-QA-selenium
-      - cucumber -t @ZAPNTR
+      - bundle exec cucumber -t @ZAPNTR
 
   - name: security warning
     image: docker:19.03.11-git
@@ -84,7 +84,7 @@ steps:
       LOCATION: browserstack
     commands:
       - cd JAQU-CAZ-QA-selenium
-      - cucumber -t @NTR --guess --retry 3
+      - bundle exec cucumber -t @NTR --guess --retry 3
 
   ################################################# End Nightly Steps ############################################################
 
@@ -140,7 +140,7 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
     commands:
-      - cucumber
+      - bundle exec cucumber
 
   # Invoke static code analysis through Ruby libraries
   - name: static code analysis (Ruby)
@@ -416,7 +416,7 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
     commands:
-      - cucumber
+      - bundle exec cucumber
 
   # Invoke static code analysis through Ruby libraries
   - name: static code analysis (Ruby)
@@ -702,7 +702,7 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
     commands:
-      - cucumber
+      - bundle exec cucumber
     depends_on:
       - unit tests
 
@@ -1520,7 +1520,7 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
     commands:
-      - cucumber
+      - bundle exec cucumber
 
   # Invoke static code analysis through Ruby libraries
   - name: static code analysis (Ruby)
