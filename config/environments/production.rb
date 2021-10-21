@@ -27,14 +27,13 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
-  # https://blog.bigbinary.com/2015/10/31/rails-5-allows-setting-custom-http-headers-for-assets.html
   config.public_file_server.headers = {
     'Cache-Control' => 'public, s-maxage=31536000, max-age=15552000',
     'Expires' => 1.year.from_now.to_formatted_s(:rfc822).to_s,
-    'X-Content-Type-Options' => 'nosniff',
-    'X-XSS-Protection' => '1; mode=block',
+    'Pragma' => 'no-cache',
     'Strict-Transport-Security' => 'max-age=31536000',
-    'Pragma' => 'no-cache'
+    'X-Content-Type-Options' => 'nosniff',
+    'X-XSS-Protection' => '1; mode=block'
   }
 
   # Compress CSS using a preprocessor.
@@ -50,26 +49,19 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
-  # https://scotthelme.co.uk/a-new-security-header-feature-policy/
-  features = %w[
-    geolocation midi notifications push sync-xhr microphone camera
-    magnetometer gyroscope speaker vibrate fullscreen payment
-  ]
-  # https://edgeguides.rubyonrails.org/configuring.html#configuring-action-dispatch
+  features = %w[geolocation midi sync-xhr microphone camera magnetometer gyroscope fullscreen payment]
   config.action_dispatch.default_headers = {
-    # default
-    'X-Frame-Options' => 'SAMEORIGIN',
-    'X-XSS-Protection' => '1; mode=block',
-    'X-Content-Type-Options' => 'nosniff',
-    'X-Download-Options' => 'noopen',
-    'X-Permitted-Cross-Domain-Policies' => 'none',
-    'Referrer-Policy' => 'strict-origin-when-cross-origin',
-    # custom
-    'Strict-Transport-Security' => 'max-age=31536000',
-    'Pragma' => 'no-cache',
     'Cache-Control' => 'no-store',
     'Expires' => 1.year.from_now.to_formatted_s(:rfc822).to_s,
-    'Feature-Policy' => features.map { |f| "#{f} 'none'" }.join('; ')
+    'Permissions-Policy' => features.map { |f| "#{f}=()" }.join(', '),
+    'Pragma' => 'no-cache',
+    'Referrer-Policy' => 'strict-origin-when-cross-origin',
+    'Strict-Transport-Security' => 'max-age=31536000',
+    'X-Content-Type-Options' => 'nosniff',
+    'X-Download-Options' => 'noopen',
+    'X-Frame-Options' => 'SAMEORIGIN',
+    'X-Permitted-Cross-Domain-Policies' => 'none',
+    'X-XSS-Protection' => '1; mode=block'
   }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
