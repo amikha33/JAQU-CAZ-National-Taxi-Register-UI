@@ -331,7 +331,6 @@ steps:
     environment:
       BASE_URL: https://dev-ntr-web.cleanairzone.defra.gov.uk
     commands:
-      - mkdir screenshots
       - /usr/local/bin/pa11y-ci -c ci-cd-resources/pa11y/.pa11yci.conf.js
     when:
       event:
