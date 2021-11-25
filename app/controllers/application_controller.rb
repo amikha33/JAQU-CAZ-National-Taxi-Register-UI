@@ -7,18 +7,13 @@ class ApplicationController < ActionController::Base
   # protects applications against CSRF
   protect_from_forgery prepend: true
   # rescues from API and security errors
-  rescue_from Errno::ECONNREFUSED,
-              SocketError,
-              BaseApi::Error500Exception,
-              BaseApi::Error422Exception,
-              BaseApi::Error400Exception,
-              RefererXssException,
+  rescue_from Errno::ECONNREFUSED, SocketError, BaseApi::Error500Exception, BaseApi::Error422Exception,
+              BaseApi::Error400Exception, RefererXssException,
               with: :render_server_unavailable
   # rescues from upload validation or if upload to AWS S3 failed
   rescue_from CsvUploadFailureException, with: :handle_exception
-
-  rescue_from InvalidHostException,
-              with: :render_forbidden
+  # rescue exception if checked host header was modified
+  rescue_from InvalidHostException, with: :render_forbidden
 
   # check if host headers are valid
   before_action :validate_host_headers!,
@@ -98,13 +93,11 @@ class ApplicationController < ActionController::Base
   end
 
   # Logs the exception at info level and renders service unavailable page
-  # :nocov:
   def render_forbidden(exception)
     Rails.logger.info "#{exception.class}: #{exception}"
 
     render template: 'errors/service_unavailable', status: :forbidden
   end
-  # :nocov:
 
   # Assign back button url
   def assign_back_button_url
@@ -114,9 +107,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Checks if hosts were not manipulated
-  # :nocov:
   def validate_host_headers!
     Security::HostHeaderValidator.call(request: request, allowed_hosts: Rails.configuration.x.host)
   end
-  # :nocov:
 end
