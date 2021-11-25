@@ -1,8 +1,9 @@
-$cc-black: #000000;
-$cc-white: #ffffff;
-$focus-color: #ffdd00;
+/* stylelint-disable declaration-block-no-duplicate-properties, selector-max-id, declaration-no-important */
 
-/* stylelint-disable selector-max-id, declaration-no-important */
+$cc-black: #000;
+$cc-white: #fff;
+$focus-color: #fd0;
+
 .ccc-button-solid {
   color: $cc-white !important;
   border-color: $cc-black !important;
@@ -10,15 +11,13 @@ $focus-color: #ffdd00;
 }
 
 #ccc .checkbox-toggle-input:focus ~ .checkbox-toggle-toggle {
-  -webkit-filter: none !important;
   filter: none !important;
   background-color: $focus-color !important;
 }
 
 #ccc-dismiss-button:focus {
-  -webkit-filter: none !important;
   filter: none !important;
   border-color: $focus-color !important;
   box-shadow: none !important;
 }
-/* stylelint-enable selector-max-id, declaration-no-important */
+/* stylelint-enable declaration-block-no-duplicate-properties, selector-max-id, declaration-no-important */

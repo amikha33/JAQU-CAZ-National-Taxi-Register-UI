@@ -1,7 +1,3 @@
 # A list of advisory exclusions for `improved-yarn-audit` library.
 # Advisory exclusions to be ignored can either be provided on their own line, or as a comma separated list.
 # Can be tested by running `yarn run improved-yarn-audit` in console.
-
-# To fix it we need to upgrade Webpacker from 5 to 6 version
-# https://github.com/rails/webpacker/blob/2ab76b3b2b7bc42cd73c33d46220a69a91f1b2dd/docs/v6_upgrade.md
-1751
