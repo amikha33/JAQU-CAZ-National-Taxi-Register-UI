@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 describe Cognito::AuthUser do
-  subject(:service_call) do
-    described_class.call(username: username, password: password, login_ip: remote_ip)
-  end
+  subject(:service_call) { described_class.call(username: username, password: password, login_ip: remote_ip) }
 
   let(:username) { 'user@example.com' }
   let(:password) { 'password' }
@@ -14,11 +12,7 @@ describe Cognito::AuthUser do
     {
       client_id: anything,
       auth_flow: 'USER_PASSWORD_AUTH',
-      auth_parameters:
-          {
-            'USERNAME' => username,
-            'PASSWORD' => password
-          }
+      auth_parameters: { 'USERNAME' => username, 'PASSWORD' => password }
     }
   end
 
@@ -28,16 +22,16 @@ describe Cognito::AuthUser do
       allow(Cognito::Client.instance).to receive(:admin_list_groups_for_user).with(
         user_pool_id: anything,
         username: username
-      ).and_return(OpenStruct.new(groups: [OpenStruct.new(group_name: 'ntr.search.dev')]))
+      ).and_return(Struct.new(:groups).new([Struct.new(:group_name).new('ntr.search.dev')]))
     end
 
     context 'when user changed the password' do
-      let(:auth_response) { OpenStruct.new(authentication_result: OpenStruct.new(access_token: token)) }
       let(:token) { SecureRandom.uuid }
+      let(:auth_response) { Struct.new(:authentication_result).new(Struct.new(:access_token).new(token)) }
 
       before do
         allow(Cognito::GetUser).to receive(:call).and_return(User.new)
-        user_groups_response = OpenStruct.new(groups: [OpenStruct.new(group_name: 'ntr.search.dev')])
+        user_groups_response = Struct.new(:groups).new([Struct.new(:group_name).new('ntr.search.dev')])
         allow(Cognito::GetUser).to receive(:call).and_return(user_groups_response)
         allow(Cognito::GetUserGroups).to receive(:call).and_return(user_groups_response)
       end
@@ -58,10 +52,9 @@ describe Cognito::AuthUser do
       let(:email) { 'test@example.com' }
       let(:session_key) { SecureRandom.uuid }
       let(:auth_response) do
-        OpenStruct.new(challenge_parameters: {
-                         'USER_ID_FOR_SRP' => username,
-                         'userAttributes' => { 'email' => email }.to_json
-                       }, session: session_key)
+        Struct.new(:authentication_result, :challenge_parameters, :session).new(
+          nil, { 'USER_ID_FOR_SRP' => username, 'userAttributes' => { 'email' => email }.to_json }, session_key
+        )
       end
 
       it 'returns an instance of the user class' do
@@ -101,9 +94,7 @@ describe Cognito::AuthUser do
   context 'when `initiate_auth` call raises exception' do
     before do
       allow(Cognito::Client.instance).to receive(:initiate_auth)
-        .and_raise(
-          Aws::CognitoIdentityProvider::Errors::NotAuthorizedException.new('', 'error')
-        )
+        .and_raise(Aws::CognitoIdentityProvider::Errors::NotAuthorizedException.new('', 'error'))
     end
 
     it 'returns false' do
@@ -113,11 +104,10 @@ describe Cognito::AuthUser do
 
   context 'when `admin_list_groups_for_user` call raises exception' do
     before do
-      token = SecureRandom.uuid
       allow(Cognito::Client.instance).to receive(:initiate_auth)
-        .with(auth_params)
-        .and_return(OpenStruct.new(authentication_result: OpenStruct.new(access_token: token)))
-
+        .with(auth_params).and_return(
+          Struct.new(:authentication_result).new(Struct.new(:access_token).new(SecureRandom.uuid))
+        )
       allow(Cognito::Client.instance).to receive(:admin_list_groups_for_user)
         .and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('', 'error'))
       allow(Cognito::GetUser).to receive(:call).and_return(User.new)

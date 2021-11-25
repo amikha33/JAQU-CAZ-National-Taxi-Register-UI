@@ -7,13 +7,11 @@ describe Cognito::ForgotPassword::Reset do
 
   let(:username) { 'wojtek@email.com' }
   let(:cognito_response) { true }
-  let(:form) { OpenStruct.new(valid?: true) }
+  let(:form) { Struct.new(:valid?).new(true) }
 
   before do
     allow(ResetPasswordForm).to receive(:new).with(username).and_return(form)
-    allow(Cognito::ForgotPassword::RateLimitVerification).to receive(:call).with(
-      username: username
-    ).and_return(true)
+    allow(Cognito::ForgotPassword::RateLimitVerification).to receive(:call).with(username: username).and_return(true)
     allow(Cognito::Client.instance).to receive(:forgot_password).with(
       client_id: anything,
       username: username
@@ -38,7 +36,7 @@ describe Cognito::ForgotPassword::Reset do
 
   context 'when form is invalid' do
     let(:cognito_response) { true }
-    let(:form) { OpenStruct.new(valid?: false, message: error) }
+    let(:form) { Struct.new(:valid?, :message).new(false, error) }
     let(:error) { 'Something went wrong' }
 
     it 'raises exception with proper params' do
@@ -49,8 +47,6 @@ describe Cognito::ForgotPassword::Reset do
   end
 
   context 'when `Cognito.forgot_password` call fails with proper params' do
-    let(:form) { OpenStruct.new(valid?: true) }
-
     context 'when service raises `ServiceError` exception' do
       before do
         allow(Cognito::Client.instance).to receive(:forgot_password).with(
@@ -83,8 +79,6 @@ describe Cognito::ForgotPassword::Reset do
   end
 
   context 'when `CheckLimit.call` fails with proper params' do
-    let(:form) { OpenStruct.new(valid?: true) }
-
     context 'when service raises `Cognito::CallException` exception' do
       before do
         allow(Cognito::ForgotPassword::RateLimitVerification).to receive(:call).with(

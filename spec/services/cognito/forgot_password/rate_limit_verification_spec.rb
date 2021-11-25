@@ -6,27 +6,19 @@ describe Cognito::ForgotPassword::RateLimitVerification do
   subject(:service_call) { described_class.call(username: username) }
 
   let(:username) { 'user@example.com' }
-
   let(:admin_get_user_response) do
-    OpenStruct.new(user_attributes: [
-                     OpenStruct.new(name: 'custom:pw-reset-counter', value: reset_counter),
-                     OpenStruct.new(name: 'custom:pw-reset-requested', value: reset_requested)
-                   ])
+    mock = Struct.new(:name, :value)
+    Struct.new(:user_attributes).new([mock.new('custom:pw-reset-counter', reset_counter),
+                                      mock.new('custom:pw-reset-requested', reset_requested)])
   end
-
   let(:reset_counter) { '0' }
   let(:reset_requested) { nil }
 
   before do
-    allow(Cognito::Client.instance).to receive(:admin_get_user).with(
-      user_pool_id: anything,
-      username: username
-    ).and_return(admin_get_user_response)
-
-    allow(Cognito::ForgotPassword::UpdateUser).to receive(:call).with(
-      reset_counter: 1,
-      username: username
-    ).and_return(true)
+    allow(Cognito::Client.instance).to receive(:admin_get_user)
+      .with(user_pool_id: anything, username: username).and_return(admin_get_user_response)
+    allow(Cognito::ForgotPassword::UpdateUser).to receive(:call).with(reset_counter: 1,
+                                                                      username: username).and_return(true)
   end
 
   context 'when password reset counter no more than five' do

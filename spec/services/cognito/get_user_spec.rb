@@ -7,11 +7,12 @@ describe Cognito::GetUser do
 
   let(:token) { SecureRandom.uuid }
   let(:cognito_response) do
-    OpenStruct.new(username: username, user_attributes: [
-                     OpenStruct.new(name: 'email', value: email),
-                     OpenStruct.new(name: 'preferred_username', value: preferred_username),
-                     OpenStruct.new(name: 'sub', value: sub)
-                   ])
+    mock = Struct.new(:name, :value)
+    Struct.new(:username, :user_attributes).new(username, [
+                                                  mock.new('email', email),
+                                                  mock.new('preferred_username', preferred_username),
+                                                  mock.new('sub', sub)
+                                                ])
   end
   let(:email) { 'test@example.com' }
   let(:username) { 'wojtek' }

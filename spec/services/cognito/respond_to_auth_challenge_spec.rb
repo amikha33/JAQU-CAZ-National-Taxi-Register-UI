@@ -11,7 +11,7 @@ describe Cognito::RespondToAuthChallenge do
   let(:password_confirmation) { password }
   let(:user) { create_user(hashed_password: Digest::MD5.hexdigest('temporary_password')) }
   let(:cognito_user) { create_user }
-  let(:auth_response) { OpenStruct.new(authentication_result: OpenStruct.new(access_token: token)) }
+  let(:auth_response) { Struct.new(:authentication_result).new(Struct.new(:access_token).new(token)) }
   let(:token) { SecureRandom.uuid }
 
   before do
@@ -35,7 +35,7 @@ describe Cognito::RespondToAuthChallenge do
   end
 
   context 'when NewPasswordForm returns invalid' do
-    let(:form) { OpenStruct.new(valid?: false, error_object: {}) }
+    let(:form) { Struct.new(:valid?, :error_object).new(false, {}) }
     let(:error) { I18n.t('password.errors.password_unchanged') }
 
     before do

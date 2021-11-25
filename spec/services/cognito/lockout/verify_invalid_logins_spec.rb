@@ -7,12 +7,11 @@ describe Cognito::Lockout::VerifyInvalidLogins do
 
   let(:username) { 'user@example.com' }
   let(:user_response) do
-    OpenStruct.new(
-      user_attributes: [
-        OpenStruct.new(name: 'custom:failed-logins', value: failed_logins),
-        OpenStruct.new(name: 'custom:lockout-time', value: lockout_time)
-      ]
-    )
+    mock = Struct.new(:name, :value)
+    Struct.new(:user_attributes).new([
+                                       mock.new('custom:failed-logins', failed_logins),
+                                       mock.new('custom:lockout-time', lockout_time)
+                                     ])
   end
 
   let(:failed_logins) { '0' }

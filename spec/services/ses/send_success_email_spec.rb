@@ -13,7 +13,7 @@ describe Ses::SendSuccessEmail do
 
   context 'with valid params' do
     before do
-      mailer = OpenStruct.new(deliver: true)
+      mailer = Struct.new(:deliver).new(true)
       allow(UploadMailer).to receive(:success_upload).and_return(mailer)
     end
 
