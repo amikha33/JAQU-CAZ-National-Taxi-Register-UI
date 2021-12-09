@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/InformedSolutions/JAQU-CAZ-Ruby-Common
+  revision: 57ab8a01d45e6f9720f2b9c9f1cb244fffb5d09f
+  specs:
+    custom_logger (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -442,6 +448,7 @@ DEPENDENCIES
   bundler-audit
   capybara
   cucumber-rails
+  custom_logger!
   devise
   dotenv-rails
   haml
@@ -471,7 +478,7 @@ DEPENDENCIES
   yard
 
 RUBY VERSION
-   ruby 3.0.2p107
+   ruby 3.0.3p157
 
 BUNDLED WITH
-   2.2.31
+   2.2.32

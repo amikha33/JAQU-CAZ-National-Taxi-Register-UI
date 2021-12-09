@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.2'
+ruby '3.0.3'
 
 gem 'rails', '~> 6.1'
 
@@ -21,6 +21,10 @@ gem 'puma'
 gem 'sdoc', require: false
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'webpacker'
+
+git 'https://github.com/InformedSolutions/JAQU-CAZ-Ruby-Common' do
+  gem 'custom_logger'
+end
 
 group :development, :test do
   gem 'dotenv-rails'

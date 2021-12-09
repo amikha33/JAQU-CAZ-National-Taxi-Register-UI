@@ -99,7 +99,7 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # Use custom logging formatter so that IP any other PII can be removed.
-  config.log_formatter = CustomLogger.new
+  config.log_formatter = CustomLogger::Formatter.new
   logger               = ActiveSupport::Logger.new($stdout)
   logger.formatter     = config.log_formatter
   config.logger        = ActiveSupport::TaggedLogging.new(logger)
