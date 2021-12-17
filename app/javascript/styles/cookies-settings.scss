@@ -1,0 +1,11 @@
+.cookie-settings-wrapper {
+  display: none;
+}
+
+.js-enabled .cookie-settings-wrapper {
+  display: block;
+}
+
+.js-enabled .cookie-settings-wrapper-no-js {
+  display: none;
+}

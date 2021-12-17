@@ -1,6 +1,7 @@
 @import "govuk-frontend";
 @import "ministryofjustice-frontend";
-@import "cookie-control";
+@import "cookies-banner";
+@import "cookies-settings";
 
 html {
   background-color: govuk-colour($colour: "light-grey");
@@ -33,4 +34,12 @@ html {
     font-size: 1.5rem;
     line-height: 1.25;
   }
+}
+
+.govuk-back-link {
+  display: none;
+}
+
+.js-enabled .govuk-back-link {
+  display: inline-block;
 }

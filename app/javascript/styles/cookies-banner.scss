@@ -1,0 +1,15 @@
+.accept-cookies {
+  display: none;
+}
+
+.reject-cookies {
+  display: none;
+}
+
+.js-enabled .accept-cookies {
+  display: inline-block;
+}
+
+.js-enabled .reject-cookies {
+  display: inline-block;
+}

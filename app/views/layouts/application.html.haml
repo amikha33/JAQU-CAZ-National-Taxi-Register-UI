@@ -7,12 +7,7 @@
     = csrf_meta_tags
     = csp_meta_tag
 
-    = render 'layouts/gtm_script' if Rails.env.production? && ENV['GTM_ID']
-    - if Rails.env.production? && ENV['COOKIE_CONTROL_API_KEY'] && ENV['COOKIE_CONTROL_PRODUCT']
-      %script{crossorigin: 'anonymous',
-              src: 'https://cc.cdn.civiccomputing.com/9/cookieControl-9.5.min.js',
-              type: 'text/javascript'}
-      = render 'layouts/cookie_control'
+    = render 'layouts/cookies_banner'
 
     = stylesheet_pack_tag 'application', media: 'all', defer: true
     = javascript_pack_tag 'application', defer: true

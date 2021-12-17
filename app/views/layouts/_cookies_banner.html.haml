@@ -1,0 +1,47 @@
+.govuk-cookie-banner{'aria-label': 'Cookies on Clean Air Zones', 'data-nosnippet': '', role: 'region', id: 'cookies-banner'}
+  .govuk-cookie-banner__message.govuk-width-container{id: 'js-cookies-banner-wrapper'}
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
+        %h2.govuk-cookie-banner__heading.govuk-heading-m Cookies on Clean Air Zones
+        .govuk-cookie-banner__content
+          %p.govuk-body We use some essential cookies to make this website work.
+          %p.govuk-body We’d like to set additional cookies to understand how you use GOV.UK, remember your settings and improve government services.
+          %p.govuk-body We also use cookies set by other sites to help us deliver content from their services.
+    .govuk-button-group
+      %button.govuk-button{'data-module': 'govuk-button',
+                           name: 'cookies',
+                           type: 'button',
+                           value: 'accept',
+                           class: 'accept-cookies',
+                           id: 'accept-cookies'}
+        Accept additional cookies
+      %button.govuk-button{'data-module': 'govuk-button',
+                           name: 'cookies',
+                           type: 'button',
+                           value: 'reject',
+                           class: 'reject-cookies',
+                           id: 'reject-cookies'}
+        Reject additional cookies
+      %a.govuk-link{href: cookies_path} View cookies
+
+  .govuk-cookie-banner{'aria-label': 'Cookies on Clean Air Zones',
+                       'data-nosnippet': '',
+                       role: 'region',
+                       id: 'cookie-banner-message',
+                       tabindex: '-1',
+                       hidden: ''}
+    .govuk-cookie-banner__message.govuk-width-container
+      .govuk-grid-row
+        .govuk-grid-column-two-thirds
+          .govuk-cookie-banner__content
+            %p.govuk-body{id: 'confirmation-message-text'}
+              You can
+              %a.govuk-link{href: cookies_path} change your cookie settings
+              at any time.
+      .govuk-button-group
+        %a.govuk-button{'data-module': 'govuk-button',
+                        draggable: 'false',
+                        href: '',
+                        role: 'button',
+                        id: 'hide-confirmation-message'}
+          Hide this message
