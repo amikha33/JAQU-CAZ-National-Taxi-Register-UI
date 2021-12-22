@@ -15,6 +15,7 @@ function showCookiesSettingsNotification() {
   const cookiesSettingsNotification = document.getElementById('cookies-settings-notification');
   cookiesSettingsNotification.hidden = false;
   cookiesSettingsNotification.focus();
+  window.scrollTo(0, 0);
 }
 
 function setupRadioButtons() {

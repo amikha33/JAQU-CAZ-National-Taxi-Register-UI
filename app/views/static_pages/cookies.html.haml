@@ -3,11 +3,10 @@
 
 = link_to 'Back', @back_button_url, class: 'govuk-back-link'
 
-%p= render 'static_pages/cookies/cookies_settings_notification'
-
 %main.govuk-main-wrapper#main-content{role: 'main'}
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      %p= render 'static_pages/cookies/cookies_settings_notification'
       %h1.govuk-heading-xl= title_and_header
       %p
         A cookie is a small piece of data that’s stored on your computer, tablet, or phone when you
