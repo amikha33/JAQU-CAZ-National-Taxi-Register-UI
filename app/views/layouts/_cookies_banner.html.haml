@@ -13,7 +13,10 @@
                            type: 'button',
                            value: 'accept',
                            class: 'accept-cookies',
-                           id: 'accept-cookies'}
+                           id: 'accept-cookies',
+                           'data-gtm-url-overrides': ENV['GTM_URL_OVERRIDES'],
+                           'data-gtm-id': ENV['GTM_ID'],
+                           'data-google_analytics_id': ENV['GOOGLE_ANALYTICS_ID']}
         Accept additional cookies
       %button.govuk-button{'data-module': 'govuk-button',
                            name: 'cookies',

@@ -1,12 +1,6 @@
 const { environment } = require('@rails/webpacker');
 const { source_path: sourcePath } = require('@rails/webpacker/package/config');
 const { join } = require('path');
-const Dotenv = require('dotenv-webpack');
-
-// A secure webpack plugin that supports dotenv and other environment variables and only exposes what you choose and use.
-environment.plugins.append('Provide',
-  new Dotenv()
-)
 
 const erbLoader = {
   test: /\.erb$/,

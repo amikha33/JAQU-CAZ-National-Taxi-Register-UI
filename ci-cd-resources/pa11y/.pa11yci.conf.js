@@ -13,8 +13,6 @@ var config = {
         {
             'url': '${BASE_URL}?pages',
             'actions': [
-                'wait for element #ccc-dismiss-button to be visible',
-                'click element #ccc-dismiss-button',
                 'wait for element #user_username to be visible',
                 'set field #user_username to tester@informed.com',
                 'set field #user_password to Tester123...',

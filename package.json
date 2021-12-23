@@ -8,7 +8,6 @@
     "@rails/activestorage": "^6.1.4",
     "@rails/ujs": "^6.1.4",
     "@rails/webpacker": "^5.4.3",
-    "dotenv-webpack": "^7.0.3",
     "govuk-frontend": "^3.14.0",
     "rails-erb-loader": "^5.5.2"
   },
