@@ -1,13 +1,12 @@
 var config = {
     defaults: {
         standard: 'WCAG2AA',
-        // ignore issue with role=presentation on start button
-        ignore: ['WCAG2AA.Principle1.Guideline1_3.1_3_1.F92,ARIA4'],
         // The time in milliseconds that a test should be allowed to run before calling back with a timeout error.
-        timeout: 15000, // Maximum 30000ms(30 seconds)
+        timeout: 30000, // 30 seconds
         // The time in milliseconds to wait before running HTML CodeSniffer on the page.
-        wait: 1500,
+        wait: 1500, // 1.5 seconds
         chromeLaunchConfig: { args: [ '--no-sandbox' ] },
+        hideElements: '[role=presentation]'
     },
     urls: [
         {
@@ -20,12 +19,14 @@ var config = {
                 'wait for element #file-upload-1 to be visible',
 
                 'click element #search',
+                'wait for element #vrn to be visible',
                 'set field #vrn to IS19PCA',
                 'click element #historical_off',
                 'click element #search_button',
-                'wait for element #new_search_button to be visible',
 
+                'wait for element #new_search_button to be visible',
                 'click element #new_search_button',
+                'wait for element #vrn to be visible',
                 'set field #vrn to IS19PCA',
                 'click element #historical_on',
                 'wait for element #search_start_date_day to be visible',
@@ -41,9 +42,11 @@ var config = {
                 'click element #cookies',
                 'wait for path to be /cookies',
 
+                'wait for element #privacy to be visible',
                 'click element #privacy',
                 'wait for path to be /privacy_notice',
 
+                'wait for element #accessibility-statement to be visible',
                 'click element #accessibility-statement',
                 'wait for path to be /accessibility_statement'
             ]
