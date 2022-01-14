@@ -25,4 +25,13 @@ describe 'ApplicationController - GET #build_id', type: :request do
       expect(response.body).to eq(build_id)
     end
   end
+
+  context 'when format is nil' do
+    subject { get '/build_id' }
+
+    it 'returns default format as JSON' do
+      subject
+      expect(response.header['Content-Type']).to include('application/json')
+    end
+  end
 end

@@ -68,4 +68,16 @@ describe ErrorsController, type: :request do
       end
     end
   end
+
+  describe '*unmatched' do
+    subject { get '/blablablabla' }
+
+    it 'returns a not_found response' do
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'renders the view' do
+      expect(response).to render_template(:not_found)
+    end
+  end
 end
