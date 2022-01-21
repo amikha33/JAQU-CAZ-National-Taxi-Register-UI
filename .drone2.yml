@@ -1,27 +1,20 @@
-  #################################################### Nightly Steps ############################################################
+#################################################### Nightly Steps ####################################################
 kind: pipeline
 type: docker
 name: ntr-web-nightly
+
 trigger:
   event:
     - cron
 concurrency:
   limit: 1
+
 volumes:
 - name: docker_sock
   host:
     path: /var/run/docker.sock
 
-services:
-  - name: zap
-    image: owasp/zap2docker-stable
-    commands:
-      - zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true
-    ports:
-      - 8080
-
 steps:
-
   - name: build testing tools image
     image: docker:19.03.11-git
     volumes:
@@ -41,31 +34,7 @@ steps:
       GIT_PRIVATE_SSH:
         from_secret: jaqu_lower_github_private_key
 
-  - name: run owasp zap tests
-    image: test-tools-image
-    pull: never
-    failure: ignore
-    environment:
-      ZAP: true
-      ZAP_PROXY_URL: 'zap'
-      BASEURL_NTR: 'https://dev-ntr-web.cleanairzone.defra.gov.uk'
-      VALID_USERNAME: 'tester@informed.com'
-      VALID_PASSWORD: 'Tester123...'
-      SCREENSHOT_TYPE: 'base'
-      LOCATION: local
-    commands:
-      - cd JAQU-CAZ-QA-selenium
-      - bundle exec cucumber -t @ZAPNTR
-
-  - name: security warning
-    image: docker:19.03.11-git
-    commands:
-      - echo "OWASP ZAP tests failed. Please check outputs in case of false positives."
-    when:
-      status:
-        - failure
-
-    # Run end to end tests
+  # Run end to end tests
   - name: run end to end tests
     image: test-tools-image
     pull: never
@@ -85,16 +54,15 @@ steps:
     commands:
       - cd JAQU-CAZ-QA-selenium
       - bundle exec cucumber -t @NTR --guess --retry 3
-
-  ################################################# End Nightly Steps ############################################################
-
+#################################################### End Nightly Steps ################################################
 
 ---
 
-################################################### Dev Environment Steps ############################################################
+#################################################### Dev Environment Steps ############################################
 kind: pipeline
 type: docker
 name: ntr-web-dev
+
 trigger:
   branch:
     - develop
@@ -103,13 +71,13 @@ trigger:
     - push
 concurrency:
   limit: 1
+
 volumes:
 - name: docker_sock
   host:
     path: /var/run/docker.sock
 
 steps:
-
   # Build docker image
   - name: build
     image: docker:19.03.11-git
@@ -181,8 +149,7 @@ steps:
         -Dsonar.login=$SONAR_TOKEN
         -Dproject.settings=./sonar-project.properties
 
-
- # Push built image to ECR registry
+  # Push built image to ECR registry
   - name: publish dev image to ecr
     image: plugins/ecr
     settings:
@@ -207,7 +174,6 @@ steps:
     when:
       event:
         - push
-
 
   # Invoke terraform scripts with tagged image number
   - name: deploy to dev
@@ -311,7 +277,7 @@ steps:
       event:
         - push
 
-    # Build pa11y-ci image
+  # Build pa11y-ci image
   - name: build pa11y-ci image
     image: docker:19.03.11-git
     commands:
@@ -351,15 +317,29 @@ steps:
       event:
         - push
 
-
-  ################################################# End of Dev Environment Steps ############################################################
+  # Execute OWASP Zap tests
+  - name: owasp zap tests
+    image: owasp/zap2docker-stable
+    commands:
+      - mkdir -p /zap/wrk
+      - cp ci-cd-resources/zap.conf /zap/wrk/zap.conf
+      - cd /zap
+      - zap-full-scan.py -t https://dev-ntr-web.cleanairzone.defra.gov.uk -c zap.conf
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    when:
+      event:
+        - push
+#################################################### End of Dev Environment Steps #####################################
 
 ---
-#################################################### ST Environment Steps ############################################################
 
+#################################################### ST Environment Steps #############################################
 kind: pipeline
 type: docker
 name: ntr-web-st
+
 trigger:
   branch:
     - release-candidate/*
@@ -368,13 +348,13 @@ trigger:
     - push
 concurrency:
   limit: 1
+
 volumes:
 - name: docker_sock
   host:
     path: /var/run/docker.sock
 
 steps:
-
   # Clean agent images and containers to prevent disk space overuse
   - name: clean agent
     image: docker:19.03.11-git
@@ -394,7 +374,6 @@ steps:
         path: /var/run/docker.sock
     build_args:
       - AWS_REGION=eu-west-2
-
 
   # Trigger unit tests
   - name: unit tests
@@ -440,8 +419,7 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
 
-
- # Push built image to ECR registry
+  # Push built image to ECR registry
   - name: publish ST image to ecr
     image: plugins/ecr
     settings:
@@ -462,7 +440,6 @@ steps:
     when:
       event:
         - push
-
 
   - name: plan terraform updates in st
     image: hashicorp/terraform:0.12.31
@@ -634,15 +611,15 @@ steps:
     when:
       event:
         - push
-  ################################################# End of ST Environment Steps ############################################################
-
+#################################################### End of ST Environment Steps ######################################
 
 ---
 
-#################################################### SIT Environment Steps ############################################################
+#################################################### SIT Environment Steps ############################################
 kind: pipeline
 type: docker
 name: ntr-web-sit
+
 trigger:
   branch:
     - release/*
@@ -651,13 +628,13 @@ trigger:
     - push
 concurrency:
   limit: 2
+
 volumes:
 - name: docker_sock
   host:
     path: /var/run/docker.sock
 
 steps:
-
   # Clean agent images and containers to prevent disk space overuse
   - name: clean agent
     image: docker:19.03.11-git
@@ -1073,15 +1050,15 @@ steps:
         - push
     depends_on:
       - codedeploy ui sit2
-
-  ################################################# End of SIT Environment Steps ############################################################
+#################################################### End of SIT Environment Steps #####################################
 
 ---
 
-#################################################### Preprod Environment Steps ############################################################
+#################################################### Preprod Environment Steps ########################################
 kind: pipeline
 type: docker
 name: ntr-web-preprod
+
 trigger:
   branch:
     - staging
@@ -1092,7 +1069,6 @@ concurrency:
   limit: 2
 
 steps:
-
   - name: clone iac
     image: hashicorp/terraform:0.12.31
     commands:
@@ -1455,15 +1431,15 @@ steps:
         - push
     depends_on:
       - codedeploy ui preprod2
-
-  ################################################# End of Preprod Environment Steps ############################################################
+#################################################### End of Preprod Environment Steps #################################
 
 ---
-#################################################### UAT Environment Steps ############################################################
 
+#################################################### UAT Environment Steps ############################################
 kind: pipeline
 type: docker
 name: ntr-web-uat
+
 trigger:
   branch:
     -  uat/*
@@ -1472,13 +1448,13 @@ trigger:
     - push
 concurrency:
   limit: 1
+
 volumes:
 - name: docker_sock
   host:
     path: /var/run/docker.sock
 
 steps:
-
   # Clean agent images and containers to prevent disk space overuse
   - name: clean agent
     image: docker:19.03.11-git
@@ -1566,7 +1542,6 @@ steps:
     when:
       event:
         - push
-
 
   - name: plan terraform updates in uat
     image: hashicorp/terraform:0.12.31
@@ -1738,14 +1713,15 @@ steps:
     when:
       event:
         - push
-  ################################################# End of UAT Environment Steps ############################################################
+#################################################### End of UAT Environment Steps #####################################
 
 ---
 
-#################################################### Prod Environment Steps ############################################################
+#################################################### Prod Environment Steps ###########################################
 kind: pipeline
 type: docker
 name: ntr-web-prod
+
 trigger:
   branch:
     - master
@@ -1756,7 +1732,6 @@ concurrency:
   limit: 1
 
 steps:
-
   - name: plan terraform updates in prod
     image: hashicorp/terraform:0.12.31
     commands:
@@ -1945,11 +1920,10 @@ steps:
     when:
       event:
         - push
-  ################################################# End of Prod Environment Steps ############################################################
+#################################################### End of Prod Environment Steps ####################################
 
 
-  ################################################ Secrets - IAC Restructure #########################################################
-
+#################################################### Secrets - IAC Restructure ########################################
 # Note the below values are pulled from AWS Secrets Manager via the aws-secrets Drone plugin
 ---
 kind: secret
@@ -1964,7 +1938,6 @@ name: jaqu_lower_aws_secret_access_key
 get:
   path: /build-tools/drone
   name: awsLowerSecretAccessKey
-
 
 ---
 kind: secret
@@ -1994,7 +1967,6 @@ get:
   path: /build-tools/drone
   name: awsControlledSecretAccessKey
 
-
 ---
 kind: secret
 name: jaqu_controlled_service_aws_access_key_id
@@ -2023,7 +1995,6 @@ get:
   path: /build-tools/drone
   name: awsStagingSecretAccessKey
 
-
 ---
 kind: secret
 name: jaqu_staging_service_aws_access_key_id
@@ -2038,7 +2009,6 @@ get:
   path: /build-tools/drone
   name: awsStagingServiceSecretAccessKey
 
-
 ---
 kind: secret
 name: jaqu_prod_aws_access_key_id
@@ -2052,8 +2022,6 @@ name: jaqu_prod_aws_secret_access_key
 get:
   path: /build-tools/drone
   name: awsProdSecretAccessKey
-
-
 
 ---
 kind: secret
@@ -2110,5 +2078,4 @@ name: ntr_ruby_secret
 get:
   path: /build-tools/drone
   name: ntrRubySecret
-
-################################################ End Secrets #########################################################
+#################################################### End Secrets ######################################################
