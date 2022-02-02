@@ -15,6 +15,18 @@ volumes:
     path: /var/run/docker.sock
 
 steps:
+  # Execute OWASP Zap tests
+  - name: owasp zap tests
+    image: owasp/zap2docker-stable
+    commands:
+      - mkdir -p /zap/wrk
+      - cp ci-cd-resources/zap.conf /zap/wrk/zap.conf
+      - cd /zap
+      - zap-full-scan.py -t https://dev-ntr-web.cleanairzone.defra.gov.uk -c zap.conf
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+
   - name: build testing tools image
     image: docker:19.03.11-git
     volumes:
