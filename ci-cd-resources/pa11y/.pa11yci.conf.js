@@ -6,7 +6,7 @@ var config = {
         // The time in milliseconds to wait before running HTML CodeSniffer on the page.
         wait: 1500, // 1.5 seconds
         chromeLaunchConfig: { args: [ '--no-sandbox' ] },
-        hideElements: '[role=presentation]'
+        hideElements: '[role=presentation], .hidden-version-label'
     },
     urls: [
         {

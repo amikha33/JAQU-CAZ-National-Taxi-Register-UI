@@ -22,6 +22,7 @@ module NtrUi
     # email address for sending emails, eg 'from@example.com'
     default_email = 'TaxiandPHVCentralised.Database@defra.gov.uk'
     config.x.service_email = ENV.fetch('SES_FROM_EMAIL', default_email)
+    config.x.version = File.read('.version')
 
     config.time_zone = 'London'
     config.x.time_format = '%d %B %Y %H:%M:%S %Z'
