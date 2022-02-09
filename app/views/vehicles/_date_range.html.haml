@@ -53,8 +53,6 @@
                   = form.label :start_date_day, 'Day', class: 'govuk-label govuk-date-input__label'
                   = form.text_field :start_date_day,
                                     class: "govuk-input govuk-date-input__input govuk-input--width-2 #{'govuk-input--error' if @errors[:start_date_day].present?}",
-                                    inputmode: 'numeric',
-                                    pattern: '[0-9]*',
                                     type: 'text',
                                     maxlength: 2,
                                     value: params.dig(:search, :start_date_day)
@@ -64,8 +62,6 @@
                   = form.label :start_date_month, 'Month', class: 'govuk-label govuk-date-input__label'
                   = form.text_field :start_date_month,
                                     class: "govuk-input govuk-date-input__input govuk-input--width-2 #{'govuk-input--error' if @errors[:start_date_month].present?}",
-                                    inputmode: 'numeric',
-                                    pattern: '[0-9]*',
                                     type: 'text',
                                     maxlength: 2,
                                     value: params.dig(:search, :start_date_month)
@@ -75,8 +71,6 @@
                   = form.label :start_date_year, 'Year', class: 'govuk-label govuk-date-input__label'
                   = form.text_field :start_date_year,
                                     class: "govuk-input govuk-date-input__input govuk-input--width-4 #{'govuk-input--error' if @errors[:start_date_year].present?}",
-                                    inputmode: 'numeric',
-                                    pattern: '[0-9]*',
                                     type: 'text',
                                     maxlength: 4,
                                     value: params.dig(:search, :start_date_year)
@@ -99,8 +93,6 @@
                   = form.label :end_date_day, 'Day', class: 'govuk-label govuk-date-input__label'
                   = form.text_field :end_date_day,
                                     class: "govuk-input govuk-date-input__input govuk-input--width-2 #{'govuk-input--error' if @errors[:end_date_day].present?}",
-                                    inputmode: 'numeric',
-                                    pattern: '[0-9]*',
                                     type: 'text',
                                     maxlength: 2,
                                     value: params.dig(:search, :end_date_day)
@@ -110,8 +102,6 @@
                   = form.label :end_date_month, 'Month', class: 'govuk-label govuk-date-input__label'
                   = form.text_field :end_date_month,
                                     class: "govuk-input govuk-date-input__input govuk-input--width-2 #{'govuk-input--error' if @errors[:end_date_month].present?}",
-                                    inputmode: 'numeric',
-                                    pattern: '[0-9]*',
                                     type: 'text',
                                     maxlength: 2,
                                     value: params.dig(:search, :end_date_month)
@@ -121,8 +111,6 @@
                   = form.label :end_date_year, 'Year', class: 'govuk-label govuk-date-input__label'
                   = form.text_field :end_date_year,
                                     class: "govuk-input govuk-date-input__input govuk-input--width-4 #{'govuk-input--error' if @errors[:end_date_year].present?}",
-                                    inputmode: 'numeric',
-                                    pattern: '[0-9]*',
                                     type: 'text',
                                     maxlength: 4,
                                     value: params.dig(:search, :end_date_year)

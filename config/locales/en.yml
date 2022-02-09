@@ -30,6 +30,7 @@ en:
     errors:
       dates:
         invalid:
+          date_format: Enter a valid date
           end_date_format: End date must be a real date
           one_month_between: End date must be within 1 month of the start date
           start_date: Start date must be earlier than end date

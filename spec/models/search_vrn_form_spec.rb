@@ -144,7 +144,7 @@ describe SearchVrnForm do
 
         it_behaves_like 'an invalid attribute input',
                         :start_date,
-                        'Start date must be a real date'
+                        'Enter a valid date'
       end
 
       context 'when start month is negative' do
@@ -154,7 +154,7 @@ describe SearchVrnForm do
 
         it_behaves_like 'an invalid attribute input',
                         :start_date,
-                        'Start date must be a real date'
+                        'Enter a valid date'
       end
 
       context 'when start day is negative' do
@@ -164,7 +164,7 @@ describe SearchVrnForm do
 
         it_behaves_like 'an invalid attribute input',
                         :start_date,
-                        'Start date must be a real date'
+                        'Enter a valid date'
       end
 
       context 'when the start date not earlier than end date' do
@@ -181,6 +181,14 @@ describe SearchVrnForm do
         let(:end_date_month) { '4' }
 
         it { is_expected.to be_valid }
+      end
+
+      context 'when invalid start day' do
+        let(:start_date_day) { '33' }
+
+        it_behaves_like 'an invalid attribute input',
+                        :start_date,
+                        'Start date must be a real date'
       end
     end
 
@@ -235,7 +243,7 @@ describe SearchVrnForm do
 
         it_behaves_like 'an invalid attribute input',
                         :end_date,
-                        'End date must be a real date'
+                        'Enter a valid date'
       end
 
       context 'when end day is negative' do
@@ -245,7 +253,7 @@ describe SearchVrnForm do
 
         it_behaves_like 'an invalid attribute input',
                         :end_date,
-                        'End date must be a real date'
+                        'Enter a valid date'
       end
 
       context 'when end month is negative' do
@@ -255,7 +263,7 @@ describe SearchVrnForm do
 
         it_behaves_like 'an invalid attribute input',
                         :end_date,
-                        'End date must be a real date'
+                        'Enter a valid date'
       end
 
       context 'when start date with future date' do
@@ -296,6 +304,14 @@ describe SearchVrnForm do
       let(:end_date_day) { '30' }
 
       it { is_expected.to be_valid }
+    end
+
+    context 'when invalid end day' do
+      let(:end_date_day) { '33' }
+
+      it_behaves_like 'an invalid attribute input',
+                      :end_date,
+                      'End date must be a real date'
     end
   end
 end

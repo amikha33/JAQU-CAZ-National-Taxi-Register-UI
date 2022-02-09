@@ -34,6 +34,7 @@ class SearchVrnForm < MultipleAttributesBaseForm
   }, allow_blank: true
 
   validate :validate_dates, if: -> { historic == 'true' }
+  validate :validate_format_dates, if: -> { historic == 'true' && no_date_errors? }
   validate :validate_start_month_format, if: -> { historic == 'true' && no_date_errors? }
   validate :validate_end_month_format, if: -> { historic == 'true' && no_date_errors? }
   validate :validate_start_date_format, if: -> { historic == 'true' && no_date_errors? }
@@ -43,6 +44,35 @@ class SearchVrnForm < MultipleAttributesBaseForm
   validate :validate_one_month_between, if: -> { historic == 'true' && no_date_errors? }
 
   private
+
+  # Validates format start and end dates.
+  def validate_format_dates
+    validate_input_format(:start_date, :start_date_day, start_date_day)
+    validate_input_format(:start_date, :start_date_month, start_date_month)
+    validate_input_format(:start_date, :start_date_year, start_date_year)
+    validate_input_format(:end_date, :end_date_day, end_date_day)
+    validate_input_format(:end_date, :end_date_month, end_date_month)
+    validate_input_format(:end_date, :end_date_year, end_date_year)
+  end
+
+  # Validate input format.
+  def validate_input_format(period, attribute, input_value)
+    return if input_value.match(/\A[0-9]+\z/)
+
+    errors.add(attribute, :invalid)
+    add_date_format_error(period)
+  end
+
+  # Adds error messages.
+  def add_date_format_error(period)
+    return unless errors.messages[period].empty?
+
+    errors.add(
+      period,
+      :invalid_format,
+      message: I18n.t('search_vrn_form.errors.dates.invalid.date_format')
+    )
+  end
 
   # validates start and end dates
   def validate_dates
@@ -140,32 +170,26 @@ class SearchVrnForm < MultipleAttributesBaseForm
     )
   end
 
-  # validates start date format
+  # validates start date format.
   def validate_start_date_format
     start_date = "#{start_date_year}-#{start_date_month}-#{start_date_day}"
-    self.start_date = Date.parse(start_date).strftime('%Y-%m-%d')
-    raise ArgumentError unless positive_start_date
-  rescue ArgumentError
-    add_errors_to_start_date
-    errors.add(
-      :start_date,
-      :invalid,
-      message: I18n.t('search_vrn_form.errors.dates.invalid.start_date_format')
-    )
+    begin
+      self.start_date = Date.parse(start_date).strftime('%Y-%m-%d')
+    rescue Date::Error
+      add_errors_to_start_date
+      errors.add(:start_date, message: I18n.t('search_vrn_form.errors.dates.invalid.start_date_format'))
+    end
   end
 
-  # validates end date format
+  # validates end date format.
   def validate_end_date_format
     end_date = "#{end_date_year}-#{end_date_month}-#{end_date_day}"
-    self.end_date = Date.parse(end_date).strftime('%Y-%m-%d')
-    raise ArgumentError unless positive_end_date
-  rescue ArgumentError
-    add_errors_to_end_date
-    errors.add(
-      :end_date,
-      :invalid,
-      message: I18n.t('search_vrn_form.errors.dates.invalid.end_date_format')
-    )
+    begin
+      self.end_date = Date.parse(end_date).strftime('%Y-%m-%d')
+    rescue Date::Error
+      add_errors_to_end_date
+      errors.add(:end_date, message: I18n.t('search_vrn_form.errors.dates.invalid.end_date_format'))
+    end
   end
 
   # validates start and end dates period
@@ -197,18 +221,6 @@ class SearchVrnForm < MultipleAttributesBaseForm
     %i[end_date_day end_date_month end_date_year].each do |attr|
       errors.add(attr, :invalid)
     end
-  end
-
-  # check all start date values are positive
-  def positive_start_date
-    (start_date_year.to_i.positive? &&
-      start_date_day.to_i.positive? &&
-      start_date_month.to_i.positive?)
-  end
-
-  # check all end date values are positive
-  def positive_end_date
-    end_date_year.to_i.positive? && end_date_day.to_i.positive? && end_date_month.to_i.positive?
   end
 
   # Validate start date if date in the future

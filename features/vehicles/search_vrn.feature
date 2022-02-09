@@ -52,10 +52,10 @@ Feature: Search a VRN
       And I should see "Search the Taxi & PHV Data"
     When I enter a vrn and negative start date
       And I press 'Continue' button
-    Then I should see 'Start date must be a real date'
+    Then I should see 'Enter a valid date'
     When I enter a vrn and negative end date
       And I press 'Continue' button
-    Then I should see 'End date must be a real date'
+    Then I should see 'Enter a valid date'
 
   # Order of calling pages: 1, 3, 5, 2
   Scenario: Pagination on the historical results page
