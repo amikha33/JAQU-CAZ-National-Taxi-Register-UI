@@ -67,9 +67,13 @@ function deleteCookie(cookieName) {
   cookie(cookieName, null);
 
   if (cookie(cookieName)) {
-    // We need to handle deleting cookies on the domain and the .domain
+    const { hostname } = window.location;
+    // We need to clear values for cookies on the domain and the .domain
     document.cookie = `${cookieName}=;expires=${new Date()};`;
-    document.cookie = `${cookieName}=;expires=${new Date()};domain=${window.location.hostname};path=/`;
+    document.cookie = `${cookieName}=;expires=${new Date()};domain=${hostname};path=/`;
+    // Clear value for `.*.gov.uk` cookie, e.g. `.defra.gov.uk` or `.service.gov.uk`
+    const domain = hostname.match(/\.+[^.\s]+\.gov\.uk/gm)[0];
+    document.cookie = `${cookieName}=;expires=${new Date()};domain=${domain};path=/`;
   }
 }
 

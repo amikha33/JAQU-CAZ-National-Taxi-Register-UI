@@ -7,8 +7,6 @@
     = csrf_meta_tags
     = csp_meta_tag
 
-    = render 'layouts/cookies_banner'
-
     = stylesheet_pack_tag 'application', media: 'all', defer: true
     = javascript_pack_tag 'application', defer: true
 
@@ -25,6 +23,7 @@
     %link{rel: 'apple-touch-icon', href: asset_pack_url('media/images/govuk-apple-touch-icon.png')}
 
   %body.govuk-template__body
+    = render 'layouts/cookies_banner'
     = render 'layouts/gtm_noscript' if Rails.env.production? && ENV['GTM_ID']
     = render 'layouts/header'
     .govuk-width-container
