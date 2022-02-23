@@ -47,3 +47,10 @@ html {
 .hidden-version-label {
   color: #f3f2f1;
 }
+
+@media (max-width: 40.0525em) {
+  .scrollable-table {
+    overflow: scroll;
+    margin-bottom: 20px;
+  }
+}

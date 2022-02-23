@@ -1,16 +1,17 @@
 %h2.govuk-heading-m
   Cookies used to store user cookie consent
-%table.govuk-table
-  = render 'static_pages/cookies/table_head'
-  %tbody.govuk-table__body
-    %tr.govuk-table__row
-      %th.govuk-table__header{scope: 'row'} cookies_policy
-      %td.govuk-table__cell This stores user settings consent.
-      %td.govuk-table__cell 90 days
-    %tr.govuk-table__row
-      %th.govuk-table__header{scope: 'row'} global_bar_seen
-      %td.govuk-table__cell Show the cookie banner every time the user accesses service until they accept or reject cookies
-      %td.govuk-table__cell 90 days
+%div.scrollable-table
+  %table.govuk-table
+    = render 'static_pages/cookies/table_head'
+    %tbody.govuk-table__body
+      %tr.govuk-table__row
+        %th.govuk-table__header{scope: 'row'} cookies_policy
+        %td.govuk-table__cell This stores user settings consent.
+        %td.govuk-table__cell 90 days
+      %tr.govuk-table__row
+        %th.govuk-table__header{scope: 'row'} global_bar_seen
+        %td.govuk-table__cell Show the cookie banner every time the user accesses service until they accept or reject cookies
+        %td.govuk-table__cell 90 days
 
 = form_tag cookies_path, id: 'cookies-settings-form' do
   .govuk-form-group
@@ -35,5 +36,5 @@
           %label.govuk-label.govuk-radios__label{for: 'cookies-settings-off'}
             No
 
-  = submit_tag 'Save cookies settings', class: 'govuk-button', 'data-module': 'govuk-button', id: 'save-cookies-settings'
+  = submit_tag 'Save cookie settings', class: 'govuk-button', 'data-module': 'govuk-button', id: 'save-cookies-settings'
   = javascript_pack_tag 'cookiesSettings'
