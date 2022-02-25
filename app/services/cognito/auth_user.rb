@@ -48,11 +48,10 @@ module Cognito
       update_user(auth_user)
       user
     rescue AWS_ERROR::NotAuthorizedException => e
-      log_error e
-      Cognito::Lockout::VerifyInvalidLogins.call(username: username)
-      false
+      handle_not_authorized_exception(e)
     rescue AWS_ERROR::ServiceError => e
       log_error e
+      log_action('Attempted user login unsuccessful')
       false
     end
 
@@ -81,6 +80,7 @@ module Cognito
         update_challenged_user(auth_response)
       end
       assign_groups_to_user
+      log_action('Attempted user login successful')
     end
 
     # Update user based on Cognito call response.
@@ -112,6 +112,14 @@ module Cognito
     def assign_groups_to_user
       response = Cognito::GetUserGroups.call(username: username)
       user.groups = response.groups.map(&:group_name)
+    end
+
+    # Handles AWS_ERROR::NotAuthorizedException
+    def handle_not_authorized_exception(error)
+      log_error error
+      Cognito::Lockout::VerifyInvalidLogins.call(username: username)
+      log_action('Attempted user login unsuccessful')
+      false
     end
   end
 end
