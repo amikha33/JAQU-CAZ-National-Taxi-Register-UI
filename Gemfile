@@ -29,7 +29,10 @@ end
 group :development, :test do
   gem 'dotenv-rails'
   gem 'haml-rails'
-  gem 'rspec-rails'
+  gem 'rspec-core', '=3.10.2'
+  gem 'rspec-expectations', '=3.10.2'
+  gem 'rspec-mocks', '=3.10.2'
+  gem 'rspec-rails', '=5.0.2'
   gem 'ruby_jard'
 end
 
@@ -50,8 +53,8 @@ group :test do
   gem 'i18n-tasks'
   gem 'rack_session_access'
   gem 'rails-controller-testing'
-  gem 'rubocop-rails'
-  gem 'rubocop-rspec', require: false
+  gem 'rubocop-rails', '=2.13.2'
+  gem 'rubocop-rspec', '=2.7.0', require: false
   gem 'selenium-webdriver'
   gem 'show_me_the_cookies'
   gem 'simplecov', '~> 0.17.1', require: false
