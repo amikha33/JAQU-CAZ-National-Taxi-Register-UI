@@ -1,6 +1,3 @@
 # A list of advisory exclusions for `improved-yarn-audit` library.
 # Advisory exclusions to be ignored can either be provided on their own line, or as a comma separated list.
 # Can be tested by running `yarn run improved-yarn-audit` in console.
-
-# https://github.com/advisories/GHSA-566m-qj78-rww5
-GHSA-566m-qj78-rww5
