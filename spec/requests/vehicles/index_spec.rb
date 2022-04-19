@@ -14,7 +14,7 @@ describe 'VehiclesController - GET #index', type: :request do
       before do
         response = read_response_file('licence_info_response.json')
         allow(VehiclesCheckerApi).to receive(:licence_info).with(vrn).and_return(response)
-        add_to_session(vrn: vrn)
+        add_to_session(vrn:)
         subject
       end
 
@@ -38,7 +38,7 @@ describe 'VehiclesController - GET #index', type: :request do
         allow(VehiclesCheckerApi).to receive(:licence_info).with(vrn).and_raise(
           BaseApi::Error404Exception.new(404, 'VRN number was not found', {})
         )
-        add_to_session(vrn: vrn)
+        add_to_session(vrn:)
         subject
       end
 
@@ -52,7 +52,7 @@ describe 'VehiclesController - GET #index', type: :request do
         allow(VehiclesCheckerApi).to receive(:licence_info).with(vrn).and_raise(
           BaseApi::Error400Exception.new(400, '', {})
         )
-        add_to_session(vrn: vrn)
+        add_to_session(vrn:)
         subject
       end
 

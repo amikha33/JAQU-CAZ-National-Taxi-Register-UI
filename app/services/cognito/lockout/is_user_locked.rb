@@ -32,7 +32,7 @@ module Cognito
 
       # Method calls service which returns user data.
       def user_data
-        @user_data ||= Cognito::Lockout::UserData.new(username: username)
+        @user_data ||= Cognito::Lockout::UserData.new(username:)
       end
     end
   end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe BackLinkHistoryService do
-  subject { described_class.call(session: session, back_button: back_button, page: page, url: url) }
+  subject { described_class.call(session:, back_button:, page:, url:) }
 
   let(:session) { {} }
   let(:back_button) { false }

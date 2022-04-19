@@ -53,7 +53,7 @@ module Cognito
       # In case if reset counter is over 5 and last request was made less than 1h ago, user
       # redirects to the next page but without sending any email at all
       def rate_limit_verification
-        Cognito::ForgotPassword::RateLimitVerification.call(username: username)
+        Cognito::ForgotPassword::RateLimitVerification.call(username:)
       end
 
       # Requests a Cognito service to perform email send with a new temporary password.
@@ -61,7 +61,7 @@ module Cognito
         log_action('Forgot password call and email sending')
         client.forgot_password(
           client_id: ENV['AWS_COGNITO_CLIENT_ID'],
-          username: username
+          username:
         )
       rescue AWS_ERROR::ServiceError => e
         log_error e

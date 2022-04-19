@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Security::RefererXssHandler do
-  subject { described_class.call(referer: referer) }
+  subject { described_class.call(referer:) }
 
   describe '#call' do
     context 'when referer includes inline javascript' do

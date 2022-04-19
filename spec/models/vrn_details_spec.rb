@@ -9,8 +9,8 @@ describe VrnDetails do
 
   let(:response) do
     {
-      active: active,
-      description: description,
+      active:,
+      description:,
       wheelchairAccessible: wheelchair_accessible,
       licensingAuthoritiesNames: %w[Birmingham Leeds]
     }.stringify_keys

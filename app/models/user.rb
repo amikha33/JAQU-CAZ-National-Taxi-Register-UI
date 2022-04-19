@@ -41,15 +41,15 @@ class User
   #   user.serializable_hash #{:email=>"example@email.com", :username=>nil, ...}
   def serializable_hash(_options = nil) # rubocop:disable Metrics/MethodLength
     {
-      email: email,
-      username: username,
-      groups: groups,
-      aws_status: aws_status,
-      aws_session: aws_session,
-      sub: sub,
-      preferred_username: preferred_username,
-      hashed_password: hashed_password,
-      login_ip: login_ip
+      email:,
+      username:,
+      groups:,
+      aws_status:,
+      aws_session:,
+      sub:,
+      preferred_username:,
+      hashed_password:,
+      login_ip:
     }
   end
 

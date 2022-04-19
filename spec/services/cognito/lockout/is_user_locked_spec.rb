@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Cognito::Lockout::IsUserLocked do
-  subject { described_class.call(username: username) }
+  subject { described_class.call(username:) }
 
   let(:username) { 'user@example.com' }
   let(:locked) { false }
@@ -20,7 +20,7 @@ describe Cognito::Lockout::IsUserLocked do
 
   context 'when user is not locked' do
     it 'returns false' do
-      expect(subject).to eq(false)
+      expect(subject).to be(false)
     end
   end
 
@@ -28,7 +28,7 @@ describe Cognito::Lockout::IsUserLocked do
     let(:locked) { true }
 
     it 'returns true' do
-      expect(subject).to eq(true)
+      expect(subject).to be(true)
     end
   end
 end

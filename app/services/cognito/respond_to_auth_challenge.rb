@@ -41,7 +41,7 @@ module Cognito
     # Raise exception if validation failed.
     def validate_params
       form = NewPasswordForm.new(
-        password: password, confirmation: confirmation, old_password_hash: user.hashed_password
+        password:, confirmation:, old_password_hash: user.hashed_password
       )
       return if form.valid?
 
@@ -54,8 +54,8 @@ module Cognito
     # Returns an instance of {User class}[rdoc-ref:User]
     def update_user(access_token)
       @user = Cognito::GetUser.call(
-        access_token: access_token,
-        user: user,
+        access_token:,
+        user:,
         username: user.username&.downcase
       )
     end

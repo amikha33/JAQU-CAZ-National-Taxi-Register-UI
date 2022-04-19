@@ -37,7 +37,7 @@ module Cognito
     def admin_update_user
       log_action('Updating the preferred_username attribute')
       client.admin_update_user_attributes(
-        { user_pool_id: user_pool_id, username: username, user_attributes: user_attributes }
+        { user_pool_id:, username:, user_attributes: }
       )
     rescue AWS_ERROR::ServiceError => e
       log_error e

@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 describe Ses::SendSuccessEmail do
-  subject(:service_call) { described_class.call(user: user, job_data: job_data) }
+  subject(:service_call) { described_class.call(user:, job_data:) }
 
-  let(:user) { create_user(email: email) }
+  let(:user) { create_user(email:) }
   let(:email) { 'user@example.com' }
-  let(:job_data) { { filename: filename, submission_time: time } }
+  let(:job_data) { { filename:, submission_time: time } }
   let(:filename) { 'CAZ-2020-01-08-AuthorityID.csv' }
   let(:time) { Time.current.strftime(Rails.configuration.x.time_format) }
 

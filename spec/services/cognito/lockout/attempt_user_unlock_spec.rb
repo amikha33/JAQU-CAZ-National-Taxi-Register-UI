@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Cognito::Lockout::AttemptUserUnlock do
-  subject { described_class.call(username: username) }
+  subject { described_class.call(username:) }
 
   let(:username) { 'user@example.com' }
   let(:unlockable) { true }
@@ -12,7 +12,7 @@ describe Cognito::Lockout::AttemptUserUnlock do
     user_data_stub = instance_double(Cognito::Lockout::UserData, unlockable?: unlockable)
     allow(Cognito::Lockout::UserData).to receive(:new).and_return(user_data_stub)
     allow(Cognito::Lockout::UpdateUser).to receive(:call)
-      .with(username: username, failed_logins: 0, lockout_time: nil)
+      .with(username:, failed_logins: 0, lockout_time: nil)
 
     subject
   end
@@ -20,7 +20,7 @@ describe Cognito::Lockout::AttemptUserUnlock do
   context 'when user is unlockable' do
     it 'unlocks user' do
       expect(Cognito::Lockout::UpdateUser).to have_received(:call)
-        .with(username: username, failed_logins: 0, lockout_time: nil)
+        .with(username:, failed_logins: 0, lockout_time: nil)
     end
   end
 

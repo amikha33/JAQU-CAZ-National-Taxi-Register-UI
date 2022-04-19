@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe ExampleCsv do
-  subject(:service_call) { described_class.call(lines: lines, dir: dir) }
+  subject(:service_call) { described_class.call(lines:, dir:) }
 
   let(:lines) { 5 }
   let(:dir) { 'tmp/example_files_test' }

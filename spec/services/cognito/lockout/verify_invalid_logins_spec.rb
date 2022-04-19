@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Cognito::Lockout::VerifyInvalidLogins do
-  subject { described_class.call(username: username) }
+  subject { described_class.call(username:) }
 
   let(:username) { 'user@example.com' }
   let(:user_response) do
@@ -21,15 +21,8 @@ describe Cognito::Lockout::VerifyInvalidLogins do
   let(:lockout_timeout) { ENV.fetch('LOCKOUT_TIMEOUT', 30).to_i }
 
   before do
-    allow(Cognito::Client.instance).to receive(:admin_get_user).with(
-      user_pool_id: anything,
-      username: username
-    ).and_return(user_response)
-    allow(Cognito::Lockout::UpdateUser).to receive(:call).with(
-      username: username,
-      failed_logins: anything,
-      lockout_time: anything
-    )
+    allow(Cognito::Client.instance).to receive(:admin_get_user).and_return(user_response)
+    allow(Cognito::Lockout::UpdateUser).to receive(:call)
     subject
   end
 
@@ -37,7 +30,7 @@ describe Cognito::Lockout::VerifyInvalidLogins do
     it 'increments invalid-logins attribute' do
       expect(Cognito::Lockout::UpdateUser)
         .to have_received(:call)
-        .with(username: username, failed_logins: 1, lockout_time: nil)
+        .with(username:, failed_logins: 1, lockout_time: nil)
     end
   end
 
@@ -47,7 +40,7 @@ describe Cognito::Lockout::VerifyInvalidLogins do
 
     it 'sets lockout-time attribute' do
       expect(Cognito::Lockout::UpdateUser).to have_received(:call).with(
-        username: username,
+        username:,
         failed_logins: lockout_login_attempts,
         lockout_time: Time.zone.now.iso8601
       )
@@ -70,7 +63,7 @@ describe Cognito::Lockout::VerifyInvalidLogins do
     it 'sets invalid-logins to 1 and lockout-time to nil' do
       expect(Cognito::Lockout::UpdateUser)
         .to have_received(:call)
-        .with(username: username, failed_logins: 1, lockout_time: nil)
+        .with(username:, failed_logins: 1, lockout_time: nil)
     end
   end
 end

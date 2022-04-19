@@ -30,7 +30,7 @@ module Cognito
     # Perform the call to Cognito service to get user groups
     def admin_list_groups_for_user
       log_action('Getting the groups that the user belongs to')
-      client.admin_list_groups_for_user({ user_pool_id: user_pool_id, username: username })
+      client.admin_list_groups_for_user({ user_pool_id:, username: })
     end
   end
 end

@@ -3,19 +3,19 @@
 require 'rails_helper'
 
 describe 'VehiclesController - POST #submit_search', type: :request do
-  subject { post search_vehicles_path, params: params }
+  subject { post search_vehicles_path, params: }
 
   let(:params) do
     {
       search: {
-        vrn: vrn,
-        historic: historic,
-        start_date_day: start_date_day,
-        start_date_month: start_date_month,
-        start_date_year: start_date_year,
-        end_date_day: end_date_day,
-        end_date_month: end_date_month,
-        end_date_year: end_date_year
+        vrn:,
+        historic:,
+        start_date_day:,
+        start_date_month:,
+        start_date_year:,
+        end_date_day:,
+        end_date_month:,
+        end_date_year:
       }
     }
   end

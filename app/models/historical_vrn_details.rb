@@ -43,10 +43,10 @@ class HistoricalVrnDetails
   # Calls api to get historical details
   def vehicles_checker_api
     @vehicles_checker_api ||= VehiclesCheckerApi.licence_info_historical(
-      vrn: vrn,
-      page: page,
-      start_date: start_date,
-      end_date: end_date
+      vrn:,
+      page:,
+      start_date:,
+      end_date:
     )
   end
 end

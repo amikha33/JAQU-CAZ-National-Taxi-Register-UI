@@ -15,7 +15,7 @@ describe 'UploadController - POST #import', type: :request do
     let(:job_name) { 'name' }
 
     before do
-      stub = instance_double(CsvUploadService, filename: filename)
+      stub = instance_double(CsvUploadService, filename:)
       allow(CsvUploadService).to receive(:call).and_return(stub)
       allow(RegisterCheckerApi).to receive(:register_job).and_return(job_name)
       subject

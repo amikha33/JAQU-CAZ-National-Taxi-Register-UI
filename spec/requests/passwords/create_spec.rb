@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'PasswordsController - POST #create', type: :request do
-  subject { post passwords_path, params: params }
+  subject { post passwords_path, params: }
 
   let(:params) { {} }
 
@@ -102,7 +102,7 @@ describe 'PasswordsController - POST #create', type: :request do
         end
 
         it 'logs out user' do
-          expect(controller.current_user).to eq(nil)
+          expect(controller.current_user).to be_nil
         end
       end
     end

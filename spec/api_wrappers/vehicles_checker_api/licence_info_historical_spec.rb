@@ -5,10 +5,10 @@ require 'rails_helper'
 describe 'VehiclesCheckerApi.licence_info' do
   subject(:call) do
     VehiclesCheckerApi.licence_info_historical(
-      vrn: vrn,
-      page: page,
-      start_date: start_date,
-      end_date: end_date
+      vrn:,
+      page:,
+      start_date:,
+      end_date:
     )
   end
 

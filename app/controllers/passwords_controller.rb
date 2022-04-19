@@ -82,7 +82,7 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
   #
   def send_confirmation_code
     session[:password_reset_username] = username
-    Cognito::ForgotPassword::Reset.call(username: username)
+    Cognito::ForgotPassword::Reset.call(username:)
     redirect_to confirm_reset_passwords_path
   rescue Cognito::CallException => e
     redirect_to e.path, alert: (e.message.presence ? e.message : nil)
@@ -96,7 +96,7 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
   #    :GET /passwords/confirm_reset
   #
   def confirm_reset
-    return redirect_to new_user_session_path, alert: 'Email is missing' unless username_in_session
+    return redirect_to new_user_session_path, alert: I18n.t('upload.email_missing') unless username_in_session
 
     @username = username_in_session
   end
@@ -120,7 +120,7 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
   #
   def change
     update_password_call
-    Cognito::ForgotPassword::UpdateUser.call(reset_counter: 1, username: username)
+    Cognito::ForgotPassword::UpdateUser.call(reset_counter: 1, username:)
     reset_user_lockout_data
     redirect_to success_passwords_path
   rescue Cognito::CallException => e
@@ -132,7 +132,7 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
   # Sets a new password when user sign in for the first time.
   def respond_to_auth
     Cognito::RespondToAuthChallenge.call(
-      user: current_user, password: password, confirmation: password_confirmation
+      user: current_user, password:, confirmation: password_confirmation
     )
     update_session_data
     redirect_to success_passwords_path
@@ -198,10 +198,10 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
   # Calls {ConfirmForgotPassword}[rdoc-ref:Cognito::ForgotPassword::Confirm.call] and update user session
   def update_password_call
     Cognito::ForgotPassword::Confirm.call(
-      username: username,
-      password: password,
-      password_confirmation: password_confirmation,
-      code: code
+      username:,
+      password:,
+      password_confirmation:,
+      code:
     )
     %w[token username].each { |attr| session["password_reset_#{attr}".to_sym] = nil }
   end
@@ -213,6 +213,6 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
 
   # Updates user data associated with account lockout.
   def reset_user_lockout_data
-    Cognito::Lockout::UpdateUser.call(username: username, failed_logins: 0)
+    Cognito::Lockout::UpdateUser.call(username:, failed_logins: 0)
   end
 end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Cognito::Lockout::UserData do
-  subject { described_class.new(username: username) }
+  subject { described_class.new(username:) }
 
   let(:username) { 'user@example.com' }
   let(:user_response) do
@@ -13,16 +13,10 @@ describe Cognito::Lockout::UserData do
                                        mock.new('custom:lockout-time', lockout_time)
                                      ])
   end
-
   let(:failed_logins) { '0' }
   let(:lockout_time) { nil }
 
-  before do
-    allow(Cognito::Client.instance).to receive(:admin_get_user).with(
-      user_pool_id: anything,
-      username: username
-    ).and_return(user_response)
-  end
+  before { allow(Cognito::Client.instance).to receive(:admin_get_user).and_return(user_response) }
 
   describe '.invalid_logins' do
     context 'when failed-logins is nil' do
@@ -47,7 +41,7 @@ describe Cognito::Lockout::UserData do
       let(:lockout_time) { nil }
 
       it 'returns nil' do
-        expect(subject.lockout_time).to eq(nil)
+        expect(subject.lockout_time).to be_nil
       end
     end
 
@@ -65,7 +59,7 @@ describe Cognito::Lockout::UserData do
       let(:lockout_time) { nil }
 
       it 'returns false' do
-        expect(subject.unlockable?).to eq(false)
+        expect(subject.unlockable?).to be(false)
       end
     end
 
@@ -73,7 +67,7 @@ describe Cognito::Lockout::UserData do
       let(:lockout_time) { Time.zone.now.iso8601 }
 
       it 'returns false' do
-        expect(subject.unlockable?).to eq(false)
+        expect(subject.unlockable?).to be(false)
       end
     end
 
@@ -81,7 +75,7 @@ describe Cognito::Lockout::UserData do
       let(:lockout_time) { 31.minutes.ago.iso8601 }
 
       it 'returns true' do
-        expect(subject.unlockable?).to eq(true)
+        expect(subject.unlockable?).to be(true)
       end
     end
   end
@@ -91,7 +85,7 @@ describe Cognito::Lockout::UserData do
       let(:lockout_time) { nil }
 
       it 'returns false' do
-        expect(subject.locked?).to eq(false)
+        expect(subject.locked?).to be(false)
       end
     end
 
@@ -99,7 +93,7 @@ describe Cognito::Lockout::UserData do
       let(:lockout_time) { 10.minutes.ago.iso8601 }
 
       it 'returns true' do
-        expect(subject.locked?).to eq(true)
+        expect(subject.locked?).to be(true)
       end
     end
   end

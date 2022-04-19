@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe Cognito::ForgotPassword::Confirm do
   subject(:service_call) do
-    described_class.call(username: username, password: password, code: code, password_confirmation: password)
+    described_class.call(username:, password:, code:, password_confirmation: password)
   end
 
   let(:username) { 'wojtek@example.com' }
@@ -15,11 +15,11 @@ describe Cognito::ForgotPassword::Confirm do
 
   before do
     allow(Cognito::Client.instance).to receive(:confirm_forgot_password).with(
-      client_id: anything, username: username, password: password, confirmation_code: code
+      client_id: anything, username:, password:, confirmation_code: code
     ).and_return(cognito_response)
 
     allow(ConfirmResetPasswordForm).to receive(:new).with(
-      password: password, confirmation: password, code: code
+      password:, confirmation: password, code:
     ).and_return(form)
   end
 
@@ -54,7 +54,7 @@ describe Cognito::ForgotPassword::Confirm do
 
     before do
       allow(Cognito::Client.instance).to receive(:confirm_forgot_password).with(
-        client_id: anything, username: username, password: password, confirmation_code: code
+        client_id: anything, username:, password:, confirmation_code: code
       ).and_raise(exception)
     end
 

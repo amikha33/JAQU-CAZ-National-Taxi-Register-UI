@@ -194,7 +194,7 @@ def paginated_history(page = 1)
   instance_double(
     PaginatedVrnHistory,
     vrn_changes_list: mocked_changes,
-    page: page,
+    page:,
     total_pages: 5,
     range_start: 1,
     range_end: 10,

@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 describe 'PasswordsController - POST #send_confirmation_code', type: :request do
-  subject { post send_confirmation_code_passwords_path, params: params }
+  subject { post send_confirmation_code_passwords_path, params: }
 
-  let(:params) { { user: { username: username } } }
+  let(:params) { { user: { username: } } }
   let(:username) { 'wojtek' }
 
   context 'with password_reset_token set' do
@@ -13,7 +13,7 @@ describe 'PasswordsController - POST #send_confirmation_code', type: :request do
       inject_session(password_reset_token: SecureRandom.uuid)
       allow(Cognito::ForgotPassword::Reset)
         .to receive(:call)
-        .with(username: username)
+        .with(username:)
         .and_return(true)
     end
 
@@ -33,7 +33,7 @@ describe 'PasswordsController - POST #send_confirmation_code', type: :request do
       before do
         allow(Cognito::ForgotPassword::Reset)
           .to receive(:call)
-          .with(username: username)
+          .with(username:)
           .and_raise(Cognito::CallException.new('Something went wrong', fallback_path))
         subject
       end

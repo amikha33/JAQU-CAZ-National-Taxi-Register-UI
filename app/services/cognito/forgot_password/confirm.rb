@@ -58,9 +58,9 @@ module Cognito
       # Raise exception if validation failed.
       def validate_params
         form = ConfirmResetPasswordForm.new(
-          password: password,
+          password:,
           confirmation: password_confirmation,
-          code: code
+          code:
         )
         return if form.valid?
 
@@ -90,8 +90,8 @@ module Cognito
         log_action('Confirming forgot password')
         client.confirm_forgot_password(
           client_id: ENV['AWS_COGNITO_CLIENT_ID'],
-          username: username,
-          password: password,
+          username:,
+          password:,
           confirmation_code: code
         )
       end

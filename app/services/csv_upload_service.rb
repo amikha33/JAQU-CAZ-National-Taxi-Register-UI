@@ -103,7 +103,7 @@ class CsvUploadService < BaseService
   # Returns a boolean.
   def aws_call
     s3_object = AMAZON_S3_CLIENT.bucket(bucket_name).object(renamed_filename)
-    s3_object.upload_file(file, metadata: metadata)
+    s3_object.upload_file(file, metadata:)
   end
 
   # Returns hash with metadata

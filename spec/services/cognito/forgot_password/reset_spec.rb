@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Cognito::ForgotPassword::Reset do
-  subject(:service_call) { described_class.call(username: username) }
+  subject(:service_call) { described_class.call(username:) }
 
   let(:username) { 'wojtek@email.com' }
   let(:cognito_response) { true }
@@ -11,10 +11,10 @@ describe Cognito::ForgotPassword::Reset do
 
   before do
     allow(ResetPasswordForm).to receive(:new).with(username).and_return(form)
-    allow(Cognito::ForgotPassword::RateLimitVerification).to receive(:call).with(username: username).and_return(true)
+    allow(Cognito::ForgotPassword::RateLimitVerification).to receive(:call).with(username:).and_return(true)
     allow(Cognito::Client.instance).to receive(:forgot_password).with(
       client_id: anything,
-      username: username
+      username:
     ).and_return(cognito_response)
   end
 
@@ -51,7 +51,7 @@ describe Cognito::ForgotPassword::Reset do
       before do
         allow(Cognito::Client.instance).to receive(:forgot_password).with(
           client_id: anything,
-          username: username
+          username:
         ).and_raise(
           Aws::CognitoIdentityProvider::Errors::ServiceError.new('', 'error')
         )
@@ -66,7 +66,7 @@ describe Cognito::ForgotPassword::Reset do
       before do
         allow(Cognito::Client.instance).to receive(:forgot_password).with(
           client_id: anything,
-          username: username
+          username:
         ).and_raise(
           Aws::CognitoIdentityProvider::Errors::UserNotFoundException.new('', 'error')
         )
@@ -82,7 +82,7 @@ describe Cognito::ForgotPassword::Reset do
     context 'when service raises `Cognito::CallException` exception' do
       before do
         allow(Cognito::ForgotPassword::RateLimitVerification).to receive(:call).with(
-          username: username
+          username:
         ).and_raise(
           Cognito::CallException.new('', 'error_path')
         )
@@ -97,7 +97,7 @@ describe Cognito::ForgotPassword::Reset do
       before do
         allow(Cognito::Client.instance).to receive(:forgot_password).with(
           client_id: anything,
-          username: username
+          username:
         ).and_raise(
           Aws::CognitoIdentityProvider::Errors::UserNotFoundException.new('', 'error')
         )

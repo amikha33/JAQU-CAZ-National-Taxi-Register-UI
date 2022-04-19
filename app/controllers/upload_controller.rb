@@ -39,14 +39,14 @@ class UploadController < ApplicationController
   # * +current_user+ - an instance of the User class
   #
   def import
-    result = CsvUploadService.call(file: file, user: current_user)
+    result = CsvUploadService.call(file:, user: current_user)
     correlation_id = SecureRandom.uuid
     job_name = RegisterCheckerApi.register_job(result.filename, correlation_id)
     session[:job] = {
       name: job_name,
       filename: result.filename,
-      submission_time: submission_time,
-      correlation_id: correlation_id
+      submission_time:,
+      correlation_id:
     }
     redirect_to processing_upload_index_path
   end
@@ -69,7 +69,7 @@ class UploadController < ApplicationController
     if result == 'SUCCESS'
       redirect_to success_upload_index_path
     else
-      redirect_to authenticated_root_path, alert: 'Uploaded file is not valid'
+      redirect_to authenticated_root_path, alert: I18n.t('upload.invalid_file')
     end
   end
 
@@ -100,7 +100,7 @@ class UploadController < ApplicationController
   def success
     return unless session[:job]
 
-    @warning = I18n.t('upload.delivery_error') unless Ses::SendSuccessEmail.call(user: current_user, job_data: job_data)
+    @warning = I18n.t('upload.delivery_error') unless Ses::SendSuccessEmail.call(user: current_user, job_data:)
     session[:job] = nil
   end
 

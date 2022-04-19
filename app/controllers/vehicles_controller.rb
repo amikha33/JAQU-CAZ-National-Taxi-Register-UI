@@ -134,9 +134,9 @@ class VehiclesController < ApplicationController
   # Returns back link url, e.g '.../vehicles/historic_search?page=3?back=true'
   def determinate_back_link_url(page)
     BackLinkHistoryService.call(
-      session: session,
+      session:,
       back_button: back_button_used?,
-      page: page,
+      page:,
       url: historic_search_vehicles_url
     )
   end

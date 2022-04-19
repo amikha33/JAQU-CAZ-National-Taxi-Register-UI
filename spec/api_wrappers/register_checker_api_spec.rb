@@ -16,7 +16,7 @@ describe RegisterCheckerApi do
         .with(
           headers: { 'Content-Type' => 'application/json', 'X-Correlation-ID' => correlation_id },
           body: {
-            filename: filename,
+            filename:,
             s3Bucket: ENV.fetch('S3_AWS_BUCKET', 'S3_AWS_BUCKET')
           }.to_json
         ).to_return(status: 201, body: { jobName: job_name }.to_json)
@@ -32,17 +32,17 @@ describe RegisterCheckerApi do
           .with(
             headers: { 'Content-Type' => 'application/json', 'X-Correlation-ID' => correlation_id },
             body: {
-              filename: filename,
+              filename:,
               s3Bucket: ENV.fetch('S3_AWS_BUCKET', 'S3_AWS_BUCKET')
             }.to_json
-          ).to_return(status: 200, body: body)
+          ).to_return(status: 200, body:)
       end
 
       let(:body) { 'invalid JSON format' }
 
       it 'raises Error500Exception' do
         expect { subject }.to raise_exception(an_instance_of(BaseApi::Error500Exception)
-          .and(having_attributes(status: 500, status_message: 'Response body parsing failed', body: body)))
+          .and(having_attributes(status: 500, status_message: 'Response body parsing failed', body:)))
       end
     end
   end

@@ -30,7 +30,7 @@ describe 'UploadController - GET #success', type: :request do
     let(:job_data) do
       {
         name: 'name',
-        filename: filename,
+        filename:,
         correlation_id: SecureRandom.uuid,
         submission_time: time
       }
@@ -48,7 +48,7 @@ describe 'UploadController - GET #success', type: :request do
 
       it 'calls Ses::SendSuccessEmail' do
         subject
-        expect(Ses::SendSuccessEmail).to have_received(:call).with(user: user, job_data: job_data)
+        expect(Ses::SendSuccessEmail).to have_received(:call).with(user:, job_data:)
       end
 
       it 'clears job data from the session' do

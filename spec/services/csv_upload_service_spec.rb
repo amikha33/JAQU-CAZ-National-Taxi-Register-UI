@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 describe CsvUploadService do
-  subject(:service_call) { described_class.call(file: file, user: user) }
+  subject(:service_call) { described_class.call(file:, user:) }
 
   let(:file) { fixture_file_upload(csv_file("#{filename}.csv")) }
   let(:filename) { 'CAZ-2020-01-08-AuthorityID' }
-  let(:user) { create_user(sub: sub) }
+  let(:user) { create_user(sub:) }
   let(:sub) { SecureRandom.uuid }
 
   describe '#call' do

@@ -29,7 +29,7 @@ module Cognito
     def initialize(username:, password:, login_ip:)
       @username = username&.downcase
       @password = password
-      @user = User.new(login_ip: login_ip)
+      @user = User.new(login_ip:)
     end
 
     ##
@@ -68,7 +68,7 @@ module Cognito
         auth_flow: 'USER_PASSWORD_AUTH',
         auth_parameters: { 'USERNAME' => username, 'PASSWORD' => password }
       )
-      Cognito::Lockout::UpdateUser.call(username: username, failed_logins: 0)
+      Cognito::Lockout::UpdateUser.call(username:, failed_logins: 0)
       auth_response
     end
 
@@ -97,27 +97,27 @@ module Cognito
     # Performs {next call}[rdoc-ref:Cognito::GetUser.call] to get user data of unchallenged user.
     # Passes username and access_token received from the previous call.
     def update_unchallenged_user(access_token)
-      @user = Cognito::GetUser.call(access_token: access_token, username: username, user: user)
+      @user = Cognito::GetUser.call(access_token:, username:, user:)
     end
 
     # Attempts to unlock user and returns information if user is locked out
     # Returns a boolean.
     def user_locked_out?
-      Cognito::Lockout::AttemptUserUnlock.call(username: username)
-      Cognito::Lockout::IsUserLocked.call(username: username)
+      Cognito::Lockout::AttemptUserUnlock.call(username:)
+      Cognito::Lockout::IsUserLocked.call(username:)
     end
 
     # Performs {call}[rdoc-ref:Cognito::GetUserGroups.call] to get user groups.
     # Assign array of groups to user instance
     def assign_groups_to_user
-      response = Cognito::GetUserGroups.call(username: username)
+      response = Cognito::GetUserGroups.call(username:)
       user.groups = response.groups.map(&:group_name)
     end
 
     # Handles AWS_ERROR::NotAuthorizedException
     def handle_not_authorized_exception(error)
       log_error error
-      Cognito::Lockout::VerifyInvalidLogins.call(username: username)
+      Cognito::Lockout::VerifyInvalidLogins.call(username:)
       log_action('Attempted user login unsuccessful')
       false
     end

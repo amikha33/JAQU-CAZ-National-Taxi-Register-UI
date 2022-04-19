@@ -5,7 +5,7 @@ require 'rails_helper'
 describe ConfirmResetPasswordForm do
   subject(:form) do
     described_class.new(
-      password: password, confirmation: password_confirmation, code: confirmation_code
+      password:, confirmation: password_confirmation, code: confirmation_code
     )
   end
 

@@ -3,13 +3,12 @@
 require 'rails_helper'
 
 describe Cognito::ForgotPassword::UpdateUser do
-  subject(:service_call) { described_class.call(reset_counter: reset_counter, username: username) }
+  subject(:service_call) { described_class.call(reset_counter:, username:) }
 
   let(:reset_counter) { 0 }
   let(:username) { 'user@example.com' }
   let(:reset_requested) { nil }
   let(:current_date_time) { DateTime.current.to_i }
-
   let(:user_attributes) do
     [
       {
@@ -23,19 +22,13 @@ describe Cognito::ForgotPassword::UpdateUser do
     ]
   end
 
-  before do
-    allow(Cognito::Client.instance).to receive(:admin_update_user_attributes).with(
-      user_pool_id: anything,
-      username: username,
-      user_attributes: user_attributes
-    ).and_return(true)
-  end
+  before { allow(Cognito::Client.instance).to receive(:admin_update_user_attributes).and_return(true) }
 
   context 'with successful call' do
     it 'calls Cognito with proper params' do
       service_call
       expect(Cognito::Client.instance).to have_received(:admin_update_user_attributes).with(
-        user_pool_id: anything, username: username, user_attributes: user_attributes
+        user_pool_id: anything, username:, user_attributes:
       )
     end
   end
@@ -44,11 +37,7 @@ describe Cognito::ForgotPassword::UpdateUser do
  call fails with proper params' do
     context 'and service raises `ServiceError`' do
       before do
-        allow(Cognito::Client.instance).to receive(:admin_update_user_attributes).with(
-          user_pool_id: anything,
-          username: username,
-          user_attributes: user_attributes
-        ).and_raise(
+        allow(Cognito::Client.instance).to receive(:admin_update_user_attributes).and_raise(
           Aws::CognitoIdentityProvider::Errors::ServiceError.new('', 'error')
         )
       end
@@ -60,11 +49,7 @@ describe Cognito::ForgotPassword::UpdateUser do
 
     context 'and service raises `UserNotFoundException`' do
       before do
-        allow(Cognito::Client.instance).to receive(:admin_update_user_attributes).with(
-          user_pool_id: anything,
-          username: username,
-          user_attributes: user_attributes
-        ).and_raise(
+        allow(Cognito::Client.instance).to receive(:admin_update_user_attributes).and_raise(
           Aws::CognitoIdentityProvider::Errors::UserNotFoundException.new('', '')
         )
       end

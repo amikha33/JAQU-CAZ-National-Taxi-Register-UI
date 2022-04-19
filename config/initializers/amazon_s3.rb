@@ -19,9 +19,9 @@ credentials = if is_running_locally
                 # On local machines we are using STS
                 Aws::AssumeRoleCredentials.new(
                   client: Aws::STS::Client.new(
-                    region: region,
-                    access_key_id: access_key_id,
-                    secret_access_key: secret_access_key
+                    region:,
+                    access_key_id:,
+                    secret_access_key:
                   ),
                   role_arn: assume_role_arn,
                   role_session_name: assume_role_session_name
@@ -35,6 +35,6 @@ credentials = if is_running_locally
               end
 
 AMAZON_S3_CLIENT = Aws::S3::Resource.new(
-  region: region,
-  credentials: credentials
+  region:,
+  credentials:
 )

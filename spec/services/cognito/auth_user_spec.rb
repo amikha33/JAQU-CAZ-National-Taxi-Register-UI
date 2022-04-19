@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Cognito::AuthUser do
-  subject(:service_call) { described_class.call(username: username, password: password, login_ip: remote_ip) }
+  subject(:service_call) { described_class.call(username:, password:, login_ip: remote_ip) }
 
   let(:username) { 'user@example.com' }
   let(:password) { 'password' }
@@ -19,10 +19,9 @@ describe Cognito::AuthUser do
   context 'with successful call' do
     before do
       allow(Cognito::Client.instance).to receive(:initiate_auth).with(auth_params).and_return(auth_response)
-      allow(Cognito::Client.instance).to receive(:admin_list_groups_for_user).with(
-        user_pool_id: anything,
-        username: username
-      ).and_return(Struct.new(:groups).new([Struct.new(:group_name).new('ntr.search.dev')]))
+      allow(Cognito::Client.instance).to receive(:admin_list_groups_for_user).and_return(
+        Struct.new(:groups).new([Struct.new(:group_name).new('ntr.search.dev')])
+      )
     end
 
     context 'when user changed the password' do
@@ -39,12 +38,12 @@ describe Cognito::AuthUser do
       it 'calls `Cognito::GetUser`' do
         service_call
         expect(Cognito::GetUser).to have_received(:call)
-          .with(access_token: token, username: username, user: an_instance_of(User))
+          .with(access_token: token, username:, user: an_instance_of(User))
       end
 
       it 'calls `Cognito::GetUserGroups`' do
         service_call
-        expect(Cognito::GetUserGroups).to have_received(:call).with(username: username)
+        expect(Cognito::GetUserGroups).to have_received(:call).with(username:)
       end
     end
 

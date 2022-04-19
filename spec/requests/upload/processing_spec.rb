@@ -8,7 +8,7 @@ describe 'UploadController - GET #processing', type: :request do
   let(:job_status) { 'SUCCESS' }
   let(:correlation_id) { SecureRandom.uuid }
   let(:job_name) { 'name' }
-  let(:job_data) { { name: job_name, correlation_id: correlation_id } }
+  let(:job_data) { { name: job_name, correlation_id: } }
 
   before { sign_in create_user }
 

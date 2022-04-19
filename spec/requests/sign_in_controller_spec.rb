@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'User singing in', type: :request do
   let(:email) { 'user@example.com' }
   let(:password) { '12345678' }
-  let(:params) { { user: { username: email, password: password } } }
+  let(:params) { { user: { username: email, password: } } }
 
   describe 'signing in' do
     subject { post user_session_path(params) }
@@ -15,7 +15,7 @@ describe 'User singing in', type: :request do
 
       it 'logs user in' do
         subject
-        expect(controller.current_user).not_to be(nil)
+        expect(controller.current_user).not_to be_nil
       end
 
       it 'redirects to root' do
@@ -26,7 +26,7 @@ describe 'User singing in', type: :request do
       it 'calls Cognito::AuthUser with proper params' do
         subject
         expect(Cognito::AuthUser).to have_received(:call)
-          .with(username: email, password: password, login_ip: '127.0.0.1')
+          .with(username: email, password:, login_ip: '127.0.0.1')
       end
     end
 

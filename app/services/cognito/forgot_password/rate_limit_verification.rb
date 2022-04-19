@@ -64,7 +64,7 @@ module Cognito
       def user_data
         unless defined? @user_data
           log_action('Query rate limiting fields from user account')
-          @user_data = Cognito::ForgotPassword::GetUser.call(username: username)
+          @user_data = Cognito::ForgotPassword::GetUser.call(username:)
         end
 
         @user_data
@@ -73,8 +73,8 @@ module Cognito
       # Perform call to Cognito and get user data
       def admin_update_user(reset_counter)
         Cognito::ForgotPassword::UpdateUser.call(
-          reset_counter: reset_counter,
-          username: username
+          reset_counter:,
+          username:
         )
       end
     end

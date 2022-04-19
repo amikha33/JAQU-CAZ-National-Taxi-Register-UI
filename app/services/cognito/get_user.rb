@@ -54,7 +54,7 @@ module Cognito
     def user_data
       unless defined? @user_data
         log_action('Getting user')
-        @user_data = client.get_user(access_token: access_token)
+        @user_data = client.get_user(access_token:)
       end
 
       @user_data
@@ -63,9 +63,9 @@ module Cognito
     # Requesting a Cognito service to update `preferred_username` attribute
     def update_preferred_username
       Cognito::UpdatePreferredUsername.call(
-        username: username,
-        preferred_username: preferred_username,
-        sub: sub
+        username:,
+        preferred_username:,
+        sub:
       )
     end
 

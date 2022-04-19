@@ -3,7 +3,7 @@
 # Methods used to manipulate the session data in rspec tests
 module SessionHelper
   def add_vrn_to_session
-    page.set_rack_session(vrn: vrn)
+    page.set_rack_session(vrn:)
   end
 
   private

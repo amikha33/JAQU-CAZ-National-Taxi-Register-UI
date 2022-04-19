@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 describe 'PasswordsController - POST #change', type: :request do
-  subject { post change_passwords_path, params: params }
+  subject { post change_passwords_path, params: }
 
   let(:params) do
     {
       user: {
-        username: username,
-        password: password,
+        username:,
+        password:,
         confirmation_code: code,
         password_confirmation: password
       }
@@ -27,16 +27,16 @@ describe 'PasswordsController - POST #change', type: :request do
       )
       allow(Cognito::ForgotPassword::Confirm)
         .to receive(:call)
-        .with(username: username,
-              password: password,
-              code: code,
+        .with(username:,
+              password:,
+              code:,
               password_confirmation: password)
         .and_return(true)
       allow(Cognito::ForgotPassword::UpdateUser)
-        .to receive(:call).with(reset_counter: 1, username: username)
+        .to receive(:call).with(reset_counter: 1, username:)
                           .and_return(true)
       allow(Cognito::Lockout::UpdateUser)
-        .to receive(:call).with(username: username, failed_logins: 0)
+        .to receive(:call).with(username:, failed_logins: 0)
                           .and_return(true)
     end
 
@@ -58,7 +58,7 @@ describe 'PasswordsController - POST #change', type: :request do
     it 'updates user lockout data' do
       subject
       expect(Cognito::Lockout::UpdateUser).to have_received(:call)
-        .with(username: username, failed_logins: 0)
+        .with(username:, failed_logins: 0)
     end
 
     context 'when service raises exception' do

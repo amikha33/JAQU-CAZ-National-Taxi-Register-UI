@@ -23,7 +23,7 @@ describe HistoricalVrnDetails do
     it 'calls `VehiclesCheckerApi.licence_info_historical` with proper params' do
       changes
       expect(VehiclesCheckerApi).to have_received(:licence_info_historical)
-        .with(vrn: vrn, page: page, start_date: start_date, end_date: end_date)
+        .with(vrn:, page:, start_date:, end_date:)
     end
 
     it 'returns a PaginatedVrnHistory' do
@@ -53,7 +53,7 @@ describe HistoricalVrnDetails do
     it 'calls `AccountsApi.licence_info_historical` with proper params' do
       subject.changes_empty?
       expect(VehiclesCheckerApi).to have_received(:licence_info_historical)
-        .with(vrn: vrn, page: 1, start_date: start_date, end_date: end_date)
+        .with(vrn:, page: 1, start_date:, end_date:)
     end
 
     context 'when some changes returned' do
@@ -75,7 +75,7 @@ describe HistoricalVrnDetails do
     it 'calls `AccountsApi.licence_info_historical` with proper params' do
       subject.total_changes_count_zero?
       expect(VehiclesCheckerApi).to have_received(:licence_info_historical)
-        .with(vrn: vrn, page: 1, start_date: start_date, end_date: end_date)
+        .with(vrn:, page: 1, start_date:, end_date:)
     end
 
     context 'when count not zero' do

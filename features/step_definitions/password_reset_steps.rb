@@ -11,7 +11,7 @@ end
 When('I enter my username') do
   allow(Cognito::ForgotPassword::Reset)
     .to receive(:call)
-    .with(username: username)
+    .with(username:)
     .and_return(true)
   fill_in('user[username]', with: username)
   click_button 'Reset password'
@@ -36,9 +36,9 @@ When('I enter valid code and passwords') do
   code = '123456'
   allow(Cognito::ForgotPassword::Confirm)
     .to receive(:call).with(
-      username: username,
-      password: password,
-      code: code,
+      username:,
+      password:,
+      code:,
       password_confirmation: password
     ).and_return(true)
   fill_in('user[confirmation_code]', with: code)

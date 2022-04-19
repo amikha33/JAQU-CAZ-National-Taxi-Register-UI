@@ -3,23 +3,18 @@
 require 'rails_helper'
 
 describe Cognito::ForgotPassword::GetUser do
-  subject(:service_call) { described_class.call(username: username) }
+  subject(:service_call) { described_class.call(username:) }
 
   let(:username) { 'user@example.com' }
 
-  before do
-    allow(Cognito::Client.instance).to receive(:admin_get_user).with(
-      user_pool_id: anything,
-      username: username
-    ).and_return(true)
-  end
+  before { allow(Cognito::Client.instance).to receive(:admin_get_user).and_return(true) }
 
   context 'with successful call' do
     it 'calls Cognito with proper params' do
       service_call
       expect(Cognito::Client.instance).to have_received(:admin_get_user).with(
         user_pool_id: anything,
-        username: username
+        username:
       )
     end
   end
@@ -27,10 +22,7 @@ describe Cognito::ForgotPassword::GetUser do
   context 'when `Cognito::Client.instance.admin_get_user` call fails with proper params' do
     context 'and service raises `ServiceError`' do
       before do
-        allow(Cognito::Client.instance).to receive(:admin_get_user).with(
-          user_pool_id: anything,
-          username: username
-        ).and_raise(
+        allow(Cognito::Client.instance).to receive(:admin_get_user).and_raise(
           Aws::CognitoIdentityProvider::Errors::ServiceError.new('', 'error')
         )
       end
@@ -42,10 +34,7 @@ describe Cognito::ForgotPassword::GetUser do
 
     context 'and service raises `UserNotFoundException`' do
       before do
-        allow(Cognito::Client.instance).to receive(:admin_get_user).with(
-          user_pool_id: anything,
-          username: username
-        ).and_raise(
+        allow(Cognito::Client.instance).to receive(:admin_get_user).and_raise(
           Aws::CognitoIdentityProvider::Errors::UserNotFoundException.new('', '')
         )
       end

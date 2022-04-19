@@ -5,7 +5,7 @@ require 'rails_helper'
 describe NewPasswordForm do
   subject(:form) do
     described_class.new(
-      password: password, confirmation: confirmation, old_password_hash: old_password_hash
+      password:, confirmation:, old_password_hash:
     )
   end
 

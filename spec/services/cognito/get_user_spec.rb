@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Cognito::GetUser do
-  subject(:service_call) { described_class.call(access_token: token, username: username) }
+  subject(:service_call) { described_class.call(access_token: token, username:) }
 
   let(:token) { SecureRandom.uuid }
   let(:cognito_response) do
@@ -42,7 +42,7 @@ describe Cognito::GetUser do
   end
 
   it 'sets aws_session to nil' do
-    expect(service_call.aws_session).to eq(nil)
+    expect(service_call.aws_session).to be_nil
   end
 
   describe '.preferred_username' do
@@ -63,7 +63,7 @@ describe Cognito::GetUser do
 
   context 'when the initial user is given' do
     subject(:service_call) do
-      described_class.call(access_token: token, username: username, user: user)
+      described_class.call(access_token: token, username:, user:)
     end
 
     let(:user) { User.new(login_ip: remote_ip) }

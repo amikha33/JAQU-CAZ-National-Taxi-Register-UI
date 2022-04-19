@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 describe Security::HostHeaderValidator do
-  subject { described_class.call(request: request, allowed_hosts: allowed_hosts) }
+  subject { described_class.call(request:, allowed_hosts:) }
 
   let(:request) do
-    instance_double(ActionDispatch::Request, x_forwarded_host: x_forwarded_host,
+    instance_double(ActionDispatch::Request, x_forwarded_host:,
                                              get_header: any_host)
   end
   let(:x_forwarded_host) { nil }

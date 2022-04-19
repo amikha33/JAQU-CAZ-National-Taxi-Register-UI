@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe Cognito::RespondToAuthChallenge do
   subject(:service_call) do
-    described_class.call(user: user, password: password, confirmation: password_confirmation)
+    described_class.call(user:, password:, confirmation: password_confirmation)
   end
 
   let(:password) { 'password' }
@@ -16,7 +16,7 @@ describe Cognito::RespondToAuthChallenge do
 
   before do
     allow(Cognito::GetUser).to receive(:call)
-      .with(access_token: token, user: user, username: user.username)
+      .with(access_token: token, user:, username: user.username)
       .and_return(cognito_user)
     allow(Cognito::Client.instance).to receive(:respond_to_auth_challenge)
       .with(

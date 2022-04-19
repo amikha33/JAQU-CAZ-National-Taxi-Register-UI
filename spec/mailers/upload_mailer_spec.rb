@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe UploadMailer do
-  let(:user) { create_user(email: email) }
+  let(:user) { create_user(email:) }
   let(:email) { 'test@example.com' }
 
   describe '.success_upload' do

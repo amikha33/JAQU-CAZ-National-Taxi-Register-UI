@@ -77,7 +77,7 @@ class VehiclesCheckerApi < BaseApi
         'endDate' => end_date
       }
 
-      request(:get, "/#{vrn}/licence-info-historical", query: query)
+      request(:get, "/#{vrn}/licence-info-historical", query:)
     end
 
     private

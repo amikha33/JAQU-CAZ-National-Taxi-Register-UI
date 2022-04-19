@@ -62,15 +62,15 @@ module Cognito
 
       # Method calls service which returns user data.
       def user_data_call
-        Cognito::Lockout::UserData.new(username: username)
+        Cognito::Lockout::UserData.new(username:)
       end
 
       # Method calls service responsible for user updates.
       def update_user(failed_logins:, lockout_time: nil)
         Cognito::Lockout::UpdateUser.call(
-          username: username,
-          failed_logins: failed_logins,
-          lockout_time: lockout_time
+          username:,
+          failed_logins:,
+          lockout_time:
         )
       end
     end

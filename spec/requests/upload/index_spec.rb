@@ -25,7 +25,7 @@ describe 'UploadController - GET #index', type: :request do
     let(:job_name) { 'name' }
 
     before do
-      inject_session(job: { name: job_name, correlation_id: correlation_id })
+      inject_session(job: { name: job_name, correlation_id: })
       allow(RegisterCheckerApi).to receive(:job_errors).and_return(%w[error])
     end
 

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Cognito::ForgotPassword::RateLimitVerification do
-  subject(:service_call) { described_class.call(username: username) }
+  subject(:service_call) { described_class.call(username:) }
 
   let(:username) { 'user@example.com' }
   let(:admin_get_user_response) do
@@ -15,10 +15,9 @@ describe Cognito::ForgotPassword::RateLimitVerification do
   let(:reset_requested) { nil }
 
   before do
-    allow(Cognito::Client.instance).to receive(:admin_get_user)
-      .with(user_pool_id: anything, username: username).and_return(admin_get_user_response)
+    allow(Cognito::Client.instance).to receive(:admin_get_user).and_return(admin_get_user_response)
     allow(Cognito::ForgotPassword::UpdateUser).to receive(:call).with(reset_counter: 1,
-                                                                      username: username).and_return(true)
+                                                                      username:).and_return(true)
   end
 
   context 'when password reset counter no more than five' do
@@ -26,7 +25,7 @@ describe Cognito::ForgotPassword::RateLimitVerification do
       service_call
       expect(Cognito::ForgotPassword::UpdateUser).to have_received(:call).with(
         reset_counter: 1,
-        username: username
+        username:
       )
     end
   end
@@ -41,7 +40,7 @@ describe Cognito::ForgotPassword::RateLimitVerification do
         service_call
         expect(Cognito::ForgotPassword::UpdateUser).to have_received(:call).with(
           reset_counter: 1,
-          username: username
+          username:
         )
       end
     end
@@ -65,10 +64,7 @@ describe Cognito::ForgotPassword::RateLimitVerification do
   context 'when `Cognito::Client.instance.admin_get_user` call fails with proper params' do
     context 'and service raises `ServiceError`' do
       before do
-        allow(Cognito::Client.instance).to receive(:admin_get_user).with(
-          user_pool_id: anything,
-          username: username
-        ).and_raise(
+        allow(Cognito::Client.instance).to receive(:admin_get_user).and_raise(
           Aws::CognitoIdentityProvider::Errors::ServiceError.new('', 'error')
         )
       end
@@ -80,10 +76,7 @@ describe Cognito::ForgotPassword::RateLimitVerification do
 
     context 'and service raises `UserNotFoundException`' do
       before do
-        allow(Cognito::Client.instance).to receive(:admin_get_user).with(
-          user_pool_id: anything,
-          username: username
-        ).and_raise(
+        allow(Cognito::Client.instance).to receive(:admin_get_user).and_raise(
           Aws::CognitoIdentityProvider::Errors::UserNotFoundException.new('', '')
         )
       end

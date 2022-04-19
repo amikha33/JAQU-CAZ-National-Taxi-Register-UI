@@ -3,9 +3,14 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.3'
+ruby '3.1.2'
 
 gem 'rails', '~> 6.1'
+
+# Can be removed after updates rails to 7 version.
+gem 'net-imap', require: false
+gem 'net-pop', require: false
+gem 'net-smtp', require: false
 
 gem 'activerecord-nulldb-adapter'
 gem 'addressable'
@@ -29,10 +34,7 @@ end
 group :development, :test do
   gem 'dotenv-rails'
   gem 'haml-rails'
-  gem 'rspec-core', '=3.10.2'
-  gem 'rspec-expectations', '=3.10.2'
-  gem 'rspec-mocks', '=3.10.2'
-  gem 'rspec-rails', '=5.0.2'
+  gem 'rspec-rails'
   gem 'ruby_jard'
 end
 
@@ -53,8 +55,8 @@ group :test do
   gem 'i18n-tasks'
   gem 'rack_session_access'
   gem 'rails-controller-testing'
-  gem 'rubocop-rails', '=2.13.2'
-  gem 'rubocop-rspec', '=2.7.0', require: false
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'show_me_the_cookies'
   gem 'simplecov', '~> 0.17.1', require: false

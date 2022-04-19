@@ -21,8 +21,8 @@ module Cognito
     ##
     # Method called when class does not implement the method
     # Then we try to call Cognito Client if respond to that method
-    def method_missing(method, *args, &block)
-      return client.send(method, *args, &block) if respond_to_missing?(method)
+    def method_missing(method, *args, &)
+      return client.send(method, *args, &) if respond_to_missing?(method)
 
       super
     rescue Aws::CognitoIdentityProvider::Errors::ResourceNotFoundException,
@@ -31,7 +31,7 @@ module Cognito
       # reload Cognito Client
       @client = load_client
       # retry
-      client.send(method, *args, &block)
+      client.send(method, *args, &)
     end
 
     ##

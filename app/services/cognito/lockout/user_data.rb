@@ -54,8 +54,8 @@ module Cognito
       def user_data
         @user_data ||= client.admin_get_user(
           {
-            user_pool_id: user_pool_id,
-            username: username
+            user_pool_id:,
+            username:
           }
         )
       end
