@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/InformedSolutions/JAQU-CAZ-Ruby-Common
-  revision: 1e328b2fff97a021e85871299d09f743ab6a1dcb
+  revision: 719861b575f879cb16bc3f49cb7652fb9736dfb9
   specs:
     custom_logger (0.1.0)
 
