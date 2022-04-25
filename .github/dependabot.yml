@@ -33,3 +33,35 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+  
+  # Addition of checks on the master branch:
+  - package-ecosystem: "bundler" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
+      timezone: "UTC"
+      time: "00:00"
+    allow:
+      - dependency-type: "production"
+    versioning-strategy: increase-if-necessary # Increase the version requirements for npm only when required
+    open-pull-requests-limit: 0
+    target-branch: "master"
+    
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      timezone: "UTC"
+      time: "19:00"
+    allow:
+      - dependency-type: "production"
+    versioning-strategy: increase-if-necessary     # Increase the version requirements for npm only when required
+    open-pull-requests-limit: 0
+    target-branch: "master"
+
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 0
+    target-branch: "master"
