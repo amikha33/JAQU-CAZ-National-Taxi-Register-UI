@@ -22,7 +22,10 @@ function showCookiesBanner() {
     if (shouldHaveCookieMessage) {
       cookiesBanner.style.display = 'block';
 
-      // Set the default consent cookie if it isn't already present
+      // Scroll the document to the top page in Safari browsers when cookie banner is visible.
+      setTimeout(() => window.scrollTo(0, 0), 1);
+
+      // Set the default consent cookie if it isn't already present.
       if (!cookie('cookies_policy')) {
         setDefaultConsentCookie();
       }
