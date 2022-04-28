@@ -89,7 +89,7 @@ module Cognito
       def confirm_forgot_password
         log_action('Confirming forgot password')
         client.confirm_forgot_password(
-          client_id: ENV['AWS_COGNITO_CLIENT_ID'],
+          client_id: ENV.fetch('AWS_COGNITO_CLIENT_ID', nil),
           username:,
           password:,
           confirmation_code: code

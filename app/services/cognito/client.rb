@@ -51,7 +51,7 @@ module Cognito
 
     # Check if COGNITO_SDK_SECRET is set
     def cognito_sdk_secret
-      ENV['COGNITO_SDK_SECRET']
+      ENV.fetch('COGNITO_SDK_SECRET', nil)
     end
 
     # Loads Credentials from SecretManager
@@ -68,7 +68,7 @@ module Cognito
     # Loads SecretManager Client.
     def secret_manager_client
       Aws::SecretsManager::Client.new(
-        region: ENV['AWS_REGION'],
+        region: ENV.fetch('AWS_REGION', nil),
         credentials: Aws::ECSCredentials.new({ ip_address: '169.254.170.2' })
       )
     end

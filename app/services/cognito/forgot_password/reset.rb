@@ -60,7 +60,7 @@ module Cognito
       def cognito_call
         log_action('Forgot password call and email sending')
         client.forgot_password(
-          client_id: ENV['AWS_COGNITO_CLIENT_ID'],
+          client_id: ENV.fetch('AWS_COGNITO_CLIENT_ID', nil),
           username:
         )
       rescue AWS_ERROR::ServiceError => e

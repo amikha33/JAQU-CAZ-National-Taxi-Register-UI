@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 is_running_locally = Rails.env.development?
-is_running_on_aws = Rails.env.production? && ENV['BUILD_ID']
+is_running_on_aws = Rails.env.production? && ENV.fetch('BUILD_ID', nil)
 
 # Development environment config
-access_key_id = ENV['AWS_ACCESS_KEY_ID']
-secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
-assume_role_arn = ENV['AWS_ROLE_ARN']
+access_key_id = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
+secret_access_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
+assume_role_arn = ENV.fetch('AWS_ROLE_ARN', nil)
 assume_role_session_name = 'jaqu-lowerDeveloperRole-localdev'
 
 # Production environment config
