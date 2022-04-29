@@ -12,6 +12,7 @@ Feature: Sign in
       And I should not see 'Upload' link
       And I should not see 'Data rules' link
       And I should not see 'Search' link
+      And I should see "Skip to main content" link
     When I enter valid credentials
     Then I should see 'Taxi and PHV Data Portal'
       And Cookie is created for my session
