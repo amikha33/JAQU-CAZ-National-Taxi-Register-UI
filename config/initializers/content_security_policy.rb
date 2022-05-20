@@ -12,11 +12,11 @@ if Rails.env.production?
   Rails.application.config.content_security_policy do |policy|
     policy.default_src(:none)
     policy.font_src(*defaults, :data)
-    policy.img_src(*defaults)
+    policy.img_src(*defaults, 'https://www.google-analytics.com')
     policy.object_src(:none)
     policy.script_src(*defaults, :unsafe_inline)
     policy.style_src(*defaults, :unsafe_inline)
-    policy.connect_src(*defaults)
+    policy.connect_src(*defaults, 'https://www.google-analytics.com')
     policy.frame_src('https://www.googletagmanager.com')
     policy.frame_ancestors(:none)
   end
