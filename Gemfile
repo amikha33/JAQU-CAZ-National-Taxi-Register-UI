@@ -5,12 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
-gem 'rails', '~> 6.1'
-
-# Can be removed after updates rails to 7 version.
-gem 'net-imap', require: false
-gem 'net-pop', require: false
-gem 'net-smtp', require: false
+gem 'rails'
 
 gem 'activerecord-nulldb-adapter'
 gem 'addressable'
@@ -24,6 +19,7 @@ gem 'haml'
 gem 'httparty'
 gem 'puma'
 gem 'sdoc', require: false
+gem 'sprockets-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'webpacker'
 
