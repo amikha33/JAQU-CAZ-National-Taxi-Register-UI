@@ -18,6 +18,7 @@ steps:
   # Execute OWASP Zap tests
   - name: owasp zap tests
     image: owasp/zap2docker-stable
+    failure: ignore
     commands:
       - mkdir -p /zap/wrk
       - cp ci-cd-resources/zap.conf /zap/wrk/zap.conf
