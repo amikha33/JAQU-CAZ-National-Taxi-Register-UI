@@ -53,4 +53,3 @@ en:
     delivery_error: There was an error sending your confirmation email. Your data has still been saved.
     email_missing: Email is missing
     invalid_file: Uploaded file is not valid
-    mail_subject: Your file upload confirmation email

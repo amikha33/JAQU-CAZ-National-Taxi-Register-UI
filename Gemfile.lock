@@ -79,8 +79,6 @@ GEM
     ast (2.4.2)
     aws-eventstream (1.2.0)
     aws-partitions (1.600.0)
-    aws-record (2.7.0)
-      aws-sdk-dynamodb (~> 1.18)
     aws-sdk-cognitoidentityprovider (1.67.0)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sigv4 (~> 1.1)
@@ -89,19 +87,9 @@ GEM
       aws-partitions (~> 1, >= 1.525.0)
       aws-sigv4 (~> 1.1)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-dynamodb (1.75.0)
-      aws-sdk-core (~> 3, >= 3.127.0)
-      aws-sigv4 (~> 1.1)
     aws-sdk-kms (1.57.0)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-rails (3.6.2)
-      aws-record (~> 2)
-      aws-sdk-ses (~> 1)
-      aws-sdk-sqs (~> 1)
-      aws-sessionstore-dynamodb (~> 2)
-      concurrent-ruby (~> 1)
-      railties (>= 5.2.0)
     aws-sdk-s3 (1.114.0)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sdk-kms (~> 1)
@@ -109,15 +97,9 @@ GEM
     aws-sdk-secretsmanager (1.64.0)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-ses (1.47.0)
-      aws-sdk-core (~> 3, >= 3.127.0)
-      aws-sigv4 (~> 1.1)
     aws-sdk-sqs (1.51.1)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sigv4 (~> 1.1)
-    aws-sessionstore-dynamodb (2.0.1)
-      aws-sdk-dynamodb (~> 1)
-      rack (~> 2)
     aws-sigv4 (1.5.0)
       aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.18)
@@ -479,9 +461,9 @@ DEPENDENCIES
   activerecord-nulldb-adapter
   addressable
   aws-sdk-cognitoidentityprovider
-  aws-sdk-rails
   aws-sdk-s3
   aws-sdk-secretsmanager
+  aws-sdk-sqs
   better_errors
   binding_of_caller
   bootsnap

@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 describe ApplicationHelper do
-  describe '.service_email' do
-    subject { helper.service_email }
+  describe '.support_service_email' do
+    subject { helper.support_service_email }
 
     it 'returns a proper value' do
-      expect(subject).to eq('TaxiandPHVCentralised.Database@defra.gov.uk')
+      expect(subject).to eq('TaxiPHVDatabase.Support@informed.com')
     end
   end
 end

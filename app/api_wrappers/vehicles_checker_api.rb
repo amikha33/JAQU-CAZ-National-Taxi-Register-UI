@@ -67,16 +67,13 @@ class VehiclesCheckerApi < BaseApi
     #   * +wheelchairAccessible+ -  boolean, wheelchair accessible by any active operating licence
     #
     def licence_info_historical(vrn:, page:, start_date:, end_date:, per_page: 10)
-      log_call("Getting the historical details for page: #{page}, start_date: #{start_date}"\
-               " and end_date: #{end_date}")
-
+      log_call("Getting the historical details for page: #{page}, start_date: #{start_date} and end_date: #{end_date}")
       query = {
         'pageNumber' => calculate_page_number(page),
         'pageSize' => per_page,
         'startDate' => start_date,
         'endDate' => end_date
       }
-
       request(:get, "/#{vrn}/licence-info-historical", query:)
     end
 

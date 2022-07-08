@@ -84,8 +84,7 @@ class UploadController < ApplicationController
   end
 
   ##
-  # Renders page after successful CSV file processing.
-  # Sends {SuccessEmail}[rdoc-ref:Ses::SendSuccessEmail] when visited first time after submission.
+  # Sends SQS Message and renders page after successful CSV file processing.
   #
   # ==== Path
   #    GET /upload/success
@@ -100,7 +99,7 @@ class UploadController < ApplicationController
   def success
     return unless session[:job]
 
-    @warning = I18n.t('upload.delivery_error') unless Ses::SendSuccessEmail.call(user: current_user, job_data:)
+    @warning = I18n.t('upload.delivery_error') unless CsvUploadMailer.call(email: current_user.email, job_data:)
     session[:job] = nil
   end
 

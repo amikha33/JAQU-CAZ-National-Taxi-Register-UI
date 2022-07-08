@@ -7,10 +7,10 @@ module Aws
       class Handler < Seahorse::Client::Handler
         private
 
-        # Do not log Aws::CognitoIdentityProvider::Client, AWS::SES and AWS:S3 responses
+        # Do not log Aws::CognitoIdentityProvider::Client, AWS::SQS and AWS:S3 responses
         # by the reason that we should not see sensitive parameters in logs
         def log(config, response)
-          return if %w[cognito-idp ses s3].include?(config.sigv4_signer.service)
+          return if %w[cognito-idp sqs s3].include?(config.sigv4_signer.service)
 
           config.logger.send(config.log_level, format(config, response))
         end

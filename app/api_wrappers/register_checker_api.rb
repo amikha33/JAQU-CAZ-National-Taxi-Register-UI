@@ -61,8 +61,7 @@ class RegisterCheckerApi < BaseApi
     #
     def job_status(job_uuid, correlation_id)
       log_call('Getting job status')
-      response = request(:get, "/jobs/#{job_uuid}",
-                         headers: custom_headers(correlation_id))
+      response = request(:get, "/jobs/#{job_uuid}", headers: custom_headers(correlation_id))
       response['status']
     end
 
@@ -89,8 +88,7 @@ class RegisterCheckerApi < BaseApi
     #
     def job_errors(job_uuid, correlation_id)
       log_call('Getting job errors')
-      response = request(:get, "/jobs/#{job_uuid}",
-                         headers: custom_headers(correlation_id))
+      response = request(:get, "/jobs/#{job_uuid}", headers: custom_headers(correlation_id))
       return nil unless response['status'] == 'FAILURE'
 
       response['errors']

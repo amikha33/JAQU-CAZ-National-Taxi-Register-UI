@@ -19,11 +19,6 @@ module ApplicationHelper
     Rails.configuration.x.support_service_email
   end
 
-  # Returns configured contact email address, eg. 'TaxiandPHVCentralised.Database@defra.gov.uk'.
-  def service_email
-    Rails.configuration.x.service_email
-  end
-
   # Remove duplicated error messages, e.g. `Email and email address confirmation must be the same`
   def remove_duplicated_messages(errors)
     transformed_errors(errors).uniq(&:first)

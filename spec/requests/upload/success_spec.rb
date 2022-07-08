@@ -11,7 +11,7 @@ describe 'UploadController - GET #success', type: :request do
 
   context 'with empty session' do
     before do
-      allow(Ses::SendSuccessEmail).to receive(:call)
+      allow(CsvUploadMailer).to receive(:call)
       subject
     end
 
@@ -19,8 +19,8 @@ describe 'UploadController - GET #success', type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'does not call Ses::SendSuccessEmail' do
-      expect(Ses::SendSuccessEmail).not_to have_received(:call)
+    it 'does not call CsvUploadMailer' do
+      expect(CsvUploadMailer).not_to have_received(:call)
     end
   end
 
@@ -38,17 +38,17 @@ describe 'UploadController - GET #success', type: :request do
 
     before { inject_session(job: job_data) }
 
-    context 'with successful call to Ses::SendSuccessEmail' do
-      before { allow(Ses::SendSuccessEmail).to receive(:call).and_return(true) }
+    context 'with successful call to CsvUploadMailer' do
+      before { allow(CsvUploadMailer).to receive(:call).and_return(true) }
 
       it 'returns a 200 OK status' do
         subject
         expect(response).to have_http_status(:ok)
       end
 
-      it 'calls Ses::SendSuccessEmail' do
+      it 'calls CsvUploadMailer' do
         subject
-        expect(Ses::SendSuccessEmail).to have_received(:call).with(user:, job_data:)
+        expect(CsvUploadMailer).to have_received(:call).with(email: user.email, job_data:)
       end
 
       it 'clears job data from the session' do
@@ -56,15 +56,15 @@ describe 'UploadController - GET #success', type: :request do
         expect(session[:job]).to be_nil
       end
 
-      it 'deos not render the warning' do
+      it 'does not render the warning' do
         subject
         expect(response.body).not_to include(I18n.t('upload.delivery_error'))
       end
     end
 
-    context 'with unsuccessful call to Ses::SendSuccessEmail' do
+    context 'with unsuccessful call to CsvUploadMailer' do
       before do
-        allow(Ses::SendSuccessEmail).to receive(:call).and_return(false)
+        allow(CsvUploadMailer).to receive(:call).and_return(false)
         subject
       end
 

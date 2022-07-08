@@ -20,9 +20,6 @@ module NtrUi
     config.x.feedback_url = ENV.fetch('FEEDBACK_URL', 'https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX')
     config.x.service_name = 'Taxi and PHV Data Portal'
     config.x.support_service_email = ENV.fetch('SUPPORT_SERVICE_EMAIL', 'TaxiPHVDatabase.Support@informed.com')
-    # email address for sending emails, eg 'from@example.com'
-    default_email = 'TaxiandPHVCentralised.Database@defra.gov.uk'
-    config.x.service_email = ENV.fetch('SES_FROM_EMAIL', default_email)
     config.x.version = File.read('.version')
 
     config.time_zone = 'London'
@@ -30,9 +27,6 @@ module NtrUi
 
     # https://mattbrictson.com/dynamic-rails-error-pages
     config.exceptions_app = routes
-
-    # https://github.com/aws/aws-sdk-rails
-    config.action_mailer.delivery_method = :aws_sdk
 
     # https://stackoverflow.com/questions/49086693/how-do-i-remove-mail-html-content-from-rails-logs
     config.action_mailer.logger = nil
