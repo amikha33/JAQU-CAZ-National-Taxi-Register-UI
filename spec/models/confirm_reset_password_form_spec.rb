@@ -3,15 +3,10 @@
 require 'rails_helper'
 
 describe ConfirmResetPasswordForm do
-  subject(:form) do
-    described_class.new(
-      password:, confirmation: password_confirmation, code: confirmation_code
-    )
-  end
+  subject(:form) { described_class.new(password:, confirmation: password_confirmation) }
 
-  let(:password) { 'password' }
-  let(:password_confirmation) { 'password' }
-  let(:confirmation_code) { '123456' }
+  let(:password) { 'passwOrd1' }
+  let(:password_confirmation) { 'passwOrd1' }
 
   it 'is valid with a proper password' do
     expect(form).to be_valid
@@ -26,20 +21,7 @@ describe ConfirmResetPasswordForm do
 
     it 'has a proper error message' do
       form.valid?
-      expect(form.message).to eq(I18n.t('password.errors.password_required'))
-    end
-  end
-
-  context 'when confirmation code is empty' do
-    let(:confirmation_code) { '' }
-
-    it 'is not valid' do
-      expect(form).not_to be_valid
-    end
-
-    it 'has a proper error message' do
-      form.valid?
-      expect(form.message).to eq(I18n.t('password.errors.code_required'))
+      expect(form.message[:password]).to eq(I18n.t('password.errors.password_required'))
     end
   end
 
@@ -52,7 +34,7 @@ describe ConfirmResetPasswordForm do
 
     it 'has a proper error message' do
       form.valid?
-      expect(form.message).to eq(I18n.t('password.errors.password_required'))
+      expect(form.message[:password_confirmation]).to eq(I18n.t('password.errors.password_confirmation_required'))
     end
   end
 
@@ -63,9 +45,56 @@ describe ConfirmResetPasswordForm do
       expect(form).not_to be_valid
     end
 
-    it 'has a proper error message' do
+    it 'has a proper password_confirmation error message' do
       form.valid?
-      expect(form.message).to eq(I18n.t('password.errors.password_equality'))
+      expect(form.message[:password_confirmation]).to eq(I18n.t('password.errors.password_equality'))
+    end
+
+    it 'has a proper password error message' do
+      form.valid?
+      expect(form.message[:password]).to eq(I18n.t('password.errors.password_equality'))
+    end
+  end
+
+  context 'when password dont meet complexity requirements' do
+    let(:password) { 'otherpassword' }
+    let(:password_confirmation) { 'otherpassword' }
+
+    it 'is not valid' do
+      expect(form).not_to be_valid
+    end
+
+    it 'has a proper password error message' do
+      form.valid?
+      expect(form.message[:password]).to eq(I18n.t('password.errors.complexity'))
+    end
+  end
+
+  context 'when password dont contain uppercase letter' do
+    let(:password) { 'other_password1' }
+    let(:password_confirmation) { 'other_password1' }
+
+    it 'is not valid' do
+      expect(form).not_to be_valid
+    end
+
+    it 'has a proper password error message' do
+      form.valid?
+      expect(form.message[:password]).to eq(I18n.t('password.errors.complexity'))
+    end
+  end
+
+  context 'when password dont contain digit' do
+    let(:password) { 'otherpassworD' }
+    let(:password_confirmation) { 'otherpassworD' }
+
+    it 'is not valid' do
+      expect(form).not_to be_valid
+    end
+
+    it 'has a proper password error message' do
+      form.valid?
+      expect(form.message[:password]).to eq(I18n.t('password.errors.complexity'))
     end
   end
 end

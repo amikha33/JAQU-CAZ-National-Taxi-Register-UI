@@ -17,7 +17,7 @@ class User
 
   # Attribute that is being used to authorize a user and use it in csv uploading.
   attr_accessor :email, :username, :groups, :aws_status, :aws_session, :sub, :preferred_username,
-                :confirmation_code, :hashed_password, :login_ip
+                :hashed_password, :login_ip
 
   # Overrides default initializer for compliance with Devise Gem.
   def initialize(options = {})

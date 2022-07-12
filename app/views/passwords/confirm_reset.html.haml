@@ -5,49 +5,33 @@
 
 %main.govuk-main-wrapper#main-content{role: 'main'}
   - if alert
-    = render 'shared/errors'
+    = render 'shared/errors_summary'
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      %h1.govuk-heading-l
-        = title_and_header
-      %p You should receive a confirmation code on your email address. Please enter the confirmation code and your new password below.
-      %p
-        Your password should:
-      %ul.govuk-list-govuk-list--bullet
-        %li
-          %p Be at least 12 characters long
-        %li
-          %p Include at least one upper case letter
-        %li
-          %p Include at least one number
-        %li
-          %p Include at least one special character
+      %h1.govuk-heading-l= title_and_header
+      %p Please enter your new password below
       = form_for(User.new, url: change_passwords_path, method: :post, html: {autocomplete: 'off'}) do |f|
         =f.hidden_field(:username, value: @username)
-        .govuk-form-group{class: ('govuk-form-group--error' if alert && alert.downcase.include?('code'))}
-          =f.label :confirmation_code, class: 'govuk-label'
-          %span#govuk-error-message.govuk-error-message
-            - if alert && alert.downcase.include?('code')
-              %span.govuk-visually-hidden Error:
-              = alert
-          =f.text_field :confirmation_code, class: "govuk-input #{'govuk-input--error' if alert && alert.downcase.include?('code')}"
+        =f.hidden_field(:token, value: @token)
 
-        .govuk-form-group{class: ('govuk-form-group--error' if alert && alert.downcase.include?('password'))}
+        .govuk-form-group{class: ('govuk-form-group--error' if alert && alert['password'].present?)}
           =f.label :password, class: 'govuk-label'
-          %span.govuk-error-message
-            - if alert && alert.downcase.include?('password')
+          .span.govuk-hint 
+            Must be at least 8 characters long, include at least 1 upper case letter and a number
+          %span.govuk-error-message{id: 'password-error'}
+            - if alert && alert['password'].present?
               %span.govuk-visually-hidden Error:
-              = alert
-          =f.password_field :password, class: "govuk-input #{'govuk-input--error' if alert && alert.downcase.include?('password')}"
+              = alert['password']
+          =f.password_field :password, class: "govuk-input govuk-!-width-two-thirds #{'govuk-input--error' if alert && alert['password_confirmation'].present?}"
 
-        .govuk-form-group{class: ('govuk-form-group--error' if alert && alert.downcase.include?('password'))}
+        .govuk-form-group{class: ('govuk-form-group--error' if alert && alert['password_confirmation'].present?)}
           =f.label :password_confirmation, class: 'govuk-label'
-          %span.govuk-error-message
-            - if alert && alert.downcase.include?('password')
+          %span.govuk-error-message{id: 'password_confirmation-error'}
+            - if alert && alert['password_confirmation'].present?
               %span.govuk-visually-hidden Error:
-              = alert
-          =f.password_field :password_confirmation, class: "govuk-input #{'govuk-input--error' if alert && alert.downcase.include?('password')}"
+              = alert['password_confirmation']
+          =f.password_field :password_confirmation, class: "govuk-input govuk-!-width-two-thirds #{'govuk-input--error' if alert && alert['password_confirmation'].present?}"
 
         %br
         = f.submit 'Update password', class: 'govuk-button', 'data-module': 'govuk-button'

@@ -3,18 +3,18 @@
 ##
 # Controller class for the password change.
 #
-class PasswordsController < ApplicationController # rubocop:disable Metrics/ClassLength
+class PasswordsController < ApplicationController
   # checks if a user is logged in
   before_action :authenticate_user!, only: %i[new create]
   # checks if a user has a 'FORCE_NEW_PASSWORD' status
   before_action :validate_aws_status, only: %i[new create]
   # checks if a user aws session not expired
   before_action :validate_aws_session, only: %i[new create]
-  # prevent browser page caching if a password_reset_token is present
-  before_action :validate_password_reset_token,
-                only: %i[send_confirmation_code confirm_reset change]
   # assign back button path
-  before_action :assign_back_button_url, only: %i[reset confirm_reset]
+  before_action :assign_back_button_url, only: %i[reset confirm_reset invalid_or_expired email_send]
+  # prevent browser page caching
+  before_action :prevent_browser_caching,
+                only: %i[submit_reset_your_password confirm_reset change]
 
   ##
   # Renders the password change page.
@@ -56,22 +56,44 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
   end
 
   ##
-  # Sets password_reset_token.
+  # Renders the reset page.
   #
   # ==== Path
   #
   #    :GET /passwords/reset
   #
   def reset
-    session[:password_reset_token] = SecureRandom.uuid
+    # Renders static page
   end
 
   ##
-  # Sent +confirmation_code+ to user email address.
+  # Renders the email send page.
   #
   # ==== Path
   #
-  #    :POST /passwords/send_confirmation_code
+  #    :GET /passwords/email_send
+  #
+  def email_send
+    # Renders static page
+  end
+
+  ##
+  # Renders the invalid or expired page.
+  #
+  # ==== Path
+  #
+  #    :GET /passwords/invalid_or_expired
+  #
+  def invalid_or_expired
+    # Renders static page
+  end
+
+  ##
+  # Validates email address and sends email with jwt token.
+  #
+  # ==== Path
+  #
+  #    :POST /passwords/submit_reset_your_password
   #
   # ==== Params
   # * +username+ - user email address, eg 'email@example.com'
@@ -80,10 +102,9 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
   # Any exception raised during {API call}[rdoc-ref:Cognito::ForgotPassword.call]
   # redirects to the {password reset page}[rdoc-ref:PasswordsController.reset]
   #
-  def send_confirmation_code
-    session[:password_reset_username] = username
-    Cognito::ForgotPassword::Reset.call(username:)
-    redirect_to confirm_reset_passwords_path
+  def submit_reset_your_password
+    Cognito::ForgotPassword::InitiateReset.call(username:)
+    redirect_to email_send_passwords_path
   rescue Cognito::CallException => e
     redirect_to e.path, alert: (e.message.presence ? e.message : nil)
   end
@@ -96,9 +117,9 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
   #    :GET /passwords/confirm_reset
   #
   def confirm_reset
-    return redirect_to new_user_session_path, alert: I18n.t('upload.email_missing') unless username_in_session
-
-    @username = username_in_session
+    @username, @token = Cognito::ForgotPassword::ConfirmResetValidator.call(params:, session:)
+  rescue Cognito::CallException => e
+    redirect_to e.path, alert: (e.message.presence ? e.message : nil)
   end
 
   ##
@@ -112,22 +133,38 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
   # * +username+ - string, user email address
   # * +password+ - string, password submitted by the user
   # * +password_confirmation+ - string, password confirmation submitted by the user
-  # * +code+ - 6 digit string of numbers, code sent to user
   #
   # ==== Exceptions
   # Any exception raised during {API call}[rdoc-ref:Cognito::ForgotPassword::Confirm.call]
   # redirects to the {password reset page}[rdoc-ref:PasswordsController.confirm_reset]
   #
   def change
-    update_password_call
-    Cognito::ForgotPassword::UpdateUser.call(reset_counter: 1, username:)
-    reset_user_lockout_data
+    Cognito::ForgotPassword::ChangePassword.call(username:, password:, password_confirmation:, token:)
+    clean_reset_password_session
     redirect_to success_passwords_path
   rescue Cognito::CallException => e
-    redirect_to confirm_reset_passwords_path, alert: e.message
+    redirect_to confirm_reset_passwords_path, alert: parse_alerts(e.message)
   end
 
   private
+
+  # Parse alerts to hash if valid json, otherwise return string
+  # When messages are empty return nil
+  def parse_alerts(messages)
+    return if messages.empty?
+
+    JSON.parse(messages)
+  rescue JSON::ParserError
+    messages
+  end
+
+  # Prevents browser page caching in rails
+  def prevent_browser_caching
+    # https://stackoverflow.com/questions/711418/how-to-prevent-browser-page-caching-in-rails
+    response.headers['Cache-Control'] = 'no-cache, no-store'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
+  end
 
   # Sets a new password when user sign in for the first time.
   def respond_to_auth
@@ -158,21 +195,14 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
     redirect_to new_user_session_path, alert: I18n.t('expired_session')
   end
 
-  # prevent browser page caching if a password_reset_token is present.
-  def validate_password_reset_token
-    if session[:password_reset_token]
-      # https://stackoverflow.com/questions/711418/how-to-prevent-browser-page-caching-in-rails
-      response.headers['Cache-Control'] = 'no-cache, no-store'
-      response.headers['Pragma'] = 'no-cache'
-      response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
-    else
-      redirect_to success_passwords_path
-    end
-  end
-
   # Returns the list of permitted params
   def password_params
-    params.require(:user).permit(:password, :password_confirmation, :username, :confirmation_code)
+    params.require(:user).permit(:password, :password_confirmation, :username, :token)
+  end
+
+  # Returns a string
+  def token
+    password_params[:token]
   end
 
   # Returns a string
@@ -190,29 +220,8 @@ class PasswordsController < ApplicationController # rubocop:disable Metrics/Clas
     password_params[:username]&.downcase
   end
 
-  # Returns a string
-  def code
-    password_params[:confirmation_code]
-  end
-
-  # Calls {ConfirmForgotPassword}[rdoc-ref:Cognito::ForgotPassword::Confirm.call] and update user session
-  def update_password_call
-    Cognito::ForgotPassword::Confirm.call(
-      username:,
-      password:,
-      password_confirmation:,
-      code:
-    )
-    %w[token username].each { |attr| session["password_reset_#{attr}".to_sym] = nil }
-  end
-
-  # username in session
-  def username_in_session
-    session[:password_reset_username]
-  end
-
-  # Updates user data associated with account lockout.
-  def reset_user_lockout_data
-    Cognito::Lockout::UpdateUser.call(username:, failed_logins: 0)
+  # Clears user session
+  def clean_reset_password_session
+    session[:password_reset_token] = nil
   end
 end

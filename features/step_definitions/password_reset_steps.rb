@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 def username
-  'wojtek@example.com'
+  'example@example.com'
+end
+
+def token
+  'secretToken'
 end
 
 Given('I am on the forgotten password page') do
@@ -9,7 +13,7 @@ Given('I am on the forgotten password page') do
 end
 
 When('I enter my username') do
-  allow(Cognito::ForgotPassword::Reset)
+  allow(Cognito::ForgotPassword::InitiateReset)
     .to receive(:call)
     .with(username:)
     .and_return(true)
@@ -18,30 +22,25 @@ When('I enter my username') do
 end
 
 Then("I am taken to the 'Reset link sent' page") do
-  expect(page.current_url).to eq(confirm_reset_passwords_url)
+  expect(page.current_url).to eq(email_send_passwords_url)
 end
 
-Given("I am on the 'Reset link sent' page") do
-  allow(Cognito::ForgotPassword::Reset).to receive(:call).and_return(true)
-  allow(Cognito::ForgotPassword::UpdateUser).to receive(:call).and_return(true)
-  visit reset_passwords_path
-  fill_in('user[username]', with: username)
-  click_button 'Reset password'
-  # expect proper page
-  expect(page).to have_current_path(confirm_reset_passwords_path)
+Given("I am on the 'Confirm reset password' page") do
+  allow(Cognito::ForgotPassword::ConfirmResetValidator)
+    .to receive(:call)
+    .and_return([username, token])
+  visit confirm_reset_passwords_path
 end
 
-When('I enter valid code and passwords') do
-  password = 'password'
-  code = '123456'
-  allow(Cognito::ForgotPassword::Confirm)
+When('I enter valid passwords') do
+  password = 'p@ssword!'
+  allow(Cognito::ForgotPassword::ChangePassword)
     .to receive(:call).with(
       username:,
       password:,
-      code:,
-      password_confirmation: password
+      password_confirmation: password,
+      token:
     ).and_return(true)
-  fill_in('user[confirmation_code]', with: code)
   fill_in('user[password]', with: password)
   fill_in('user[password_confirmation]', with: password)
   click_button 'Update password'
@@ -57,9 +56,9 @@ Then('I remain on the update password page') do
 end
 
 And('I enter passwords that does not comply with Cognito setup password policy') do
-  service = Cognito::ForgotPassword::Confirm
-  allow(service).to receive(:call).and_raise(Cognito::CallException, I18n.t('password.errors.complexity'))
-  fill_in('user[confirmation_code]', with: '123456')
+  service = Cognito::ForgotPassword::ChangePassword
+  allow(service).to receive(:call).and_raise(Cognito::CallException,
+                                             { password: I18n.t('password.errors.complexity') }.to_json)
   fill_in('user[password]', with: 'password')
   fill_in('user[password_confirmation]', with: 'password')
 end

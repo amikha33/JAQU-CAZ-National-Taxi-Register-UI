@@ -18,12 +18,11 @@ en:
     vrn_example: For example, CU57ABC
   password:
     errors:
-      code_mismatch: The confirmation code does not match or has expired
-      code_required: Enter your confirmation code
-      complexity: Password must be at least 12 characters long, include at least one upper case letter, a number, and a special character
+      complexity: Enter a password at least 8 characters long, including at least one upper case letter and number
       confirmation_required: Enter your password confirmation
+      password_confirmation_required: Confirm your new password
       password_equality: Enter a password and password confirmation that are the same
-      password_required: Enter your password
+      password_required: Enter your new password
       password_unchanged: New password must be different than your temporary one
       required: Enter your password
   search_vrn_form:
@@ -51,5 +50,4 @@ en:
     vrn_too_short: The number plate of the vehicle is too short
   upload:
     delivery_error: There was an error sending your confirmation email. Your data has still been saved.
-    email_missing: Email is missing
     invalid_file: Uploaded file is not valid

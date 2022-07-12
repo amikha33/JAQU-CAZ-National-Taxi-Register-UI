@@ -12,7 +12,7 @@ Feature: Force password change on first login
   Scenario: Invalid new password
     Given I am on a Force Change password page
     When I enter password that does not comply with Cognito setup password policy
-    Then I should see 'Password must be at least 12 characters long, include at least one upper case letter, a number, and a special character' 3 times
+    Then I should see 'Enter a password at least 8 characters long, including at least one upper case letter and number' 3 times
       And I can retry
 
   Scenario: Valid new password

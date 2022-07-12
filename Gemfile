@@ -17,6 +17,7 @@ gem 'bootsnap', require: false
 gem 'devise'
 gem 'haml'
 gem 'httparty'
+gem 'jwt'
 gem 'puma'
 gem 'sdoc', require: false
 gem 'sprockets-rails'

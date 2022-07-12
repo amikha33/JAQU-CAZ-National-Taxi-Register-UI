@@ -12,8 +12,8 @@ describe 'PasswordsController - GET #reset', type: :request do
     expect(response).to have_http_status(:ok)
   end
 
-  it 'sets password_reset_token' do
+  it 'renders reset template' do
     subject
-    expect(session[:password_reset_token]).not_to be_nil
+    expect(response).to render_template(:reset)
   end
 end

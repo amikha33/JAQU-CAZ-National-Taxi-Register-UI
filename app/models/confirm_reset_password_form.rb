@@ -7,8 +7,9 @@ class ConfirmResetPasswordForm < BaseForm
   attr_reader :password
   # Submitted password confirmation
   attr_reader :confirmation
-  # Submitted confirmation code
-  attr_reader :code
+
+  # Regex which validates password to include one uppercase letter, digit, and has minimum 8 characters
+  PASSWORD_REGEX = /\A(?=.*[a-z])(?:(?=.*[A-Z])(?=.*[\d\W])).{8,}\z/
 
   ##
   # Initializer method.
@@ -17,12 +18,9 @@ class ConfirmResetPasswordForm < BaseForm
   #
   # * +password+ - string, eg. 'password'
   # * +confirmation+ - string, eg. 'password'
-  # * +code+ - string, eg. '123456'
-  def initialize(password:, confirmation:, code:)
+  def initialize(password:, confirmation:)
     @password = password
     @confirmation = confirmation
-    @code = code
-    super(nil)
   end
 
   ##
@@ -30,30 +28,37 @@ class ConfirmResetPasswordForm < BaseForm
   #
   # Returns a boolean.
   def valid?
-    filled_code? && filled_passwords? && correct_password_confirmation?
+    @message = {}
+    password_exist?
+    correct_password_complexity? unless password.empty?
+    correct_password_confirmation? unless password.empty?
+    password_confirmation_exist?
+    @message.empty?
   end
 
   private
 
-  # Checks if +code+  was entered.
-  # If not, add error message to +message+.
-  #
-  # Returns a boolean.
-  def filled_code?
-    return true if code.present?
+  # Checks if password is present
+  def password_exist?
+    return true if password.present?
 
-    @message = I18n.t('password.errors.code_required')
+    @message[:password] = I18n.t('password.errors.password_required')
     false
   end
 
-  # Checks if +password+ and +confirmation+ was entered.
-  # If not, add error message to +message+.
-  #
-  # Returns a boolean.
-  def filled_passwords?
-    return true if password.present? && confirmation.present?
+  # Checks if password has correct complexity
+  def correct_password_complexity?
+    return true if password.match(PASSWORD_REGEX)
 
-    @message = I18n.t('password.errors.password_required')
+    @message[:password] = I18n.t('password.errors.complexity')
+    false
+  end
+
+  # Checks if password_confirmation is present
+  def password_confirmation_exist?
+    return true if confirmation.present?
+
+    @message[:password_confirmation] = I18n.t('password.errors.password_confirmation_required')
     false
   end
 
@@ -64,7 +69,8 @@ class ConfirmResetPasswordForm < BaseForm
   def correct_password_confirmation?
     return true if password == confirmation
 
-    @message = I18n.t('password.errors.password_equality')
+    @message[:password] = I18n.t('password.errors.password_equality')
+    @message[:password_confirmation] = I18n.t('password.errors.password_equality')
     false
   end
 end

@@ -9,12 +9,11 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      %h1.govuk-heading-l
-        = title_and_header
+      %h1.govuk-heading-l= title_and_header
       %p Enter your email to reset password
-      = form_for(User.new, url: send_confirmation_code_passwords_path, method: :post,
+      = form_for(User.new, url: submit_reset_your_password_passwords_path, method: :post,
         html: {autocomplete: 'off', novalidate: 'novalidate'}) do |f|
-        .govuk-form-group{class: ('govuk-form-group--error' if alert)}
+        .govuk-form-group{class: "govuk-!-width-two-thirds #{('govuk-form-group--error' if alert)}"}
           =f.label :username, 'Email', class: 'govuk-label'
           %span#govuk-error-message.govuk-error-message
             - if alert

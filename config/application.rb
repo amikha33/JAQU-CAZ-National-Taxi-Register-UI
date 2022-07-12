@@ -35,6 +35,6 @@ module NtrUi
     config.x.csv_file_size_limit = ENV.fetch('CSV_FILE_SIZE_LIMIT_MB', 50).to_i
 
     # Configurable host of the application
-    config.x.host = ENV.fetch('HOST', nil)
+    config.x.host = ENV.fetch('HOST', '')
   end
 end

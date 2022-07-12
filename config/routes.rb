@@ -35,7 +35,9 @@ Rails.application.routes.draw do
         get '/', to: redirect('/')
         get :success
         get :reset
-        post :send_confirmation_code
+        get :email_send
+        get :invalid_or_expired
+        post :submit_reset_your_password
         get :confirm_reset
         post :change
       end
