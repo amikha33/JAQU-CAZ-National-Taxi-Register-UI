@@ -67,7 +67,7 @@ steps:
       LOCATION: browserstack
     commands:
       - cd JAQU-CAZ-QA-selenium
-      - bundle exec cucumber -t @NTR --guess --retry 3
+      - bundle exec cucumber -t @NTR --guess --retry 0
 #################################################### End Nightly Steps ################################################
 
 ---
