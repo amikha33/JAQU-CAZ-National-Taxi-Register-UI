@@ -42,6 +42,16 @@ class ResetPasswordMailer < SqsBase
 
   # Parameters which need it for email template.
   def personalisation
-    { link: Rails.configuration.x.host + confirm_reset_passwords_path(token: jwt_token) }.to_json
+    { link: "<a href=https://#{link_host}#{link_path} target=_blank>Reset your password</a>" }.to_json
+  end
+
+  # Enviroment host name.
+  def link_host
+    Rails.configuration.x.host.split(',')[0]
+  end
+
+  # Link path with jwt token.
+  def link_path
+    confirm_reset_passwords_path(token: jwt_token)
   end
 end
