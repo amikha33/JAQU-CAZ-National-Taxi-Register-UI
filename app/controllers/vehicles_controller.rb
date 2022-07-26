@@ -12,8 +12,6 @@ class VehiclesController < ApplicationController
   before_action -> { check_permissions(current_user.search_group?) }
   # checks if VRN is present in the session
   before_action :check_vrn, only: %i[index historic_search]
-  # assign back button path
-  before_action :assign_back_button_url, only: %i[index not_found historic_search]
 
   ##
   # Renders the search page
@@ -66,7 +64,6 @@ class VehiclesController < ApplicationController
     @vrn_details = HistoricalVrnDetails.new(vrn, page, start_date, end_date)
     @vrn = vrn
     @pagination = @vrn_details.pagination
-    @return_url = determinate_back_link_url(page)
   end
 
   ##
@@ -129,19 +126,5 @@ class VehiclesController < ApplicationController
     else
       redirect_to vehicles_path
     end
-  end
-
-  # Returns back link url, e.g '.../vehicles/historic_search?page=3?back=true'
-  def determinate_back_link_url(page)
-    BackLinkHistoryService.call(
-      session:,
-      back_button: back_button_used?,
-      page:,
-      url: historic_search_vehicles_url
-    )
-  end
-
-  def back_button_used?
-    request.query_parameters['page']&.include?('back')
   end
 end

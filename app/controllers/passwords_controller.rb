@@ -10,8 +10,6 @@ class PasswordsController < ApplicationController
   before_action :validate_aws_status, only: %i[new create]
   # checks if a user aws session not expired
   before_action :validate_aws_session, only: %i[new create]
-  # assign back button path
-  before_action :assign_back_button_url, only: %i[reset confirm_reset invalid_or_expired email_send]
   # prevent browser page caching
   before_action :prevent_browser_caching,
                 only: %i[submit_reset_your_password confirm_reset change]

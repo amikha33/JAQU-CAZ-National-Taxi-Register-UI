@@ -10,8 +10,6 @@ class UploadController < ApplicationController
   before_action :redirect_to_new_password_path
   # checks if session +job+ is present
   before_action :check_job_data, only: %i[processing]
-  # assign back button path
-  before_action :assign_back_button_url, only: %i[data_rules]
 
   ##
   # Renders the upload page.

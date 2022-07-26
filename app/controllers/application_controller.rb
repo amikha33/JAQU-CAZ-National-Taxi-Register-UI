@@ -8,8 +8,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true
   # rescues from API and security errors
   rescue_from Errno::ECONNREFUSED, SocketError, BaseApi::Error500Exception, BaseApi::Error422Exception,
-              BaseApi::Error400Exception, RefererXssException,
-              with: :render_server_unavailable
+              BaseApi::Error400Exception, with: :render_server_unavailable
   # rescues from upload validation or if upload to AWS S3 failed
   rescue_from CsvUploadFailureException, with: :handle_exception
   # rescue exception if checked host header was modified
@@ -97,13 +96,6 @@ class ApplicationController < ActionController::Base
     Rails.logger.info "#{exception.class}: #{exception}"
 
     render template: 'errors/service_unavailable', status: :forbidden
-  end
-
-  # Assign back button url
-  def assign_back_button_url
-    @back_button_url = request.referer || root_path
-
-    Security::RefererXssHandler.call(referer: @back_button_url)
   end
 
   # Checks if hosts were not manipulated

@@ -65,8 +65,6 @@ Feature: Search a VRN
     And I should not see "previous" pagination button
   Then I go the Search vehicles results page
      And I should see active "1" pagination button
-  Then I press 'Back' link
-    And I should be on the Search page
   Then I go the Search vehicles results page
     And I press 3 pagination button
     And I should be on the Search results page number 3
@@ -79,18 +77,6 @@ Feature: Search a VRN
     And I should be on the Search results page number 2
     And I should see active "2" pagination button
     And I should see inactive "1" pagination button
-  Then I press 'Back' link
-    And I should be on the Search results page number 5 when using back button
-  Then I press 3 pagination button
-    And I should be on the Search results page number 3
-  Then I press 'Back' link
-     And I should be on the Search results page number 5 when using back button
-  Then I press 'Back' link
-    And I should be on the Search results page number 3 when using back button
-  Then I press 'Back' link
-    And I should be on the Search results page number 1 when using back button
-  Then I press 'Back' link
-    And I should be on the Search page
 
   Scenario: Historical Search when no results found
     Given I am on the Search VRN page

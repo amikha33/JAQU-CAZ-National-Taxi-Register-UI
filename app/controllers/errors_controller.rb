@@ -7,13 +7,6 @@
 class ErrorsController < ApplicationController
   before_action :set_html_response_format
 
-  # assign back button path
-  before_action :assign_back_button_url, only: %i[
-    not_found
-    internal_server_error
-    service_unavailable
-  ]
-
   ##
   # Renders 404 error page.
   #
