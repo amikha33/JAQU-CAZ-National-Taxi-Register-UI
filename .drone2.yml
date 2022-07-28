@@ -60,7 +60,7 @@ steps:
       CUCUMBER_PUBLISH_TOKEN: '3b2298a1-72e1-4914-92f6-44ce88d3875e'
       VALID_USERNAME: 'tester@informed.com'
       VALID_PASSWORD: 'Tester123...'
-      BROWSER_SET: 'mid'
+      BROWSER_SET: 'min'
       SCREENSHOT_TYPE: 'base'
       BUILD: NTR-UI-${DRONE_BUILD_NUMBER}
       SPECTRE: false
