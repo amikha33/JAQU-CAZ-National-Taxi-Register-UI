@@ -4,11 +4,10 @@
 = render 'shared/js_back_link'
 
 %main.govuk-main-wrapper#main-content{role: 'main'}
-  - if alert
-    = render 'shared/errors_summary'
-
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render 'shared/errors_summary' if alert
+        
       %h1.govuk-heading-l= title_and_header
       %p Please enter your new password below
       = form_for(User.new, url: change_passwords_path, method: :post, html: {autocomplete: 'off'}) do |f|

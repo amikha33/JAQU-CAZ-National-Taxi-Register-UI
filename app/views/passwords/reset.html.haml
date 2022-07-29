@@ -4,11 +4,10 @@
 = render 'shared/js_back_link'
 
 %main.govuk-main-wrapper#main-content{role: 'main'}
-  - if alert
-    = render 'shared/errors'
-
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+      = render 'shared/errors' if alert
+      
       %h1.govuk-heading-l= title_and_header
       %p Enter your email to reset password
       = form_for(User.new, url: submit_reset_your_password_passwords_path, method: :post,
