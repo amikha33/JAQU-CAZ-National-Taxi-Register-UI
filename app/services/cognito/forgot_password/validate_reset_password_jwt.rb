@@ -59,7 +59,7 @@ module Cognito
 
       # pw-reset-requested field stored in token.
       def pw_reset_from_token
-        token_data['pw-reset-requested']
+        token_data['pw-reset-requested'].to_s
       end
 
       # exp fields stored in token.

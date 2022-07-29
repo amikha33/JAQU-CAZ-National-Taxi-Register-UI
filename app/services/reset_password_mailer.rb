@@ -42,7 +42,7 @@ class ResetPasswordMailer < SqsBase
 
   # Parameters which need it for email template.
   def personalisation
-    { link: "<a href=https://#{link_host}#{link_path} target=_blank>Reset your password</a>" }.to_json
+    { link: "https://#{link_host}#{link_path}" }.to_json
   end
 
   # Enviroment host name.
