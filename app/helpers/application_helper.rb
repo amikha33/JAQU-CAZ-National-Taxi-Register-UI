@@ -19,6 +19,11 @@ module ApplicationHelper
     Rails.configuration.x.support_service_email
   end
 
+  # Returns Support service email, eg. 'taxiandphvcentralised.database@dvla.gov.uk'.
+  def dvla_email
+    Rails.configuration.x.dvla_email
+  end
+
   # Remove duplicated error messages, e.g. `Email and email address confirmation must be the same`
   def remove_duplicated_messages(errors)
     transformed_errors(errors).uniq(&:first)

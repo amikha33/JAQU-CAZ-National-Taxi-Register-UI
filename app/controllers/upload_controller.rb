@@ -10,6 +10,8 @@ class UploadController < ApplicationController
   before_action :redirect_to_new_password_path
   # checks if session +job+ is present
   before_action :check_job_data, only: %i[processing]
+  # clear the request_form session
+  before_action :clear_request_form_session, only: %i[index data_rules]
 
   ##
   # Renders the upload page.

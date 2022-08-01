@@ -20,6 +20,7 @@ module NtrUi
     config.x.feedback_url = ENV.fetch('FEEDBACK_URL', 'https://defragroup.eu.qualtrics.com/jfe/form/SV_2iugBKyyYVyl0LX')
     config.x.service_name = 'Taxi and PHV Data Portal'
     config.x.support_service_email = ENV.fetch('SUPPORT_SERVICE_EMAIL', 'TaxiPHVDatabase.Support@informed.com')
+    config.x.dvla_email = ENV.fetch('DVLA_EMAIL', 'taxiandphvcentralised.database@dvla.gov.uk')
     config.x.version = File.read('.version')
 
     config.time_zone = 'London'

@@ -1,0 +1,42 @@
+.govuk-form-group{class: ('govuk-form-group--error' if errors[:name].present?)}
+  = form.label :name, 'Full name', class: 'govuk-label', id: 'name_label', for: 'name'
+  %span#name-error.govuk-error-message
+    - if errors[:name].present?
+      %span.govuk-visually-hidden Error:
+      = errors[:name].join(', ')
+  = form.text_field :name,
+                    class: "govuk-input #{'govuk-input--error' if errors[:name].present?} govuk-!-width-full",
+                    id: 'name',
+                    value: session.dig(:la_request, 'name'),
+                    'aria-labelledby': 'name_label',
+                    'aria-describedby': 'name'
+
+.govuk-form-group{class: ('govuk-form-group--error' if errors[:email].present?)}
+  = form.label :email, 'Email', class: 'govuk-label', id: 'email_label', for: 'email'
+  %span#email-error.govuk-error-message
+    - if errors[:email].present?
+      %span.govuk-visually-hidden Error:
+      = errors[:email].join(', ')
+  .govuk-hint We'll only use this to contact you about your request
+  = form.text_field :email,
+                  class: "govuk-input #{'govuk-input--error' if errors[:email].present?} govuk-!-width-full",
+                  id: 'email',
+                  value: session.dig(:la_request, 'email'),
+                  'aria-labelledby': 'email_label',
+                  'aria-describedby': 'email'
+
+%h2.govuk-heading-m Request details
+
+.govuk-form-group{class: ('govuk-form-group--error' if errors[:details].present?)}
+  %span#details-error.govuk-error-message
+    - if errors[:details].present?
+      %span.govuk-visually-hidden Error:
+      = errors[:details].join(', ')
+  .govuk-hint Provide details of your request
+  = form.text_area :details,
+                  class: "govuk-textarea #{'govuk-input--error' if errors[:details].present?} govuk-!-width-full",
+                  id: 'details',
+                  value: session.dig(:la_request, 'details'),
+                  'aria-labelledby': 'details',
+                  'aria-describedby': 'details',
+                  rows: 5

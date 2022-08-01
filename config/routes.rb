@@ -30,6 +30,14 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :la_request, only: %i[index] do
+      collection do
+        post :index, to: 'la_request#submit_la_request'
+        get :review
+        post :review, to: 'la_request#submit_review'
+      end
+    end
+
     resources :passwords, only: %i[new create] do
       collection do
         get '/', to: redirect('/')

@@ -12,6 +12,8 @@ class VehiclesController < ApplicationController
   before_action -> { check_permissions(current_user.search_group?) }
   # checks if VRN is present in the session
   before_action :check_vrn, only: %i[index historic_search]
+  # clear the request_form session
+  before_action :clear_request_form_session, only: %i[search index historic_search not_found]
 
   ##
   # Renders the search page

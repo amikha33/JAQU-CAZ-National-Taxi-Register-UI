@@ -102,4 +102,9 @@ class ApplicationController < ActionController::Base
   def validate_host_headers!
     Security::HostHeaderValidator.call(request:, allowed_hosts: Rails.configuration.x.host)
   end
+
+  # Clears la_request form session variables
+  def clear_request_form_session
+    session[:la_request] = nil
+  end
 end

@@ -1,0 +1,21 @@
+- %i[success warning].each do |banner_type|
+  - if flash[banner_type]
+
+    .moj-banner{class: "moj-banner--#{banner_type}"}
+      %svg.moj-banner__icon{fill: 'currentColor',
+                            focusable: 'false',
+                            height: '25',
+                            role: 'presentation',
+                            viewbox: '0 0 25 25',
+                            width: '25',
+                            xmlns: 'http://www.w3.org/2000/svg'}
+
+        - if banner_type == :success
+          %path{d: 'M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z'}
+        - else
+          %path{d: 'M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z'}
+
+      .moj-banner__message
+        %span.moj-banner__assistive>
+          = banner_type.to_s.humanize
+        = flash[banner_type]

@@ -1,0 +1,27 @@
+- title_and_header = 'Licensing authority request form'
+- content_for(:title, title_and_header)
+
+= render 'shared/js_back_link'
+
+%main.govuk-main-wrapper#main-content{role: 'main'}
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      
+      = render 'errors_summary', errors: @errors if @errors.present?
+
+      %h1.govuk-heading-xl=title_and_header
+
+      %h2.govuk-heading-m Contact details
+
+      = form_for('la_request_form', url: la_request_index_path, method: :post) do |form|
+        %fieldset.govuk-fieldset
+          %legend.govuk-visually-hidden
+        
+          - if @errors.present?
+            = render 'la_request/input_errored', form: form, errors: @errors
+          - else
+            = render 'la_request/input_normal', form: form
+
+          %p
+            = submit_tag 'Continue', class: 'govuk-button', 'data-module': 'govuk-button', id: 'submit-request'
+

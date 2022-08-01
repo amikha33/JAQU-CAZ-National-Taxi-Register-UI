@@ -13,6 +13,11 @@ en:
       too_long: The email exceeds the limit of 45 characters
   expired_session: Your session has expired
   external_link: opens in a new window
+  la_request_form:
+    errors:
+      details_required: Enter your request details
+      name_required: Enter your full name
+    success: You have successfully submitted a request, a confirmation email has been sent.
   labels:
     vrn: Enter a number plate
     vrn_example: For example, CU57ABC

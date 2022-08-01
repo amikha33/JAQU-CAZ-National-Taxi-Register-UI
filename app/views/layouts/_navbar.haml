@@ -16,6 +16,9 @@
       %li.govuk-header__navigation-item{class: current_path?(data_rules_upload_index_path)}
         %a.govuk-header__link{href: data_rules_upload_index_path, id: 'data-rules'}
           Data rules
+      %li.govuk-header__navigation-item{class: current_path?(la_request_index_path)}
+        %a.govuk-header__link{href: la_request_index_path, id: 'la-request-form'}
+          Request form
     %li.govuk-header__navigation-item{class: current_path?(new_user_session_path)}
       - if user_signed_in?
         = link_to('Sign out', destroy_user_session_path,

@@ -1,5 +1,7 @@
 %main.govuk-main-wrapper#main-content{role: 'main'}
   .govuk-grid-row
+    .govuk-grid-column-three-quarters
+      = render 'shared/banners'
     .govuk-grid-column-two-thirds
       - if @job_errors
         = render 'upload/job_errors'

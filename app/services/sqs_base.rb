@@ -21,4 +21,9 @@ class SqsBase < BaseService
   def support_service_email
     Rails.configuration.x.support_service_email
   end
+
+  # Returns DVLA contact email, eg. 'taxiandphvcentralised.database@dvla.gov.uk'.
+  def dvla_email
+    Rails.configuration.x.dvla_email
+  end
 end

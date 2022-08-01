@@ -4,6 +4,9 @@
 # Controller class for the static pages
 #
 class StaticPagesController < ApplicationController
+  # clear the request_form session
+  before_action :clear_request_form_session
+
   ##
   # Renders the accessibility statement page
   #

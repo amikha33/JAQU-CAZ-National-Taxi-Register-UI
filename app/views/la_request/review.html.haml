@@ -1,0 +1,51 @@
+- title_and_header = 'Check your answers'
+- content_for(:title, title_and_header)
+
+= render 'shared/js_back_link'
+
+%main.govuk-main-wrapper#main-content{role: 'main'}
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      %h1.govuk-heading-xl=title_and_header
+
+      = form_tag(review_la_request_index_path, method: :post) do |form|
+        %dl.govuk-summary-list
+          %div.govuk-summary-list__row
+
+            - if session.dig(:la_request, 'licensing_authorities').count > 1
+              %dt.govuk-summary-list__key Licensing authorities
+              %dd.govuk-summary-list__value
+                = session.dig(:la_request, 'licensing_authorities').join(', ')
+            - else
+              %dt.govuk-summary-list__key Licensing authority
+              %dd.govuk-summary-list__value
+                = session.dig(:la_request, 'licensing_authorities').first
+
+            %dd.govuk-summary-list__actions
+          %div.govuk-summary-list__row
+            %dt.govuk-summary-list__key Name
+            %dd.govuk-summary-list__value
+              = session.dig(:la_request, 'name')
+            %dd.govuk-summary-list__actions
+              = link_to la_request_index_path, class: 'govuk-link', id: "change-name-link" do
+                Change
+                %span.govuk-visually-hidden name
+          %div.govuk-summary-list__row
+            %dt.govuk-summary-list__key Email address
+            %dd.govuk-summary-list__value
+              = session.dig(:la_request, 'email')
+            %dd.govuk-summary-list__actions
+              = link_to la_request_index_path, class: 'govuk-link', id: "change-email-link" do
+                Change
+                %span.govuk-visually-hidden email
+          %div.govuk-summary-list__row
+            %dt.govuk-summary-list__key Request details
+            %dd.govuk-summary-list__value
+              = session.dig(:la_request, 'details')
+            %dd.govuk-summary-list__actions
+              = link_to la_request_index_path, class: 'govuk-link', id: "change-details-link" do
+                Change
+                %span.govuk-visually-hidden details
+
+        = submit_tag 'Confirm and send', class: 'govuk-button', 'data-module': 'govuk-button', id: 'confirm-and-send'
+
