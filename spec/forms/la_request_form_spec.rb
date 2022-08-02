@@ -6,7 +6,6 @@ describe LaRequestForm do
   subject { described_class.new(la_params) }
 
   let(:la_params) { { name:, email:, details: } }
-
   let(:name) { 'Joe Bloggs' }
   let(:email) { 'joe.bloggs@informed.com' }
   let(:details) { 'I need to reset my email address' }
