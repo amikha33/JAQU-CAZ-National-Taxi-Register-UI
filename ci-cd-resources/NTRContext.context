@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <context>
+        <name>NTR Context</name>
+        <desc/>
+        <inscope>true</inscope>
+        <incregexes>https://dev-ntr-web.cleanairzone.defra.gov.uk.*</incregexes>
+        <excregexes>.sitemap.xml</excregexes>
+        <tech>
+            <include>Db.PostgreSQL</include>
+            <include>Language.JSP/Servlet</include>
+            <include>Language.Java</include>
+            <include>Language.Java.Spring</include>
+            <include>Language.JavaScript</include>
+            <include>Language.Python</include>
+            <include>Language.Ruby</include>
+            <include>Language.XML</include>
+            <include>OS.Linux</include>
+            <include>OS.Windows</include>
+            <include>SCM.Git</include>
+            <include>WS</include>
+            <include>WS.Apache</include>
+            <include>WS.IIS</include>
+            <include>WS.Tomcat</include>
+            <exclude>Db</exclude>
+            <exclude>Db.CouchDB</exclude>
+            <exclude>Db.Firebird</exclude>
+            <exclude>Db.HypersonicSQL</exclude>
+            <exclude>Db.IBM DB2</exclude>
+            <exclude>Db.Microsoft Access</exclude>
+            <exclude>Db.Microsoft SQL Server</exclude>
+            <exclude>Db.MongoDB</exclude>
+            <exclude>Db.MySQL</exclude>
+            <exclude>Db.Oracle</exclude>
+            <exclude>Db.SAP MaxDB</exclude>
+            <exclude>Db.SQLite</exclude>
+            <exclude>Db.Sybase</exclude>
+            <exclude>Language</exclude>
+            <exclude>Language.ASP</exclude>
+            <exclude>Language.C</exclude>
+            <exclude>Language.PHP</exclude>
+            <exclude>OS</exclude>
+            <exclude>OS.MacOS</exclude>
+            <exclude>SCM</exclude>
+            <exclude>SCM.SVN</exclude>
+        </tech>
+        <urlparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </urlparser>
+        <postparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </postparser>
+        <authentication>
+            <type>2</type>
+            <strategy>EACH_RESP</strategy>
+            <pollurl/>
+            <polldata/>
+            <pollheaders/>
+            <pollfreq>60</pollfreq>
+            <pollunits>REQUESTS</pollunits>
+            <loggedin>sign-out</loggedin>
+            <loggedout>sign-in</loggedout>
+            <form>
+                <loginurl>https://dev-ntr-web.cleanairzone.defra.gov.uk/users/sign_in</loginurl>
+                <loginbody>authenticity_token=0vQ3J1yNcV1J6pWSzYL91asxlKy_fX703QU6IuADSZsjPPHkB0MwRb6khdHPQOvIFsKq2MzALNvj8HlBc6qSAg&amp;user%5Busername%5D={%username%}&amp;user%5Bpassword%5D={%password%}&amp;commit=Continue</loginbody>
+                <loginpageurl>https://dev-ntr-web.cleanairzone.defra.gov.uk/users/sign_in</loginpageurl>
+            </form>
+        </authentication>
+        <users>
+            <user>608;true;VGVzdGVy;2;dGVzdGVyQGluZm9ybWVkLmNvbQ==~VGVzdGVyMTIzLi4u~</user>
+        </users>
+        <forceduser>608</forceduser>
+        <session>
+            <type>0</type>
+        </session>
+        <authorization>
+            <type>0</type>
+            <basic>
+                <header/>
+                <body/>
+                <logic>AND</logic>
+                <code>-1</code>
+            </basic>
+        </authorization>
+        <alertFilters>
+            <filter>true;10096;-1;aHR0cHM6Ly9kZXYtbnRyLXdlYi5jbGVhbmFpcnpvbmUuZGVmcmEuZ292LnVrL3BhY2tzLio=;true;;false;;false;;false;</filter>
+            <filter>true;10096;-1;aHR0cHM6Ly9kZXYtbnRyLXdlYi5jbGVhbmFpcnpvbmUuZGVmcmEuZ292LnVrLio=;true;;false;;false;MTQ0Nzc0NTQ5;false;</filter>
+        </alertFilters>
+    </context>
+</configuration>
