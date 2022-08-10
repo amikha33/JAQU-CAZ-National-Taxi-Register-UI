@@ -332,22 +332,6 @@ steps:
       event:
         - push
 
-  # Execute OWASP Zap tests
-  - name: owasp zap tests
-    image: owasp/zap2docker-stable
-    failure: ignore
-    commands:
-      - mkdir -p /zap/wrk
-      - cp ci-cd-resources/zap.conf /zap/wrk/zap.conf
-      - cp ci-cd-resources/NTRContext.context /zap/wrk/NTRContext.context
-      - cd /zap
-      - zap-full-scan.py -t https://dev-ntr-web.cleanairzone.defra.gov.uk -c zap.conf -n NTRContext.context -U Tester
-    volumes:
-      - name: docker_sock
-        path: /var/run/docker.sock
-    when:
-      event:
-        - push
 #################################################### End of Dev Environment Steps #####################################
 
 ---
