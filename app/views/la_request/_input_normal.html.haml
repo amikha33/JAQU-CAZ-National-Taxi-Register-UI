@@ -1,6 +1,9 @@
 .govuk-form-group
   = form.label :name, 'Full name', class: 'govuk-label'
-  = form.text_field :name, class: 'govuk-input govuk-!-width-full', value: session.dig(:la_request, 'name')
+  = form.text_field :name, 
+                    class: 'govuk-input govuk-!-width-full', 
+                    value: session.dig(:la_request, 'name'),
+                    maxlength: 60
 
 .govuk-form-group
   = form.label :email, 'Email', class: 'govuk-label', id: 'email_label', for: 'email'
@@ -10,7 +13,8 @@
                     id: 'email',
                     value: session.dig(:la_request, 'email'),
                     'aria-labelledby': 'email_label',
-                    'aria-describedby': 'email'
+                    'aria-describedby': 'email',
+                    maxlength: 255
 
 %h2.govuk-heading-m Request details
 
@@ -22,4 +26,5 @@
                   value: session.dig(:la_request, 'details'),
                   'aria-labelledby': 'details',
                   'aria-describedby': 'details',
-                  rows: 5
+                  rows: 5,
+                  maxlength: 1000
