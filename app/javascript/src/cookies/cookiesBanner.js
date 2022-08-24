@@ -14,6 +14,14 @@ function isInIframe() {
   return window.parent && window.location !== window.parent.location;
 }
 
+/* Focusing email login input when cookie banner is hidden */
+function autofocusLoginInput() {
+  const loginEmailInput = document.getElementById('user_username');
+  if (loginEmailInput) {
+    document.addEventListener('DOMContentLoaded', () => loginEmailInput.focus());
+  }
+}
+
 function showCookiesBanner() {
   const cookiesBanner = document.getElementById('cookies-banner');
   if (!isInCookiesPage() && !isInIframe()) {
@@ -21,9 +29,6 @@ function showCookiesBanner() {
 
     if (shouldHaveCookieMessage) {
       cookiesBanner.style.display = 'block';
-
-      // Scroll the document to the top page in Safari browsers when cookie banner is visible.
-      setTimeout(() => window.scrollTo(0, 0), 1);
 
       // Set the default consent cookie if it isn't already present.
       if (!cookie('cookies_policy')) {
@@ -33,9 +38,11 @@ function showCookiesBanner() {
       deleteUnconsentedCookies();
     } else {
       cookiesBanner.style.display = 'none';
+      autofocusLoginInput();
     }
   } else {
     cookiesBanner.style.display = 'none';
+    autofocusLoginInput();
   }
 }
 
