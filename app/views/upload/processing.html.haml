@@ -1,9 +1,12 @@
 = javascript_pack_tag 'autorefreshPage'
 
+- title_and_header = "Validating submission..."
+- content_for(:title, title_and_header)
+
 %main.govuk-main-wrapper#main-content{role: 'main'}
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      %h1.govuk-heading-l Validating submission...
+      %h1.govuk-heading-l= title_and_header
       %p
         We are validating your CSV submission to National Taxi and PHV register.
         Please do not leave this page. It will automatically refresh to present your submission status.

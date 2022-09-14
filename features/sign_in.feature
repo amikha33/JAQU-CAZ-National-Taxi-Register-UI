@@ -8,7 +8,7 @@ Feature: Sign in
     When I navigate to a Upload page
     Then I am redirected to the unauthenticated root page
       And I should see 'Sign in'
-      And I should see 'Taxi and PHV Data Portal' title
+      And I should see 'Sign in | Drive in a clean air zone | GOV.UK' title
       And I should not see 'Upload' link
       And I should not see 'Data rules' link
       And I should not see 'Search' link

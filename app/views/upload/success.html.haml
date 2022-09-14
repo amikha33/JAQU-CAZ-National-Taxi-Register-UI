@@ -1,9 +1,11 @@
+- title_and_header = "Upload successful"
+- content_for(:title, title_and_header)
+
 %main.govuk-main-wrapper#main-content{role: 'main'}
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       .govuk-panel.govuk-panel--confirmation
-        %h1.govuk-panel__title
-          Upload successful
+        %h1.govuk-panel__title= title_and_header
         .govuk-panel__body
           Taxi and PHV centralised database has been successfully updated
       - if @warning

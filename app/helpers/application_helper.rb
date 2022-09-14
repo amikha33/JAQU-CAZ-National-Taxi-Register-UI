@@ -9,11 +9,6 @@ module ApplicationHelper
     'govuk-header__navigation-item--active' if request.path_info == path
   end
 
-  # Returns name of service, eg. 'Taxi and PHV Data Portal'.
-  def service_name
-    Rails.configuration.x.service_name
-  end
-
   # Returns Support service email, eg. 'TaxiPHVDatabase.Support@informed.com'.
   def support_service_email
     Rails.configuration.x.support_service_email

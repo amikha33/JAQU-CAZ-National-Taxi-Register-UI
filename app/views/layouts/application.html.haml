@@ -2,8 +2,7 @@
 %html{html_attrs('en')}
   %head
     %meta{charset: 'utf-8'}
-    %title
-      = content_for?(:title) ? yield(:title) : service_name
+    %title= [(yield(:title) if content_for?(:title)), 'Drive in a clean air zone | GOV.UK'].compact.join(' | ')
     = csrf_meta_tags
     = csp_meta_tag
 

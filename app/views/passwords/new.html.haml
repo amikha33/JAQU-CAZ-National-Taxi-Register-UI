@@ -1,7 +1,10 @@
+- title_and_header = 'Setup your new password'
+- content_for(:title, title_and_header)
+
 %main.govuk-main-wrapper#main-content{role: 'main'}
   %fieldset.govuk-fieldset
     %legend.govuk-fieldset__legend.govuk-fieldset__legend--xl
-      %h1.govuk-heading-l Setup your new password
+      %h1.govuk-heading-l= title_and_header
       - if @error.present?
         .govuk-error-summary{'aria-labelledby': 'error-summary-title',
                              'data-module': 'govuk-error-summary',

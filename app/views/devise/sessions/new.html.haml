@@ -1,10 +1,12 @@
 - @errors = flash[:errors] || (alert && { 'email' => alert })
+- title_and_header = 'Sign in'
+- content_for(:title, title_and_header)
 
 %main.govuk-main-wrapper#main-content{role: 'main'}
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       %h1.govuk-heading-xl Taxi and PHV Data Portal
-      %h2.govuk-heading-l Sign in
+      %h2.govuk-heading-l=title_and_header
 
       - if @errors
         .govuk-error-summary{'aria-labelledby': 'error-summary-title',
